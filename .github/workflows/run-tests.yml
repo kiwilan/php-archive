@@ -33,6 +33,23 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
+      - name: Add rar extension
+        run: |
+          sudo apt-get install -y unrar
+          sudo apt-get install -y libunrar-dev
+          cd ~
+          git clone https://github.com/cataphract/php-rar
+          cd php-rar
+          phpize
+          ./configure
+          make
+          make install
+          cd ..
+          PATH="pecl config-get ext_dir"
+          pecl_path=$(pecl config-get ext_dir)
+          cp ~/php-rar/modules/rar.so $pecl_path
+          echo "extension=rar.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
       - name: Execute tests
         run: vendor/bin/pest --coverage
 
