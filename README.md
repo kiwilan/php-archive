@@ -3,6 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
 [![Tests](https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/kiwilan/php-archive/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
+[![codecov](https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G)](https://codecov.io/gh/kiwilan/php-archive)
 
 This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
 
