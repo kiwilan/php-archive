@@ -23,6 +23,7 @@ it('can read archive', function () {
     expect($archive->path())->toBe(ZIP);
     expect($archive->extension())->toBe(ArchiveUtils::getExtension(ZIP));
     expect($archive->type())->toBe(ArchiveEnum::zip);
+    expect($archive->count())->toBeGreaterThan(0);
 });
 
 it('can read archive files', function () {
@@ -59,7 +60,9 @@ it('can extract archive file', function () {
     $extension = $file->extension();
 
     $path = __DIR__.'/output/cover.'.$extension;
-    unlink($path);
+    if (file_exists($path)) {
+        unlink($path);
+    }
     ArchiveUtils::base64ToImage($content, $path);
     expect(ArchiveUtils::isBase64($content))->toBeTrue();
     expect($path)->toBeReadableFile();
@@ -83,4 +86,17 @@ it('can extract archive files', function () {
     ArchiveUtils::base64ToImage($cover, $path);
     expect(ArchiveUtils::isBase64($cover))->toBeTrue();
     expect($path)->toBeReadableFile();
+});
+
+it('can get content after parse', function () {
+    $archive = Archive::make(ZIP);
+
+    $cover = null;
+    foreach ($archive->files() as $name => $file) {
+        if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
+            $cover = $file->content();
+        }
+    }
+
+    expect(ArchiveUtils::isBase64($cover))->toBeTrue();
 });
