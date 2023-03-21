@@ -43,6 +43,8 @@ jobs:
           ./configure
           sudo make
           sudo make install
+          pecl_path=$(pecl config-get ext_dir)
+          echo $pecl_path
 
       - name: Execute tests
         run: vendor/bin/pest --coverage

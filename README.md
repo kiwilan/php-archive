@@ -5,7 +5,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
 [![codecov](https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G)](https://codecov.io/gh/kiwilan/php-archive)
 
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
+PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.
 
 -   <https://www.php.net/manual/en/refs.compression.php>
 -   <https://github.com/splitbrain/php-archive>
