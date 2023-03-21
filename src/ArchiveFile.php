@@ -2,34 +2,62 @@
 
 namespace Kiwilan\Archive;
 
+use Closure;
 use Kiwilan\Archive\Enums\ArchiveEnum;
+use Kiwilan\Archive\Parsers\ParserArchive;
+use Kiwilan\Archive\Parsers\ParserRar;
+use Kiwilan\Archive\Parsers\ParserZip;
+use Kiwilan\Archive\Readers\ReaderFile;
 
 class ArchiveFile
 {
+    /** @var array<string, ReaderFile> */
+    protected array $files = [];
+
     protected function __construct(
         protected string $path,
-        protected ?string $name = null,
         protected ?string $extension = null,
         protected ?ArchiveEnum $type = null,
-        protected ?string $size = null,
-        protected ?string $date = null,
-        protected ?string $time = null,
-        protected ?string $permissions = null,
-        protected ?string $owner = null,
-        protected ?string $group = null,
-        protected ?string $crc = null,
-        protected ?string $compressedSize = null,
-        protected ?string $uncompressedSize = null,
-        protected ?string $compressionRatio = null,
-        protected ?string $compressionMethod = null,
-        protected ?string $encrypted = null,
+        protected ?string $filename = null,
+        protected ?string $name = null,
+        protected ?string $dirname = null,
+        protected ?int $size = null,
+        protected ?int $date = null,
+        protected ?int $permissions = null,
+        protected ?int $count = null,
+        protected ?string $status = null,
         protected ?string $comment = null,
+        protected ?ParserArchive $parser = null,
     ) {
     }
 
     public static function make(string $path): self
     {
         $self = new self($path);
+        $self->extension = ArchiveUtils::getExtension($path);
+        $self->type = ArchiveEnum::tryFrom($self->extension);
+
+        $parser = match ($self->type) {
+            ArchiveEnum::zip => ParserZip::make($self),
+            ArchiveEnum::rar => ParserRar::make($self),
+            default => null,
+        };
+
+        if (! $parser) {
+            throw new \Exception("Archive type not supported: {$self->extension}");
+        }
+
+        $self->filename = pathinfo($path, PATHINFO_FILENAME);
+        $self->name = pathinfo($path, PATHINFO_BASENAME);
+        $self->dirname = pathinfo($path, PATHINFO_DIRNAME);
+        $self->size = filesize($path);
+        $self->date = filemtime($path);
+        $self->permissions = fileperms($path);
+        $self->count = $parser->count();
+        $self->status = $parser->status();
+        $self->comment = $parser->comment();
+        $self->files = $parser->files();
+        $self->parser = $parser;
 
         return $self;
     }
@@ -37,5 +65,68 @@ class ArchiveFile
     public function path(): string
     {
         return $this->path;
+    }
+
+    public function extension(): string
+    {
+        return $this->extension;
+    }
+
+    public function type(): ArchiveEnum
+    {
+        return $this->type;
+    }
+
+    public function filename(): string
+    {
+        return $this->filename;
+    }
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function dirname(): string
+    {
+        return $this->dirname;
+    }
+
+    public function size(): ?int
+    {
+        return $this->size;
+    }
+
+    public function date(): ?int
+    {
+        return $this->date;
+    }
+
+    public function permissions(): ?int
+    {
+        return $this->permissions;
+    }
+
+    public function count(): ?int
+    {
+        return $this->count;
+    }
+
+    public function status(): ?string
+    {
+        return $this->status;
+    }
+
+    public function comment(): ?string
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param Closure(ReaderFile $file): void $closure
+     */
+    public function parse(Closure $closure): void
+    {
+        $this->parser->parse($closure);
     }
 }
