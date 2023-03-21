@@ -25,8 +25,9 @@
     },
     "require-dev": {
         "ext-zip": "*",
-        "pestphp/pest": "^2.0",
         "friendsofphp/php-cs-fixer": "^3.13",
+        "pestphp/pest": "^2.0",
+        "phpstan/phpstan": "^1.10",
         "spatie/ray": "^1.28"
     },
     "autoload": {
