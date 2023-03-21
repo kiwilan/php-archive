@@ -1,45 +1,53 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "kiwilan/php-archive",
+    "description": "This is my package php-archive",
     "keywords": [
-        ":vendor_name",
-        ":package_slug"
+        "kiwilan",
+        "php-archive"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/kiwilan/php-archive",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Ewilan Rivière",
+            "email": "ewilan.riviere@gmail.com",
             "role": "Developer"
         }
     ],
+    "suggest": {
+        "ext-imagick": "*",
+        "ext-rar": "*"
+    },
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "laravel/pint": "^1.6",
+        "smalot/pdfparser": "^2.4"
     },
     "require-dev": {
-        :require_dev_testing,
-        :require_dev_codestyle,
+        "ext-zip": "*",
+        "pestphp/pest": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.13",
         "spatie/ray": "^1.28"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src"
+            "Kiwilan\\Archive\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Kiwilan\\Archive\\Tests\\": "tests"
         }
     },
     "scripts": {
-        :scripts_testing,
-        :scripts_codestyle
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes"
     },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            :plugins_testing,
+            "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true
         }
     },
