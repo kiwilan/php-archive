@@ -5,7 +5,6 @@ namespace Kiwilan\Archive\Parsers;
 use Closure;
 use Kiwilan\Archive\ArchiveFile;
 use Kiwilan\Archive\ArchiveUtils;
-use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Readers\ReaderFile;
 use Kiwilan\Archive\Readers\ReaderRarFile;
 use RarArchive;
@@ -21,7 +20,7 @@ class ParserRar extends ParserArchive
     {
         $self = new self();
 
-        if ($file->type() === ArchiveEnum::rar && ! extension_loaded('rar')) {
+        if (! extension_loaded('rar')) {
             ArchiveUtils::print('.rar file: rar extension: is not installed', 'red');
             ArchiveUtils::print('Check this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9', 'red');
 
