@@ -47,8 +47,8 @@ jobs:
           cd ..
           PATH="pecl config-get ext_dir"
           pecl_path=$(pecl config-get ext_dir)
-          cp ~/php-rar/modules/rar.so $pecl_path
-          echo "extension=rar.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+          sudo cp ~/php-rar/modules/rar.so $pecl_path
+          sudo echo "extension=rar.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
       - name: Execute tests
         run: vendor/bin/pest --coverage
