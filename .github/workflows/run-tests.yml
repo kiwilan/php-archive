@@ -11,6 +11,9 @@ jobs:
         os: [ubuntu-latest]
         php: [8.2, 8.1]
         stability: [prefer-lowest, prefer-stable]
+        coverage-driver:
+          - pcov
+          - xdebug3
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -34,4 +37,11 @@ jobs:
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/pest
+        run: vendor/bin/pest --coverage
+
+      - name: Send code coverage report to Codecov.io
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          verbose: true
