@@ -24,7 +24,7 @@ class ParserRar extends ParserArchive
             ArchiveUtils::print('.rar file: rar extension: is not installed', 'red');
             ArchiveUtils::print('Check this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9', 'red');
 
-            return $self;
+            throw new \Exception('rar extension: is not installed');
         }
 
         $self->file = $file;
