@@ -7,12 +7,12 @@
 
 PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.
 
-| Type | Native | Extension |
-| :--: | :----: | :-------: |
-| ZIP  |   ✅   |    N/A    |
-| TAR  |   ❌   |    N/A    |
-| RAR  |   ❌   |   `rar`   |
-| PDF  |   ✅   |    N/A    |
+| Type | Native | Extension |     Dependency     |
+| :--: | :----: | :-------: | :----------------: |
+| ZIP  |   ✅   |    N/A    |        N/A         |
+| TAR  |   ❌   |    N/A    |        N/A         |
+| RAR  |   ❌   |   `rar`   |        N/A         |
+| PDF  |   ✅   |    N/A    | `smalot/pdfparser` |
 
 -   <https://www.php.net/manual/en/refs.compression.php>
 -   <https://github.com/splitbrain/php-archive>
