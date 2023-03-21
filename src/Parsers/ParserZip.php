@@ -49,7 +49,7 @@ class ParserZip extends ParserArchive
         $this->archive->close();
     }
 
-    public function parse(Closure $closure): void
+    public function parse(Closure $closure): mixed
     {
         $this->open();
 
@@ -60,9 +60,14 @@ class ParserZip extends ParserArchive
                 continue;
             }
 
-            $closure($reader);
+            $res = $closure($reader);
+            if ($res) {
+                return $res;
+            }
         }
 
         $this->close();
+
+        return null;
     }
 }

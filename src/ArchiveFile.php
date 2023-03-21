@@ -123,10 +123,18 @@ class ArchiveFile
     }
 
     /**
+     * @return array<string, ReaderFile>
+     */
+    public function files(): array
+    {
+        return $this->files;
+    }
+
+    /**
      * @param Closure(ReaderFile $file): void $closure
      */
-    public function parse(Closure $closure): void
+    public function parse(Closure $closure): mixed
     {
-        $this->parser->parse($closure);
+        return $this->parser->parse($closure);
     }
 }

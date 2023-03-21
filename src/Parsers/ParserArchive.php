@@ -44,7 +44,7 @@ abstract class ParserArchive
 
     abstract public static function make(ArchiveFile $file): self;
 
-    abstract public function parse(Closure $closure): void;
+    abstract public function parse(Closure $closure): mixed;
 
     /**
      * @return array<string, ReaderFile>

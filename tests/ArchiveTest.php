@@ -17,26 +17,70 @@ it('failed if file not exists', function () {
     expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
 });
 
-it('can read archive file', function () {
+it('can read archive', function () {
     $archive = Archive::make(ZIP);
 
     expect($archive->path())->toBe(ZIP);
     expect($archive->extension())->toBe(ArchiveUtils::getExtension(ZIP));
     expect($archive->type())->toBe(ArchiveEnum::zip);
-
-    $archive->parse(function (ReaderFile $file) {
-        dump($file->name());
-    });
 });
 
-it('can read rar archive file', function () {
-    $archive = Archive::make(RAR);
+it('can read archive files', function () {
+    $archive = Archive::make(ZIP);
 
-    expect($archive->path())->toBe(RAR);
-    expect($archive->extension())->toBe(ArchiveUtils::getExtension(RAR));
-    expect($archive->type())->toBe(ArchiveEnum::rar);
+    expect($archive->files())->toBeIterable();
+});
 
-    $archive->parse(function (ReaderFile $file) {
-        dump($file->name());
+it('can get archive file content', function () {
+    $archive = Archive::make(ZIP);
+
+    $file = $archive->parse(function (ReaderFile $file) {
+        if (str_contains($file->name(), 'cover')) {
+            return $file->content();
+        }
     });
+
+    expect($file)->toBeString();
+});
+
+it('can extract archive file', function () {
+    $archive = Archive::make(ZIP);
+
+    expect($archive->path())->toBe(ZIP);
+
+    /** @var ReaderFile */
+    $file = $archive->parse(function (ReaderFile $file) {
+        if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
+            return $file;
+        }
+    });
+
+    $content = $file->content();
+    $extension = $file->extension();
+
+    $path = __DIR__.'/output/cover.'.$extension;
+    unlink($path);
+    ArchiveUtils::base64ToImage($content, $path);
+    expect(ArchiveUtils::isBase64($content))->toBeTrue();
+    expect($path)->toBeReadableFile();
+});
+
+it('can extract archive files', function () {
+    $archive = Archive::make(ZIP);
+
+    expect($archive->path())->toBe(ZIP);
+
+    $cover = null;
+    $extension = null;
+    $archive->parse(function (ReaderFile $file) use (&$cover, &$extension) {
+        if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
+            $cover = $file->content();
+            $extension = $file->extension();
+        }
+    });
+
+    $path = __DIR__.'/output/cover.'.$extension;
+    ArchiveUtils::base64ToImage($cover, $path);
+    expect(ArchiveUtils::isBase64($cover))->toBeTrue();
+    expect($path)->toBeReadableFile();
 });

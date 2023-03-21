@@ -1,5 +1,21 @@
 # Metadata for the media tests
 
+## Archives
+
+```bash
+rm -f archive.zip archive.7z archive.tar archive.tar.gz archive.tar.bz2 archive.tar.xz archive.rar
+```
+
+```bash
+zip archive.zip ./archive/*
+7z a archive.7z ./archive
+tar -tvf archive.tar ./archive
+tar -czvf archive.tar.gz ./archive
+tar -cjvf archive.tar.bz2 ./archive
+tar -cJf archive.tar.xz ./archive
+rar a archive.rar ./archive
+```
+
 ## PDF
 
 ```bash

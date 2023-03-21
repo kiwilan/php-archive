@@ -14,6 +14,8 @@ abstract class ReaderFile
         protected bool $isDirectory = false,
         protected ?int $size = null,
         protected bool $isEncrypted = false,
+        protected bool $isImage = false,
+        protected bool $isHidden = false,
     ) {
     }
 
@@ -21,6 +23,8 @@ abstract class ReaderFile
     {
         $this->name = $name;
         $this->extension = ArchiveUtils::getExtension($this->name);
+        $this->isImage = ArchiveUtils::isImage($this->extension);
+        $this->isHidden = ArchiveUtils::isHidden($this->name);
 
         return $this;
     }
@@ -48,6 +52,11 @@ abstract class ReaderFile
     public function isEncrypted(): bool
     {
         return $this->isEncrypted;
+    }
+
+    public function isImage(): bool
+    {
+        return $this->isImage;
     }
 
     abstract public function content(bool $base64 = true): ?string;
