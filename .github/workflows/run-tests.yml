@@ -45,9 +45,8 @@ jobs:
           make
           make install
           cd ..
-          PATH="pecl config-get ext_dir"
-          echo $PATH
           pecl_path=$(pecl config-get ext_dir)
+          echo $pecl_path
           sudo cp ~/php-rar/modules/rar.so $pecl_path
           sudo echo "extension=rar.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
