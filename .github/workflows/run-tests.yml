@@ -44,8 +44,9 @@ jobs:
           sudo make
           sudo make install
           pecl_path=$(pecl config-get ext_dir)
+          phpini_path=$(php --ini)
           sudo cp ./modules/rar.so $pecl_path
-          sudo echo "extension=rar.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+          sudo echo "extension=rar.so" >> $phpini_path
 
       - name: Execute tests
         run: vendor/bin/pest --coverage

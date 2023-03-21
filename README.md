@@ -7,6 +7,13 @@
 
 PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.
 
+| Type | Native | Extension |
+| :--: | :----: | :-------: |
+| ZIP  |   ✅   |    N/A    |
+| TAR  |   ❌   |    N/A    |
+| RAR  |   ❌   |   `rar`   |
+| PDF  |   ✅   |    N/A    |
+
 -   <https://www.php.net/manual/en/refs.compression.php>
 -   <https://github.com/splitbrain/php-archive>
 -   <https://github.com/cmanley/PHP-SevenZipArchive>
