@@ -62,6 +62,8 @@ class ParserZip extends ParserArchive
 
             $res = $closure($reader);
             if ($res) {
+                $this->close();
+
                 return $res;
             }
         }

@@ -80,11 +80,6 @@ class ReaderRarFile extends ReaderFile
 
     public function content(bool $base64 = true): ?string
     {
-        // dump($this->name);
-        // $content = $this->convertStream($this->entry->getStream());
-        // dump($content);
-
-        // return $base64 ? base64_encode($content) : $content;
-        return '';
+        return $base64 ? base64_encode($this->content) : $this->content;
     }
 }

@@ -45,7 +45,7 @@ class ParserRar extends ParserArchive
         $this->archive->close();
     }
 
-    public function parse(Closure $closure): void
+    public function parse(Closure $closure): mixed
     {
         $this->open();
 
@@ -59,9 +59,16 @@ class ParserRar extends ParserArchive
                 continue;
             }
 
-            $closure($reader);
+            $res = $closure($reader);
+            if ($res) {
+                $this->close();
+
+                return $res;
+            }
         }
 
         $this->close();
+
+        return null;
     }
 }
