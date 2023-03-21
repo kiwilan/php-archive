@@ -48,6 +48,7 @@ jobs:
           pecl_path=$(pecl config-get ext_dir)
           echo $pecl_path
           sudo cp ~/php-rar/modules/rar.so $pecl_path
+          php --ini
           sudo echo "extension=rar.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
       - name: Execute tests
