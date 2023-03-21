@@ -1,4 +1,4 @@
-# This is my package php-archive
+# PHP Archive
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
 [![Tests](https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/kiwilan/php-archive/actions/workflows/run-tests.yml)
@@ -7,12 +7,12 @@
 
 PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.
 
-| Type | Native | Extension |     Dependency     |
-| :--: | :----: | :-------: | :----------------: |
-| ZIP  |   ✅   |    N/A    |        N/A         |
-| TAR  |   ❌   |    N/A    |        N/A         |
-| RAR  |   ❌   |   `rar`   |        N/A         |
-| PDF  |   ✅   |    N/A    | `smalot/pdfparser` |
+| Type | Native | PECL Extension |     Dependency     |
+| :--: | :----: | :------------: | :----------------: |
+| ZIP  |   ✅   |      N/A       |        N/A         |
+| TAR  |   ❌   |      N/A       |        N/A         |
+| RAR  |   ❌   |     `rar`      |        N/A         |
+| PDF  |   ✅   |      N/A       | `smalot/pdfparser` |
 
 -   <https://www.php.net/manual/en/refs.compression.php>
 -   <https://github.com/splitbrain/php-archive>
