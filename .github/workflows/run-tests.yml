@@ -41,8 +41,8 @@ jobs:
           cd php-rar
           phpize
           ./configure
-          make
-          make install
+          sudo make
+          sudo make install
 
       - name: Execute tests
         run: vendor/bin/pest --coverage
