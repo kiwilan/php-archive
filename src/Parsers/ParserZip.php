@@ -38,17 +38,22 @@ class ParserZip extends ParserArchive
         $this->comment = $archive->getArchiveComment();
     }
 
-    public function open()
+    protected function open(): void
     {
         $this->archive = new ZipArchive();
-        $this->archive->open($this->file->path());
+        $this->closed = $this->archive->open($this->file->path());
     }
 
-    public function close()
+    protected function close(): void
     {
-        $this->archive->close();
+        if (! $this->closed) {
+            $this->closed = $this->archive->close();
+        }
     }
 
+    /**
+     * @param Closure(ReaderFile $file): mixed $closure
+     */
     public function parse(Closure $closure): mixed
     {
         $this->open();

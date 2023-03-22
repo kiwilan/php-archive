@@ -24,6 +24,7 @@
     },
     "require": {
         "php": "^8.1",
+        "gemorroj/archive7z": "^5.5",
         "laravel/pint": "^1.6",
         "smalot/pdfparser": "^2.4"
     },
@@ -47,6 +48,7 @@
     "scripts": {
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
+        "analyse": "vendor/bin/phpstan analyse",
         "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes"
     },
     "config": {

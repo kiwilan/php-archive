@@ -51,6 +51,9 @@ jobs:
       - name: Execute tests
         run: vendor/bin/pest --coverage
 
+      - name: Execute tests
+        run: vendor/bin/phpstan analyse --memory-limit=2G
+
       - name: Send code coverage report to Codecov.io
         uses: codecov/codecov-action@v3
         with:

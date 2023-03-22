@@ -15,7 +15,9 @@ abstract class ParserArchive
 
     protected ?string $comment = null;
 
-    protected ?int $count = null;
+    protected int $count = 0;
+
+    protected bool $closed = true;
 
     protected function __construct(
         protected ArchiveFile $file,
@@ -44,7 +46,14 @@ abstract class ParserArchive
 
     abstract public static function make(ArchiveFile $file): self;
 
+    /**
+     * @param Closure(ReaderFile $file): void $closure
+     */
     abstract public function parse(Closure $closure): mixed;
+
+    abstract protected function open(): void;
+
+    abstract protected function close(): void;
 
     /**
      * @return array<string, ReaderFile>

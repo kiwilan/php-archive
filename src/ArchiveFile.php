@@ -6,6 +6,7 @@ use Closure;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Parsers\ParserArchive;
 use Kiwilan\Archive\Parsers\ParserRar;
+use Kiwilan\Archive\Parsers\ParserTar;
 use Kiwilan\Archive\Parsers\ParserZip;
 use Kiwilan\Archive\Readers\ReaderFile;
 
@@ -35,11 +36,12 @@ class ArchiveFile
     {
         $self = new self($path);
         $self->extension = ArchiveUtils::getExtension($path);
-        $self->type = ArchiveEnum::tryFrom($self->extension);
+        $self->type = ArchiveEnum::fromExtension($self->extension);
 
         $parser = match ($self->type) {
             ArchiveEnum::zip => ParserZip::make($self),
             ArchiveEnum::rar => ParserRar::make($self),
+            ArchiveEnum::tar => ParserTar::make($self),
             default => null,
         };
 
@@ -131,7 +133,7 @@ class ArchiveFile
     }
 
     /**
-     * @param Closure(ReaderFile $file): void $closure
+     * @param Closure(ReaderFile $file): mixed $closure
      */
     public function parse(Closure $closure): mixed
     {

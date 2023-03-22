@@ -35,16 +35,21 @@ class ParserRar extends ParserArchive
         return $self;
     }
 
-    public function open()
+    protected function open(): void
     {
         $this->archive = RarArchive::open($this->file->path());
     }
 
-    public function close()
+    protected function close(): void
     {
-        $this->archive->close();
+        if (! $this->closed) {
+            $this->closed = $this->archive->close();
+        }
     }
 
+    /**
+     * @param Closure(ReaderFile $file): mixed $closure
+     */
     public function parse(Closure $closure): mixed
     {
         $this->open();

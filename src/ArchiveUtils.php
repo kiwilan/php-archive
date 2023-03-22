@@ -11,7 +11,7 @@ class ArchiveUtils
         return pathinfo($path, PATHINFO_EXTENSION);
     }
 
-    public static function isImage(?string $extension): ?string
+    public static function isImage(?string $extension): bool
     {
         return in_array($extension, [
             'jpg',
@@ -42,6 +42,15 @@ class ArchiveUtils
         }
 
         $content = base64_decode($base64, true);
+
+        return file_put_contents($path, $content);
+    }
+
+    public static function stringToImage(?string $content, string $path): string|false
+    {
+        if (! $content) {
+            return false;
+        }
 
         return file_put_contents($path, $content);
     }
