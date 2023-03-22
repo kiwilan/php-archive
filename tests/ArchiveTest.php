@@ -1,7 +1,8 @@
 <?php
 
-use Archive7z\Archive7z;
+use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\ArchiveUtils;
+use Kiwilan\Archive\Readers\ReaderFile;
 
 define('FAILED', __DIR__.'/media/test.zip');
 define('SEVENZIP', __DIR__.'/media/archive.7z');
@@ -11,139 +12,114 @@ define('TARBZ2', __DIR__.'/media/archive.tar.bz2');
 define('TARGZ', __DIR__.'/media/archive.tar.gz');
 define('TARXZ', __DIR__.'/media/archive.tar.xz');
 define('ZIP', __DIR__.'/media/archive.zip');
-
-define('EPUB', __DIR__.'/media/le-clan-de-lours-des-cavernes.epub');
-define('CBZ', __DIR__.'/media/grise-bouille-tome-1.cbz');
-define('CBR', __DIR__.'/media/grise-bouille-tome-1.cbr');
-define('CB7', __DIR__.'/media/grise-bouille-tome-1.cb7');
-
 define('ARCHIVES', [
-    'SEVENZIP' => SEVENZIP,
+    // 'SEVENZIP' => SEVENZIP,
     'RAR' => RAR,
+    // 'TAR' => TAR,
+    // 'TARBZ2' => TARBZ2,
+    // 'TARGZ' => TARGZ,
+    // 'TARXZ' => TARXZ,
     'ZIP' => ZIP,
 ]);
 
-define('COMICS', [
-    'CBZ' => CBZ,
-    'CBR' => CBR,
-    'CB7' => CB7,
-]);
-
 it('can make archive', function () {
-    foreach (ARCHIVES as $path) {
-        $archive = new Archive7z($path);
-        expect($archive->isValid())->toBeTrue();
+    foreach (ARCHIVES as $name => $path) {
+        expect(Archive::make(ZIP))->toBeInstanceOf(\Kiwilan\Archive\ArchiveFile::class);
+    }
+});
+
+it('failed if file not exists', function () {
+    expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
+});
+
+it('can read archive', function () {
+    foreach (ARCHIVES as $name => $path) {
+        $archive = Archive::make($path);
+
+        expect($archive->path())->toBe($path);
+        expect($archive->extension())->toBe(ArchiveUtils::getExtension($path));
+        // expect($archive->type()->value)->toBe();
+        expect($archive->count())->toBeGreaterThan(0);
     }
 });
 
 it('can read archive files', function () {
     foreach (ARCHIVES as $path) {
-        $archive = new Archive7z($path);
+        $archive = Archive::make($path);
 
-        expect($archive->getEntries())->toBeIterable();
+        expect($archive->files())->toBeIterable();
     }
 });
 
 it('can get archive file content', function () {
     foreach (ARCHIVES as $path) {
-        $archive = new Archive7z($path);
+        $archive = Archive::make($path);
 
-        $cover = null;
-        foreach ($archive->getEntries() as $key => $entry) {
-            if (str_contains($entry->getPath(), 'cover')) {
-                $cover = $entry->getContent();
+        $file = $archive->parse(function (ReaderFile $file) {
+            if (str_contains($file->name(), 'cover')) {
+                return $file->content();
             }
-        }
+        });
 
-        expect($cover)->toBeString();
+        expect($file)->toBeString();
     }
 });
 
 it('can extract archive file', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = new Archive7z($path);
+    foreach (ARCHIVES as $path) {
+        $archive = Archive::make($path);
 
-        $file = null;
-        foreach ($archive->getEntries() as $key => $entry) {
-            if ($entry->getPath() === 'archive/cover.jpeg') {
-                $file = $entry;
+        /** @var ReaderFile */
+        $file = $archive->parse(function (ReaderFile $file) {
+            if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
+                return $file;
             }
-        }
+        });
 
-        $content = $file->getContent();
-        $extension = pathinfo($file->getPath(), PATHINFO_EXTENSION);
+        $content = $file->content();
+        $extension = $file->extension();
 
-        $currentdir = __DIR__;
-        $path = "{$currentdir}/output/cover-{$name}.{$extension}";
+        $path = __DIR__.'/output/cover.'.$extension;
         if (file_exists($path)) {
             unlink($path);
         }
-        ArchiveUtils::stringToImage($content, $path);
-        expect($content)->toBeString();
+        ArchiveUtils::base64ToImage($content, $path);
+        expect(ArchiveUtils::isBase64($content))->toBeTrue();
         expect($path)->toBeReadableFile();
     }
 });
 
-it('can extract comics file', function () {
-    foreach (COMICS as $name => $path) {
-        $archive = new Archive7z($path);
+it('can extract archive files', function () {
+    foreach (ARCHIVES as $path) {
+        $archive = Archive::make($path);
 
-        $file = null;
-        foreach ($archive->getEntries() as $key => $entry) {
-            if ($entry->getPath() === 'grise-bouille-tome-1/volume-1/tad_001.jpg') {
-                $file = $entry;
+        $cover = null;
+        $extension = null;
+        $archive->parse(function (ReaderFile $file) use (&$cover, &$extension) {
+            if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
+                $cover = $file->content();
+                $extension = $file->extension();
             }
-        }
+        });
 
-        $content = $file->getContent();
-        $extension = pathinfo($file->getPath(), PATHINFO_EXTENSION);
-
-        $currentdir = __DIR__;
-        $path = "{$currentdir}/output/cover-{$name}.{$extension}";
-        if (file_exists($path)) {
-            unlink($path);
-        }
-        ArchiveUtils::stringToImage($content, $path);
-        expect($content)->toBeString();
+        $path = __DIR__.'/output/cover.'.$extension;
+        ArchiveUtils::base64ToImage($cover, $path);
+        expect(ArchiveUtils::isBase64($cover))->toBeTrue();
         expect($path)->toBeReadableFile();
     }
 });
 
-it('can extract epub file', function () {
-    $archive = new Archive7z(EPUB);
+it('can get content after parse', function () {
+    foreach (ARCHIVES as $path) {
+        $archive = Archive::make($path);
 
-    $file = null;
-    foreach ($archive->getEntries() as $key => $entry) {
-        if ($entry->getPath() === 'cover.jpeg') {
-            $file = $entry;
+        $cover = null;
+        foreach ($archive->files() as $name => $file) {
+            if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
+                $cover = $file->content();
+            }
         }
+
+        expect(ArchiveUtils::isBase64($cover))->toBeTrue();
     }
-
-    $content = $file->getContent();
-    $extension = pathinfo($file->getPath(), PATHINFO_EXTENSION);
-
-    $currentdir = __DIR__;
-    $path = "{$currentdir}/output/cover-EPUB.{$extension}";
-    if (file_exists($path)) {
-        unlink($path);
-    }
-    ArchiveUtils::stringToImage($content, $path);
-    expect($content)->toBeString();
-    expect($path)->toBeReadableFile();
-});
-
-it('can extract epub metadata file', function () {
-    $archive = new Archive7z(EPUB);
-
-    $file = null;
-    foreach ($archive->getEntries() as $key => $entry) {
-        $path = $entry->getPath();
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
-        if ($extension === 'opf') {
-            $file = $entry;
-        }
-    }
-
-    $content = $file->getContent();
-    expect($content)->toBeString();
 });

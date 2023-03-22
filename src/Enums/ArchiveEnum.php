@@ -35,5 +35,7 @@ enum ArchiveEnum: string
         if (in_array($extension, $rarExts)) {
             return self::rar;
         }
+
+        throw new \Exception("Unknown archive type for extension: {$extension}");
     }
 }
