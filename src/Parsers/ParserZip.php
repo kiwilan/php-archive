@@ -30,12 +30,13 @@ class ParserZip extends ParserArchive
 
     private function metadata()
     {
-        $archive = new ZipArchive();
-        $archive->open($this->file->path());
+        $this->open();
 
-        $this->count = $archive->count();
-        $this->status = $archive->getStatusString();
-        $this->comment = $archive->getArchiveComment();
+        $this->count = $this->archive->count();
+        $this->status = $this->archive->getStatusString();
+        $this->comment = $this->archive->getArchiveComment();
+
+        $this->close();
     }
 
     protected function open(): void

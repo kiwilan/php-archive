@@ -123,3 +123,14 @@ it('can get content after parse', function () {
         expect(ArchiveUtils::isBase64($cover))->toBeTrue();
     }
 });
+
+it('can read tar', function () {
+    $archive = Archive::make(TAR);
+
+    dump($archive->files());
+    foreach ($archive->files() as $key => $file) {
+        dump($file);
+    }
+
+    expect($archive->files())->toBeIterable();
+});

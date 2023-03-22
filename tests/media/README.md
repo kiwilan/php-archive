@@ -7,19 +7,19 @@ rm -f archive.zip archive.7z archive.tar archive.tar.gz archive.tar.bz2 archive.
 ```
 
 ```bash
-zip archive.zip ./archive/*
+zip archive.zip ./archive/**/*
 7z a archive.7z ./archive
 tar -cvf archive.tar ./archive
 tar -czvf archive.tar.gz ./archive
 tar -cjvf archive.tar.bz2 ./archive
 tar -cJf archive.tar.xz ./archive
 rar a archive.rar ./archive
-rar a grise-bouille-tome-1.rar ./grise-bouille-tome-1
-zip grise-bouille-tome-1.zip ./grise-bouille-tome-1/**/*
-7z a grise-bouille-tome-1.7z ./grise-bouille-tome-1
-mv grise-bouille-tome-1.rar grise-bouille-tome-1.cbr
-mv grise-bouille-tome-1.zip grise-bouille-tome-1.cbz
-mv grise-bouille-tome-1.7z grise-bouille-tome-1.cb7
+rar a cba.rar ./cba
+zip cba.zip ./cba/**/*
+7z a cba.7z ./cba
+mv cba.rar cba.cbr
+mv cba.zip cba.cbz
+mv cba.7z cba.cb7
 ```
 
 ## PDF
