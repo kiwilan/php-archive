@@ -14,6 +14,10 @@ PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF wi
 >
 > Works with [p7zip](https://www.7-zip.org/) binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d) to install it on your system.
 
+> **Info**
+>
+> This package to not handle archive creation.
+
 ## About
 
 This package was heavily inspired by [Gemorroj/Archive7z](https://github.com/Gemorroj/Archive7z) which is a wrapper is a wrapper of [p7zip-project/p7zip](https://github.com/p7zip-project/p7zip) a fork of `p7zip`. If you need to manage many archives, you should use `Gemorroj/Archive7z` instead. Current package is a wrapper of original `p7zip`, it's not powerful as `p7zip-project/p7zip` but easier to install.
@@ -31,7 +35,7 @@ The binary `p7zip` is a really good solution to handle all of them. It's not a n
 
 ### What is the aim of this package?
 
-I want to handle many archives to handle eBooks like `.epub` or `.cbz` for example. I need to scan files into these archives and extract some files with a good performance. I extended to `.tar` compression formats because it's really easy to handle with `p7zip`. I handle PDF metadata with `smalot/pdfparser` for eBooks which are PDF format.
+I wanted to handle eBooks like `.epub` or `.cbz`. I needed to scan files into these archives and extract some files with a good performance. I extended to `.tar` compression formats because it's really easy to handle with `p7zip`. I handle PDF metadata with `smalot/pdfparser` for eBooks which are PDF format.
 
 ### Really works on any system?
 
@@ -44,6 +48,24 @@ It designed to works with any system with `p7zip` installed. But for `macOS`, `p
 -   Optional:
     -   `macOS` only: `rar` binary for `.rar` file extract method, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos)
     -   [`imagick` PECL extension](https://github.com/Imagick/imagick): for PDF `extract` method, you can check [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
+
+## Features
+
+### Archives
+
+-   List files
+-   Extract file
+-   [ ] Extract all files
+-   Find files
+-   [ ] Extract files with a pattern
+-   Count files
+
+### PDF
+
+-   Extract any page as image
+-   [ ] Extract all pages as images
+-   Extract text content
+-   Get metadata
 
 ## Installation
 
@@ -65,6 +87,7 @@ $count = $archive->count(); // int of files count
 $content = $archive->extractFile('archive/cover.jpeg'); // string of file content
 $images = $archive->findAll('jpeg'); // ArchiveItem[]
 $specificFile = $archive->find('metadata.xml'); // ArchiveItem|null
+$extractIt = $archive->extractFile($specificFile->path()); // string of `metadata.xml` file content
 ```
 
 With PDF file
