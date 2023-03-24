@@ -15,19 +15,22 @@ jobs:
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
-      - if: runner.os == 'Linux'
+      - name: Install for Linux
+        if: runner.os == 'Linux'
         run: |
           sudo apt -y install p7zip-full
         shell: bash
 
-      - if: runner.os == 'macOS'
+      - name: Install for macOS
+        if: runner.os == 'macOS'
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           brew install p7zip
           brew install rar
         shell: bash
 
-      - if: runner.os == 'Windows'
+      - name: Install for Windows
+        if: runner.os == 'Windows'
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop install 7zip
@@ -69,12 +72,13 @@ jobs:
       - name: Execute tests
         run: vendor/bin/pest --coverage
 
-      - name: phpstan
+      - name: on Linux run phpstan
         if: runner.os == 'Linux'
         run: vendor/bin/phpstan analyse
         shell: bash
 
-      - name: Send code coverage report to Codecov.io
+      - name: on Linux send code coverage
+        if: runner.os == 'Linux'
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
