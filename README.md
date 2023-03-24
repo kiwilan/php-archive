@@ -9,6 +9,24 @@
 
 PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.
 
+## About
+
+This package was heavily inspired by [Gemorroj/Archive7z](https://github.com/Gemorroj/Archive7z) which is a wrapper is a wrapper of [p7zip-project/p7zip](https://github.com/p7zip-project/p7zip) a fork of `p7zip`. If you need to manage many archives, you should use this package instead. Current package is a wrapper of original `p7zip`, it's not powerful as `p7zip-project/p7zip` but easier to install.
+
+### Why not use native PHP functions?
+
+To handle `zip` archives, it's easy with `ZipArchive` native class. But for other formats, it's really a pain. For `rar` format, you need [PECL `rar`](https://github.com/cataphract/php-rar) extension which is not actively maintained. For `tar` format, you have many possibilities but it's really a pain to manage all of them, with `gz`, `bz2`, `xz` and `lzma` compression. And for `7z` format with PHP, it's again a pain.
+
+The binary `p7zip` is a really good solution to handle all of them. It's not a native PHP solution but it's easy to install on most of OS. This package is not an all-in-one solution but it's a good start to handle archives.
+
+### What is the aim of this package?
+
+I want to handle many archives to handle eBooks like `epub` or `cbz` for example. I need to scan files into these archives and extract some files with a good performance. I extended to `tar` compression formats because it's really easy to handle with `p7zip`. I handle PDF metadata with `smalot/pdfparser` for eBooks which are PDF format.
+
+### Really works on any system?
+
+//
+
 | Type | Native | PECL Extension |     Dependency     |
 | :--: | :----: | :------------: | :----------------: |
 | ZIP  |   ✅   |      N/A       |        N/A         |
