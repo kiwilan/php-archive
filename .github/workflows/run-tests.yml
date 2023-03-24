@@ -28,7 +28,7 @@ jobs:
 
       - if: runner.os == 'Windows'
         run: |
-          irm get.scoop.sh | iex
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop install 7zip
         shell: powershell
 
