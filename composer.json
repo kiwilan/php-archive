@@ -1,7 +1,7 @@
 {
     "name": "kiwilan/php-archive",
     "version": "0.1.0",
-    "description": "PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.",
+    "description": "PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF. It works too with comic book archives like CBZ, CBR, CBT or CB7 or eBooks with EPUB format.",
     "keywords": [
         "php",
         "archive",
