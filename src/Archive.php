@@ -8,7 +8,7 @@ use Symfony\Component\Process\Process;
 
 class Archive
 {
-    /** @var SevenZipItem[] */
+    /** @var ArchiveItem[] */
     protected array $files = [];
 
     protected ?ArchiveEnum $type = null;
@@ -46,7 +46,7 @@ class Archive
     }
 
     /**
-     * @return SevenZipItem[]
+     * @return ArchiveItem[]
      */
     public function files(): array
     {
@@ -90,7 +90,7 @@ class Archive
 
     /**
      * @param  string  $file Can be a filename or extension.
-     * @return SevenZipItem[]
+     * @return ArchiveItem[]
      */
     public function findAll(string $file): array
     {
@@ -100,7 +100,7 @@ class Archive
     /**
      * @param  string  $file Can be a filename or extension.
      */
-    public function find(string $file): ?SevenZipItem
+    public function find(string $file): ?ArchiveItem
     {
         $files = $this->findFiles($file);
 
@@ -108,7 +108,7 @@ class Archive
     }
 
     /**
-     * @return SevenZipItem[]
+     * @return ArchiveItem[]
      */
     private function setFiles(): array
     {
@@ -150,7 +150,7 @@ class Archive
             }
         }
 
-        /** @var SevenZipItem[] $items */
+        /** @var ArchiveItem[] $items */
         $items = [];
 
         foreach ($files as $file) {
@@ -166,12 +166,12 @@ class Archive
                 $item[$key] = $value;
             }
 
-            $item = SevenZipItem::make($item, $this->path);
+            $item = ArchiveItem::make($item, $this->path);
             $items[] = $item;
         }
 
-        $items = array_filter($items, fn (SevenZipItem $item) => ! $item->isDirectory());
-        $items = array_filter($items, fn (SevenZipItem $item) => ! $item->isHidden());
+        $items = array_filter($items, fn (ArchiveItem $item) => ! $item->isDirectory());
+        $items = array_filter($items, fn (ArchiveItem $item) => ! $item->isHidden());
 
         return $items;
     }
@@ -180,7 +180,7 @@ class Archive
     {
         $files = $this->files();
 
-        return array_filter($files, function (SevenZipItem $file) use ($search) {
+        return array_filter($files, function (ArchiveItem $file) use ($search) {
             $isExtension = ! str_contains($search, '.');
             if ($isExtension) {
                 return $file->extension() === $search;

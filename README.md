@@ -27,27 +27,11 @@ I want to handle many archives to handle eBooks like `.epub` or `.cbz` for examp
 
 It designed to works with any system with `p7zip` installed. But for `macOS`, `p7zip` is not able to handle `.rar` extraction, you have to install third library `rar`.
 
-| Type | Native | PECL Extension |     Dependency     |
-| :--: | :----: | :------------: | :----------------: |
-| ZIP  |   ✅   |      N/A       |        N/A         |
-| TAR  |   ❌   |      N/A       |        N/A         |
-| RAR  |   ❌   |     `rar`      |        N/A         |
-| PDF  |   ✅   |      N/A       | `smalot/pdfparser` |
-
--   <https://www.php.net/manual/en/refs.compression.php>
--   <https://github.com/splitbrain/php-archive>
--   <https://github.com/cmanley/PHP-SevenZipArchive>
--   <https://github.com/smalot/pdfparser>
--   <https://github.com/Gemorroj/Archive7z>
-
 ## Requirements
 
 -   PHP >= 8.1
--   `p7zip` binary
-
-```bash
-sudo apt-get install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller
-```
+-   `p7zip` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d)
+-   `macOS` only: `rar` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d)
 
 ## Installation
 
@@ -60,8 +44,12 @@ composer require kiwilan/php-archive
 ## Usage
 
 ```php
-$skeleton = new Kiwilan\Archive();
-echo $skeleton->echoPhrase('Hello, Kiwilan!');
+$archive = Archive::make('path/to/archive.zip');
+
+$files = $archive->files(); // ArchiveItem[]
+$content = $archive->extractFile('archive/cover.jpeg'); // string
+$images = $archive->findAll('jpeg'); // ArchiveItem[]
+$specificFile = $archive->find('metadata.xml'); // ArchiveItem|null
 ```
 
 ## Testing
@@ -86,7 +74,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 -   [Kiwilan](https://github.com/kiwilan)
 -   [All Contributors](../../contributors)
--   [Test eBook](https://deslivresencommuns.org/post/grisebouille/)
+-   [`smalot/pdfparser`](https://github.com/smalot/pdfparser)
+-   [`7-zip`](https://www.7-zip.org/)
 
 ## License
 

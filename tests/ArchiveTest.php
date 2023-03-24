@@ -1,9 +1,9 @@
 <?php
 
 use Kiwilan\Archive\Archive;
+use Kiwilan\Archive\ArchiveItem;
 use Kiwilan\Archive\ArchiveUtils;
 use Kiwilan\Archive\Enums\ArchiveEnum;
-use Kiwilan\Archive\SevenZipItem;
 
 define('FAILED', __DIR__.'/media/test.zip');
 define('SEVENZIP', __DIR__.'/media/archive.7z');
@@ -83,7 +83,7 @@ it('can find file', function () {
         $archive = Archive::make($path);
         $file = $archive->find('jpeg');
 
-        expect($file)->toBeInstanceOf(SevenZipItem::class);
+        expect($file)->toBeInstanceOf(ArchiveItem::class);
     }
 });
 
@@ -92,6 +92,6 @@ it('can find and extract specific file', function () {
     $file = $archive->find('metadata.xml');
     $content = $archive->extractFile($file->path());
 
-    expect($file)->toBeInstanceOf(SevenZipItem::class);
+    expect($file)->toBeInstanceOf(ArchiveItem::class);
     expect($content)->toBeString();
 });

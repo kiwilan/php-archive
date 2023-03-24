@@ -1,10 +1,10 @@
 <?php
 
+use Kiwilan\Archive\ArchiveItem;
 use Kiwilan\Archive\ArchiveUtils;
-use Kiwilan\Archive\SevenZipItem;
 
-it('can create SevenZipItem', function () {
-    $item = SevenZipItem::make([
+it('can create ArchiveItem', function () {
+    $item = ArchiveItem::make([
         'Id' => base64_encode('archive/metadata.xml'),
         'Path' => 'archive/metadata.xml',
         'Folder' => '-',
@@ -25,11 +25,11 @@ it('can create SevenZipItem', function () {
         'Offset' => '116929',
     ]);
 
-    expect($item)->toBeInstanceOf(SevenZipItem::class);
+    expect($item)->toBeInstanceOf(ArchiveItem::class);
 });
 
-it('can create SevenZipItem without id', function () {
-    $item = SevenZipItem::make([
+it('can create ArchiveItem without id', function () {
+    $item = ArchiveItem::make([
         'Path' => 'archive/metadata.xml',
         'Folder' => '-',
         'Size' => '313',
@@ -49,29 +49,29 @@ it('can create SevenZipItem without id', function () {
         'Offset' => '116929',
     ]);
 
-    expect($item)->toBeInstanceOf(SevenZipItem::class);
+    expect($item)->toBeInstanceOf(ArchiveItem::class);
 });
 
-it('can create SevenZipItem with path', function () {
-    $item = SevenZipItem::make([
+it('can create ArchiveItem with path', function () {
+    $item = ArchiveItem::make([
         'Path' => 'archive/metadata.xml',
     ]);
 
-    expect($item)->toBeInstanceOf(SevenZipItem::class);
+    expect($item)->toBeInstanceOf(ArchiveItem::class);
 });
 
-it('can failed SevenZipItem if no data', function () {
-    expect(fn () => SevenZipItem::make([]))->toThrow(\Exception::class);
+it('can failed ArchiveItem if no data', function () {
+    expect(fn () => ArchiveItem::make([]))->toThrow(\Exception::class);
 });
 
-it('can failed SevenZipItem if no data path', function () {
-    expect(fn () => SevenZipItem::make([
+it('can failed ArchiveItem if no data path', function () {
+    expect(fn () => ArchiveItem::make([
         'Path' => null,
     ]))->toThrow(\Exception::class);
 });
 
 it('can read attributes', function () {
-    $item = SevenZipItem::make([
+    $item = ArchiveItem::make([
         'Id' => base64_encode('archive/metadata.xml'),
         'Path' => 'archive/metadata.xml',
         'Folder' => '-',
@@ -123,7 +123,7 @@ it('can read attributes', function () {
 });
 
 it('can be print as array', function () {
-    $item = SevenZipItem::make([
+    $item = ArchiveItem::make([
         'Id' => base64_encode('archive/metadata.xml'),
         'Path' => 'archive/metadata.xml',
         'Folder' => '-',
@@ -160,7 +160,7 @@ it('can be print as array', function () {
 });
 
 it('can print as string', function () {
-    $item = SevenZipItem::make([
+    $item = ArchiveItem::make([
         'Id' => base64_encode('archive/metadata.xml'),
         'Path' => 'archive/metadata.xml',
         'Folder' => '-',

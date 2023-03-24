@@ -4,7 +4,7 @@ namespace Kiwilan\Archive;
 
 use DateTime;
 
-class SevenZipItem
+class ArchiveItem
 {
     protected function __construct(
         protected ?string $id = null,
