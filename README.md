@@ -1,11 +1,12 @@
 # PHP Archive
 
-## NOT AVAILABLE YET, WORK IN PROGRESS
+[![version][version-src]][version-href]
+[![tests][tests-src]][tests-href]
+[![downloads][downloads-src]][downloads-href]
+[![license][license-src]][license-href]
+[![php][php-version-src]][php-version-href]
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
-[![Tests](https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/kiwilan/php-archive/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
-[![codecov](https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G)](https://codecov.io/gh/kiwilan/php-archive)
+[![codecov][codecov-src]][codecov-href]
 
 PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF with p7zip library. It works too with comic book archives like CBZ, CBR, CBT or CB7 or eBooks with EPUB format.
 
@@ -71,10 +72,10 @@ With PDF file
 ```php
 $pdf = ArchivePdf::make('path/to/file.pdf');
 
-$files = $archive->metadata(); // PdfMetadata
-$count = $archive->count(); // int of PDF pages count
-$content = $archive->extract(index: 0, format: 'png', isBase64: true ); // string of PDF page index 0 as PNG base64 encoded (ImageMagick required)
-$text = $archive->text(); // string of PDF text content
+$files = $pdf->metadata(); // PdfMetadata
+$count = $pdf->count(); // int of PDF pages count
+$content = $pdf->extractPage(index: 0, format: 'png', isBase64: true ); // string of PDF page index 0 as PNG base64 encoded (ImageMagick required)
+$text = $pdf->text(); // string of PDF text content
 ```
 
 ## Testing
@@ -105,3 +106,16 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[version-src]: https://img.shields.io/packagist/v/kiwilan/php-archive.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[version-href]: https://packagist.org/packages/kiwilan/steward-laravel
+[php-version-src]: https://img.shields.io/static/v1?style=flat-square&label=PHP&message=v8.1&color=777BB4&logo=php&logoColor=ffffff&labelColor=18181b
+[php-version-href]: https://www.php.net/
+[downloads-src]: https://img.shields.io/npm/dt/php-archive.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[downloads-href]: https://packagist.org/packages/kiwilan/php-archive
+[license-src]: https://img.shields.io/github/license/kiwilan/php-archive.svg?style=flat-square&label=License&colorA=18181B&colorB=777BB4
+[license-href]: https://github.com/kiwilan/php-archive/blob/main/README.md
+[tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=Tests&style=flat-square&colorA=18181B
+[tests-href]: https://packagist.org/packages/kiwilan/php-archive
+[codecov-src]: https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G
+[codecov-href]: https://codecov.io/gh/kiwilan/php-archive

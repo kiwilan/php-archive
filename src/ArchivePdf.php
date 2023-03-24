@@ -108,7 +108,7 @@ class ArchivePdf
         return $this->text;
     }
 
-    public function extract(int $index = 0, string $format = 'jpg', bool $isBase64 = true): ?string
+    public function extractPage(int $index = 0, string $format = 'jpg', bool $isBase64 = true): ?string
     {
         if (! extension_loaded('Imagick')) {
             throw new \Exception("'Imagick extension: is not installed (can't get cover)'\nCheck this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9");
