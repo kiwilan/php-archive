@@ -1,7 +1,6 @@
 <?php
 
 use Kiwilan\Archive\Archive;
-use Kiwilan\Archive\ArchiveUtils;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 
 define('EPUB', __DIR__.'/media/epub.epub');
@@ -19,7 +18,7 @@ define('CBA_ITEMS', [
 it('can read epub', function () {
     $archive = Archive::make(EPUB);
     $files = $archive->files();
-    $extension = ArchiveUtils::getExtension(EPUB);
+    $extension = pathinfo(EPUB, PATHINFO_EXTENSION);
 
     expect($archive->os())->toBe(PHP_OS_FAMILY);
     expect($archive->extension())->toBe($extension);
@@ -33,7 +32,7 @@ it('can read cba', function () {
     foreach (CBA_ITEMS as $name => $path) {
         $archive = Archive::make($path);
         $files = $archive->files();
-        $extension = ArchiveUtils::getExtension($path);
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
 
         expect($archive->os())->toBe(PHP_OS_FAMILY);
         expect($archive->extension())->toBe($extension);

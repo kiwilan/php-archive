@@ -2,6 +2,7 @@
 
 namespace Kiwilan\Archive;
 
+use Exception;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -29,7 +30,7 @@ class Archive
 
     public static function make(string $path): self
     {
-        ArchiveUtils::p7zipBinaryExists();
+        Archive::p7zipBinaryExists();
 
         if (! file_exists($path)) {
             throw new \Exception("File does not exist: {$path}");
@@ -86,9 +87,9 @@ class Archive
         return $this->isDarwin;
     }
 
-    public function contentFile(string $path, bool $base64 = false): ?string
+    public function contentFile(string $path, bool $toBase64 = false): ?string
     {
-        return $this->extract($path, $base64);
+        return $this->content($path, $toBase64);
     }
 
     /**
@@ -193,7 +194,7 @@ class Archive
         });
     }
 
-    private function extract(string $extract, bool $base64 = false): string
+    private function content(string $extract, bool $toBase64 = false): string
     {
         $command = '7z';
 
@@ -236,7 +237,11 @@ class Archive
 
         $this->recurseRmdir($this->outputDir);
 
-        return $base64 ? base64_encode($content) : $content;
+        if ($toBase64) {
+            return base64_encode($content);
+        }
+
+        return $content;
     }
 
     /**
@@ -267,5 +272,17 @@ class Archive
         }
 
         return rmdir($dir);
+    }
+
+    private static function p7zipBinaryExists(): bool
+    {
+        $process = new Process(['7z']);
+        $process->run();
+
+        if (! $process->isSuccessful()) {
+            throw new Exception("7zip is not installed or not in the PATH. Please install 7zip and try again.\nYou can check this guide: https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d");
+        }
+
+        return true;
     }
 }

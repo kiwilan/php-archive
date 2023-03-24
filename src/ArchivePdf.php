@@ -38,8 +38,6 @@ class ArchivePdf
 
     public static function make(string $path): self
     {
-        ArchiveUtils::p7zipBinaryExists();
-
         if (! file_exists($path)) {
             throw new \Exception("File does not exist: {$path}");
         }
@@ -108,7 +106,7 @@ class ArchivePdf
         return $this->text;
     }
 
-    public function contentPage(int $index = 0, string $format = 'jpg', bool $isBase64 = true): ?string
+    public function contentPage(int $index = 0, string $format = 'jpg', bool $toBase64 = false): ?string
     {
         if (! extension_loaded('Imagick')) {
             throw new \Exception("'Imagick extension: is not installed (can't get cover)'\nCheck this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9");
@@ -121,12 +119,15 @@ class ArchivePdf
         $imagick->setImageFormat($format);
 
         $content = $imagick->getImageBlob();
-        $base64 = base64_encode($content);
 
         $imagick->clear();
         $imagick->destroy();
 
-        return $isBase64 ? $base64 : $content;
+        if ($toBase64) {
+            return base64_encode($content);
+        }
+
+        return $content;
     }
 
     public function toArray(): array

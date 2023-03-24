@@ -2,7 +2,6 @@
 
 use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\ArchiveItem;
-use Kiwilan\Archive\ArchiveUtils;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 
 define('FAILED', __DIR__.'/media/test.zip');
@@ -23,69 +22,57 @@ define('ARCHIVES', [
     'ZIP' => ZIP,
 ]);
 
-it('can read', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $files = $archive->files();
-        $extension = ArchiveUtils::getExtension($path);
+it('can read', function (string $path) {
+    $archive = Archive::make($path);
+    $files = $archive->files();
+    $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-        expect($archive->os())->toBe(PHP_OS_FAMILY);
-        expect($archive->extension())->toBe($extension);
-        expect($archive->path())->toBe($path);
-        expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
-        expect($files)->toBeIterable();
-        expect($archive->count())->toBeGreaterThanOrEqual(4);
-    }
-});
+    expect($archive->os())->toBe(PHP_OS_FAMILY);
+    expect($archive->extension())->toBe($extension);
+    expect($archive->path())->toBe($path);
+    expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
+    expect($files)->toBeIterable();
+    expect($archive->count())->toBeGreaterThanOrEqual(4);
+})->with(ARCHIVES);
 
 it('can failed', function () {
     expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
 });
 
-it('can extract', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $content = $archive->contentFile('archive/cover.jpeg');
+it('can extract', function (string $path) {
+    $archive = Archive::make($path);
+    $content = $archive->contentFile('archive/cover.jpeg');
 
-        expect($content)->toBeString();
-    }
-});
+    expect($content)->toBeString();
+})->with(ARCHIVES);
 
-it('can extract with base64', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $content = $archive->contentFile('archive/cover.jpeg', true);
-        $isBase64 = ArchiveUtils::isBase64($content);
+it('can extract with base64', function (string $path) {
+    $archive = Archive::make($path);
+    $content = $archive->contentFile('archive/cover.jpeg', true);
+    $isBase64 = isBase64($content);
 
-        expect($isBase64)->toBeTrue();
-    }
-});
+    expect($isBase64)->toBeTrue();
+})->with(ARCHIVES);
 
-it('can extract failed', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
+it('can extract failed', function (string $path) {
+    $archive = Archive::make($path);
 
-        expect(fn () => $archive->contentFile('archive/cover'))->toThrow(\Exception::class);
-    }
-});
+    expect(fn () => $archive->contentFile('archive/cover'))->toThrow(\Exception::class);
+})->with(ARCHIVES);
 
-it('can find files', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $files = $archive->findAll('jpeg');
+it('can find files', function (string $path) {
+    $archive = Archive::make($path);
+    $files = $archive->findAll('jpeg');
 
-        expect($files)->toBeIterable();
-    }
-});
+    expect($files)->toBeIterable();
+})->with(ARCHIVES);
 
-it('can find file', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $file = $archive->find('jpeg');
+it('can find file', function (string $path) {
+    $archive = Archive::make($path);
+    $file = $archive->find('jpeg');
 
-        expect($file)->toBeInstanceOf(ArchiveItem::class);
-    }
-});
+    expect($file)->toBeInstanceOf(ArchiveItem::class);
+})->with(ARCHIVES);
 
 it('can find and extract specific file', function () {
     $archive = Archive::make(ZIP);
@@ -94,4 +81,4 @@ it('can find and extract specific file', function () {
 
     expect($file)->toBeInstanceOf(ArchiveItem::class);
     expect($content)->toBeString();
-});
+})->with(ARCHIVES);

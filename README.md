@@ -96,7 +96,7 @@ $pdf = ArchivePdf::make('path/to/file.pdf');
 
 $files = $pdf->metadata(); // PdfMetadata
 $count = $pdf->count(); // int of PDF pages count
-$content = $pdf->contentPage(index: 0, format: 'png', isBase64: true ); // string of PDF page index 0 as PNG base64 encoded (ImageMagick required)
+$content = $pdf->contentPage(index: 0, format: 'png', toBase64: true ); // string of PDF page index 0 as PNG base64 encoded (ImageMagick required)
 $text = $pdf->text(); // string of PDF text content
 ```
 

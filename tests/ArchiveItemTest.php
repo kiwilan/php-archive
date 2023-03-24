@@ -1,7 +1,6 @@
 <?php
 
 use Kiwilan\Archive\ArchiveItem;
-use Kiwilan\Archive\ArchiveUtils;
 
 it('can create ArchiveItem', function () {
     $item = ArchiveItem::make([
@@ -103,7 +102,7 @@ it('can read attributes', function () {
     expect($item->path())->toBe('archive/metadata.xml');
     expect($item->isDirectory())->toBe(false);
     expect($item->isHidden())->toBe(false);
-    expect($item->fileSize())->toBe(ArchiveUtils::bytesToHuman(313));
+    expect($item->fileSize())->toBe(ArchiveItem::bytesToHuman(313));
     expect($item->folder())->toBe('-');
     expect($item->size())->toBe(313);
     expect($item->packedSize())->toBe(199);
@@ -169,4 +168,22 @@ it('can print as string', function () {
     ]);
 
     expect($item->__toString())->toBe('archive/metadata.xml');
+});
+
+it('can convert bytes to human readable', function () {
+    $human = ArchiveItem::bytesToHuman(1024);
+
+    expect($human)->toBe('1 KB');
+});
+
+it('can convert bytes as string to human readable', function () {
+    $human = ArchiveItem::bytesToHuman('1024');
+
+    expect($human)->toBe('1 KB');
+});
+
+it('can convert 0 bytes to human readable', function () {
+    $human = ArchiveItem::bytesToHuman(0);
+
+    expect($human)->toBeNull();
 });

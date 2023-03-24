@@ -55,7 +55,7 @@ class ArchiveItem
             $filename = "{$filename}.{$extension}";
         }
         $size = $data['Size'] ?? null;
-        $fileSize = ArchiveUtils::bytesToHuman($size);
+        $fileSize = ArchiveItem::bytesToHuman($size);
         $packedSize = array_key_exists('Packed Size', $data) && ! empty($data['Packed Size'])
             ? (int) $data['Packed Size']
             : null;
@@ -257,5 +257,24 @@ class ArchiveItem
     public function __toString(): string
     {
         return $this->path();
+    }
+
+    public static function bytesToHuman(mixed $bytes): ?string
+    {
+        if (empty($bytes)) {
+            return null;
+        }
+
+        if (gettype($bytes) !== 'integer' && gettype($bytes) !== 'double' && gettype($bytes) !== 'float') {
+            $bytes = intval($bytes);
+        }
+
+        $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $floor = floor(log($bytes, 1024));
+        $format = $size[$floor];
+
+        $round = round($bytes / pow(1024, $floor), 2);
+
+        return "{$round} {$format}";
     }
 }
