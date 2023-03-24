@@ -10,29 +10,28 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         php: [8.2, 8.1]
-        stability: [prefer-lowest, prefer-stable]
+        stability: [prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
-      - name: Install
+      - if: runner.os == 'Linux'
         run: |
-          echo $RUNNER_OS;
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            sudo apt -y install p7zip-full
-          elif [ "$RUNNER_OS" == "macOS" ]; then
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-            brew install p7zip
-          fi
+          sudo apt -y install p7zip-full
         shell: bash
 
-      - name: Install for Windows
+      - if: runner.os == 'macOS'
         run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
-            irm get.scoop.sh | iex
-            scoop install 7zip
-          fi
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew install p7zip
+        shell: bash
+
+      - if: runner.os == 'Windows'
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
+          irm get.scoop.sh | iex
+          scoop install 7zip
+        shell: powershell
 
       - name: Checkout code
         uses: actions/checkout@v3
