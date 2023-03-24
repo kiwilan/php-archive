@@ -14,6 +14,8 @@ enum ArchiveEnum: string
     case sevenZip = '7z';
     /** `.rar` archive file. */
     case rar = 'rar';
+    /** `.pdf` file. */
+    case pdf = 'pdf';
 
     public static function fromExtension(string $extension): self
     {
@@ -28,7 +30,7 @@ enum ArchiveEnum: string
         $zipExts = ['zip', 'epub', 'cbz'];
         $tarExts = ['tar', 'cbt'];
         $tarExtendedExts = ['tar.gz', 'tar.bz2', 'tar.xz', 'gz', 'bz2', 'xz', 'phar'];
-        $sevenZipExts = ['7z', 'cb7'];
+        $sevenZipExts = ['7z', 'cb7', '7zip'];
         $rarExts = ['rar', 'cbr'];
 
         if (in_array($extension, $zipExts)) {
@@ -49,6 +51,10 @@ enum ArchiveEnum: string
 
         if (in_array($extension, $rarExts)) {
             return self::rar;
+        }
+
+        if (in_array($extension, ['pdf'])) {
+            return self::pdf;
         }
 
         throw new \Exception("Unknown archive type for extension: {$extension}");

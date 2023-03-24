@@ -7,7 +7,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
 [![codecov](https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G)](https://codecov.io/gh/kiwilan/php-archive)
 
-PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.
+PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF with `p7zip` binary.
 
 ## About
 
@@ -31,7 +31,8 @@ It designed to works with any system with `p7zip` installed. But for `macOS`, `p
 
 -   PHP >= 8.1
 -   `p7zip` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d)
--   `macOS` only: `rar` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d)
+    -   `macOS` only: `rar` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos)
+-   For PDF `extract` method: `ImageMagick` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
 
 ## Installation
 
@@ -43,13 +44,27 @@ composer require kiwilan/php-archive
 
 ## Usage
 
+With archive file: `.zip`, `.rar`, `.tar`, `.7z`, `epub`, `cbz`, `cbr`, `cb7`, `cbt`, `tar.gz`
+
 ```php
 $archive = Archive::make('path/to/archive.zip');
 
 $files = $archive->files(); // ArchiveItem[]
+$count = $archive->count(); // int
 $content = $archive->extractFile('archive/cover.jpeg'); // string
 $images = $archive->findAll('jpeg'); // ArchiveItem[]
 $specificFile = $archive->find('metadata.xml'); // ArchiveItem|null
+```
+
+With PDF file
+
+```php
+$pdf = ArchivePdf::make('path/to/file.pdf');
+
+$files = $archive->metadata(); // PdfMetadata
+$count = $archive->count(); // int
+$content = $archive->extract(index: 1, format: 'png', isBase64: true ); // PDF page index 1 as PNG base64 encoded (ImageMagick required)
+$text = $archive->text(); // PDF text content
 ```
 
 ## Testing

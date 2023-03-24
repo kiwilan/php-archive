@@ -37,6 +37,9 @@ class Archive
 
         $self = new self($path, pathinfo($path, PATHINFO_EXTENSION));
         $self->type = ArchiveEnum::fromExtension($self->extension);
+        if ($self->type === ArchiveEnum::pdf) {
+            throw new \Exception('Use `ArchivePdf` class for PDF files.');
+        }
         $self->os = PHP_OS_FAMILY; // 'Windows', 'BSD', 'Darwin', 'Solaris', 'Linux' or 'Unknown'
         $self->isDarwin = $self->os === 'Darwin';
         $self->files = $self->setFiles();
