@@ -14,10 +14,6 @@ PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF wi
 >
 > Works with [p7zip](https://www.7-zip.org/) binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d) to install it on your system.
 
-> **Note**
->
-> This package to not handle archive creation.
-
 ## About
 
 This package was heavily inspired by [Gemorroj/Archive7z](https://github.com/Gemorroj/Archive7z) which is a wrapper is a wrapper of [p7zip-project/p7zip](https://github.com/p7zip-project/p7zip) a fork of `p7zip`. If you need to manage many archives, you should use `Gemorroj/Archive7z` instead. Current package is a wrapper of original `p7zip`, it's not powerful as `p7zip-project/p7zip` but easier to install.
@@ -59,6 +55,7 @@ It designed to works with any system with `p7zip` installed. But for `macOS`, `p
 -   Find files
 -   [ ] Extract files with a pattern
 -   Count files
+-   [ ] Create
 
 ### PDF
 
