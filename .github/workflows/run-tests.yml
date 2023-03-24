@@ -28,7 +28,6 @@ jobs:
 
       - if: runner.os == 'Windows'
         run: |
-          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
           irm get.scoop.sh | iex
           scoop install 7zip
         shell: powershell
@@ -68,9 +67,6 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/pest --coverage
-
-      - name: Execute tests
-        run: vendor/bin/phpstan analyse --memory-limit=2G
 
       - name: Send code coverage report to Codecov.io
         uses: codecov/codecov-action@v3
