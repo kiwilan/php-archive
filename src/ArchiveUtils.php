@@ -26,13 +26,17 @@ class ArchiveUtils
         ], true);
     }
 
-    public static function isBase64(?string $string): bool
+    public static function isBase64(?string $data): bool
     {
-        if (! $string) {
+        if (! $data) {
             return false;
         }
 
-        return base64_encode(base64_decode($string, true)) === $string;
+        if (base64_encode(base64_decode($data, true)) === $data) {
+            return true;
+        }
+
+        return false;
     }
 
     public static function base64ToImage(?string $base64, string $path): string|false
@@ -64,5 +68,28 @@ class ArchiveUtils
     {
         $output = new ConsoleOutput();
         $output->writeln($message);
+    }
+
+    public static function bytesToHuman(mixed $bytes): ?string
+    {
+        if (! $bytes) {
+            return null;
+        }
+
+        if (! is_numeric($bytes)) {
+            $bytes = intval($bytes);
+        }
+
+        if ($bytes == 0) {
+            return '0.00 B';
+        }
+
+        $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $floor = floor(log($bytes, 1024));
+        $format = $size[$floor];
+
+        $round = round($bytes / pow(1024, $floor), 2);
+
+        return "{$round} {$format}";
     }
 }

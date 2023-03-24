@@ -12,3 +12,4 @@ vendor
 .php-cs-fixer.cache
 
 .DS_Store
+example
