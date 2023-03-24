@@ -112,16 +112,17 @@ function listFiles(string $dir): array
     return $items;
 }
 
-function recurseRmdir(string $dir): void
+function recurseRmdir(string $dir)
 {
-    $leave_files = ['.gitignore'];
-
-    foreach (glob("$dir/*") as $file) {
-        if (! in_array(basename($file), $leave_files) && ! is_dir($file)) {
-            unlink($file);
-        } elseif (is_dir($file)) {
-            recurseRmdir($file);
-            rmdir($file);
+    $exclude = ['.gitignore'];
+    $it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
+    $it = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+    foreach ($it as $file) {
+        if ($file->isDir()) {
+            rmdir($file->getPathname());
+        } elseif (! in_array($file->getFilename(), $exclude)) {
+            unlink($file->getPathname());
         }
     }
+    // rmdir($dir);
 }
