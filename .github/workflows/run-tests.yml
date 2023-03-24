@@ -24,6 +24,9 @@ jobs:
             Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
             irm get.scoop.sh | iex
             scoop install 7zip
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            brew install p7zip
           else
             echo "$RUNNER_OS not supported"
             exit 1
