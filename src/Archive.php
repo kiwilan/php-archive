@@ -29,6 +29,8 @@ class Archive
 
     public static function make(string $path): self
     {
+        ArchiveUtils::p7zipBinaryExists();
+
         if (! file_exists($path)) {
             throw new \Exception("File does not exist: {$path}");
         }
@@ -48,10 +50,6 @@ class Archive
      */
     public function files(): array
     {
-        if (empty($this->files)) {
-            $this->files = $this->setFiles();
-        }
-
         return $this->files;
     }
 

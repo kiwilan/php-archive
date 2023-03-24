@@ -2,7 +2,7 @@
 
 use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\ArchiveUtils;
-use Kiwilan\Archive\Readers\ReaderFile;
+use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\SevenZipItem;
 
 define('FAILED', __DIR__.'/media/test.zip');
@@ -27,10 +27,19 @@ it('can read', function () {
     foreach (ARCHIVES as $name => $path) {
         $archive = Archive::make($path);
         $files = $archive->files();
+        $extension = ArchiveUtils::getExtension($path);
 
+        expect($archive->os())->toBe(PHP_OS_FAMILY);
+        expect($archive->extension())->toBe($extension);
+        expect($archive->path())->toBe($path);
+        expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
         expect($files)->toBeIterable();
         expect($archive->count())->toBeGreaterThan(0);
     }
+});
+
+it('can failed', function () {
+    expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
 });
 
 it('can extract', function () {
@@ -86,95 +95,3 @@ it('can find and extract specific file', function () {
     expect($file)->toBeInstanceOf(SevenZipItem::class);
     expect($content)->toBeString();
 });
-
-// it('can read archive', function () {
-//     foreach (ARCHIVES as $name => $path) {
-//         $archive = Archive::make($path);
-
-//         expect($archive->path())->toBe($path);
-//         expect($archive->extension())->toBe(ArchiveUtils::getExtension($path));
-//         // expect($archive->type()->value)->toBe();
-//         expect($archive->count())->toBeGreaterThan(0);
-//     }
-// });
-
-// it('can read archive files', function () {
-//     foreach (ARCHIVES as $path) {
-//         $archive = Archive::make($path);
-
-//         expect($archive->files())->toBeIterable();
-//     }
-// });
-
-// it('can get archive file content', function () {
-//     foreach (ARCHIVES as $path) {
-//         $archive = Archive::make($path);
-
-//         $file = $archive->parse(function (ReaderFile $file) {
-//             if (str_contains($file->name(), 'cover')) {
-//                 return $file->content();
-//             }
-//         });
-
-//         expect($file)->toBeString();
-//     }
-// });
-
-// it('can extract archive file', function () {
-//     foreach (ARCHIVES as $path) {
-//         $archive = Archive::make($path);
-
-//         /** @var ReaderFile */
-//         $file = $archive->parse(function (ReaderFile $file) {
-//             if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
-//                 return $file;
-//             }
-//         });
-
-//         $content = $file->content();
-//         $extension = $file->extension();
-
-//         $path = __DIR__.'/output/cover.'.$extension;
-//         if (file_exists($path)) {
-//             unlink($path);
-//         }
-//         ArchiveUtils::base64ToImage($content, $path);
-//         expect(ArchiveUtils::isBase64($content))->toBeTrue();
-//         expect($path)->toBeReadableFile();
-//     }
-// });
-
-// it('can extract archive files', function () {
-//     foreach (ARCHIVES as $path) {
-//         $archive = Archive::make($path);
-
-//         $cover = null;
-//         $extension = null;
-//         $archive->parse(function (ReaderFile $file) use (&$cover, &$extension) {
-//             if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
-//                 $cover = $file->content();
-//                 $extension = $file->extension();
-//             }
-//         });
-
-//         $path = __DIR__.'/output/cover.'.$extension;
-//         ArchiveUtils::base64ToImage($cover, $path);
-//         expect(ArchiveUtils::isBase64($cover))->toBeTrue();
-//         expect($path)->toBeReadableFile();
-//     }
-// });
-
-// it('can get content after parse', function () {
-//     foreach (ARCHIVES as $path) {
-//         $archive = Archive::make($path);
-
-//         $cover = null;
-//         foreach ($archive->files() as $name => $file) {
-//             if ($file->isImage() && $file->name() === 'archive/cover.jpeg') {
-//                 $cover = $file->content();
-//             }
-//         }
-
-//         expect(ArchiveUtils::isBase64($cover))->toBeTrue();
-//     }
-// });

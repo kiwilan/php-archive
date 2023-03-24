@@ -2,6 +2,10 @@
 
 use Kiwilan\Archive\ArchiveUtils;
 
+it('p7zip is available', function () {
+    expect(ArchiveUtils::p7zipBinaryExists())->toBeTrue();
+});
+
 it('can get extension', function () {
     $ext = ArchiveUtils::getExtension('test.zip');
 
@@ -40,12 +44,26 @@ it('can save image base64', function () {
     expect($path)->toBeReadableFile();
 });
 
+it('can failed save image base64', function () {
+    $path = __DIR__.'/output/test.jpg';
+    $res = ArchiveUtils::base64ToImage(null, $path);
+
+    expect($res)->toBeFalse();
+});
+
 it('can save image', function () {
     $testPicture = file_get_contents(__DIR__.'/../tests/media/test.jpg');
     $path = __DIR__.'/output/test.jpg';
     ArchiveUtils::stringToImage($testPicture, $path);
 
     expect($path)->toBeReadableFile();
+});
+
+it('can failed save image', function () {
+    $path = __DIR__.'/output/test.jpg';
+    $res = ArchiveUtils::stringToImage(null, $path);
+
+    expect($res)->toBeFalse();
 });
 
 it('can check if is hidden', function () {
@@ -57,8 +75,19 @@ it('can check if is hidden', function () {
 });
 
 it('can convert bytes to human readable', function () {
-    $bytes = 1024;
-    $human = ArchiveUtils::bytesToHuman($bytes);
+    $human = ArchiveUtils::bytesToHuman(1024);
 
     expect($human)->toBe('1 KB');
+});
+
+it('can convert bytes as string to human readable', function () {
+    $human = ArchiveUtils::bytesToHuman('1024');
+
+    expect($human)->toBe('1 KB');
+});
+
+it('can convert 0 bytes to human readable', function () {
+    $human = ArchiveUtils::bytesToHuman(0);
+
+    expect($human)->toBeNull();
 });

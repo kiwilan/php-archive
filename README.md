@@ -25,7 +25,7 @@ I want to handle many archives to handle eBooks like `.epub` or `.cbz` for examp
 
 ### Really works on any system?
 
-It designed to works with any system with `p7zip` installed. But for `macOS`, `p7zip` is not able to handle `.rar` extraction, you have to install third library `rar`
+It designed to works with any system with `p7zip` installed. But for `macOS`, `p7zip` is not able to handle `.rar` extraction, you have to install third library `rar`.
 
 | Type | Native | PECL Extension |     Dependency     |
 | :--: | :----: | :------------: | :----------------: |
@@ -42,7 +42,8 @@ It designed to works with any system with `p7zip` installed. But for `macOS`, `p
 
 ## Requirements
 
--   PHP >= 7.4
+-   PHP >= 8.1
+-   `p7zip` binary
 
 ```bash
 sudo apt-get install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller

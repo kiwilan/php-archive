@@ -4,15 +4,20 @@ namespace Kiwilan\Archive\Enums;
 
 enum ArchiveEnum: string
 {
+    /** `.zip` archive file. */
     case zip = 'zip';
+    /** `.tar` archive file. */
     case tar = 'tar';
+    /** `.tar` archive file with extended compression. */
     case tarExtended = 'tar_ext';
+    /** `.7z` archive file. */
     case sevenZip = '7z';
+    /** `.rar` archive file. */
     case rar = 'rar';
 
     public static function fromExtension(string $extension): self
     {
-        if (str_contains($extension, 'tar')) {
+        if ($extension === 'tar') {
             return self::tar;
         }
 

@@ -2,10 +2,24 @@
 
 namespace Kiwilan\Archive;
 
+use Exception;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Process\Process;
 
 class ArchiveUtils
 {
+    public static function p7zipBinaryExists(): bool
+    {
+        $process = new Process(['7z']);
+        $process->run();
+
+        if (! $process->isSuccessful()) {
+            throw new Exception("7zip is not installed or not in the PATH. Please install 7zip and try again.\nYou can check this guide: https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d");
+        }
+
+        return true;
+    }
+
     public static function getExtension(string $path): string
     {
         return pathinfo($path, PATHINFO_EXTENSION);
@@ -72,16 +86,12 @@ class ArchiveUtils
 
     public static function bytesToHuman(mixed $bytes): ?string
     {
-        if (! $bytes) {
+        if (empty($bytes)) {
             return null;
         }
 
-        if (! is_numeric($bytes)) {
+        if (gettype($bytes) !== 'integer' && gettype($bytes) !== 'double' && gettype($bytes) !== 'float') {
             $bytes = intval($bytes);
-        }
-
-        if ($bytes == 0) {
-            return '0.00 B';
         }
 
         $size = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
