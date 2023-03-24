@@ -18,8 +18,8 @@ jobs:
       - name: Fix PHP code style issues
         uses: aglipanci/laravel-pint-action@2.1.0
 
-      - name: Execute tests
-        run: vendor/bin/phpstan analyse --memory-limit=2G
+      - name: phpstan
+        uses: php-actions/phpstan@v3
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
