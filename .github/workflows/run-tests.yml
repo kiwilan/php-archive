@@ -17,6 +17,7 @@ jobs:
     steps:
       - name: Install
         run: |
+          echo $RUNNER_OS;
           if [ "$RUNNER_OS" == "Linux" ]; then
             apt install important_linux_software
           elif [ "$RUNNER_OS" == "Windows" ]; then
