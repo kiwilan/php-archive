@@ -6,7 +6,7 @@ use Kiwilan\Archive\ArchivePdf;
 it('can read pdf', function () {
     $archive = ArchivePdf::make(PDF);
 
-    expect($archive->metadata())->toBeInstanceOf(\Kiwilan\Archive\Utils\PdfMetadata::class);
+    expect($archive->metadata())->toBeInstanceOf(\Kiwilan\Archive\Pdf\PdfMetadata::class);
     expect($archive->dictionary())->toBeArray();
     expect($archive->objects())->toBeArray();
     expect($archive->pages())->toBeArray();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiwilan\Archive\Utils;
+namespace Kiwilan\Archive\Pdf;
 
 use DateTime;
 

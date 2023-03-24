@@ -4,7 +4,7 @@ namespace Kiwilan\Archive;
 
 use Imagick;
 use Kiwilan\Archive\Enums\ArchiveEnum;
-use Kiwilan\Archive\Utils\PdfMetadata;
+use Kiwilan\Archive\Pdf\PdfMetadata;
 use Smalot\PdfParser\Page;
 use Smalot\PdfParser\Parser;
 use Smalot\PdfParser\PDFObject;
