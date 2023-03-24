@@ -7,7 +7,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
 [![codecov](https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G)](https://codecov.io/gh/kiwilan/php-archive)
 
-PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF with `p7zip` binary.
+PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF with p7zip library. It works too with comic book archives like CBZ, CBR, CBT or CB7 or eBooks with EPUB format.
 
 ## About
 

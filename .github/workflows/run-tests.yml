@@ -18,22 +18,21 @@ jobs:
       - name: Install for Linux
         if: runner.os == 'Linux'
         run: |
-          sudo apt -y install p7zip-full
+          sudo apt -y install p7zip-full ghostscript
         shell: bash
 
       - name: Install for macOS
         if: runner.os == 'macOS'
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install p7zip
-          brew install rar
+          brew install p7zip rar ghostscript
         shell: bash
 
       - name: Install for Windows
         if: runner.os == 'Windows'
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install 7zip
+          scoop install 7zip ghostscript
         shell: powershell
 
       - name: Checkout code
