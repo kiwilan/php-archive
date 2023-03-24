@@ -100,8 +100,9 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 -   [Kiwilan](https://github.com/kiwilan)
 -   [All Contributors](../../contributors)
--   [`smalot/pdfparser`](https://github.com/smalot/pdfparser)
--   [`7-zip`](https://www.7-zip.org/)
+-   [spatie](https://github.com/spatie) for `spatie/package-skeleton-php`
+-   [`smalot/pdfparser`](https://github.com/smalot/pdfparser) for PDF parser
+-   [`7-zip`](https://www.7-zip.org/) for `p7zip` binary
 
 ## License
 
