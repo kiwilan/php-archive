@@ -1,5 +1,7 @@
 # PHP Archive
 
+## NOT AVAILABLE YET, WORK IN PROGRESS
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
 [![Tests](https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/kiwilan/php-archive/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square)](https://packagist.org/packages/kiwilan/php-archive)
@@ -19,6 +21,14 @@ PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.
 -   <https://github.com/cmanley/PHP-SevenZipArchive>
 -   <https://github.com/smalot/pdfparser>
 -   <https://github.com/Gemorroj/Archive7z>
+
+## Requirements
+
+-   PHP >= 7.4
+
+```bash
+sudo apt-get install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller
+```
 
 ## Installation
 
