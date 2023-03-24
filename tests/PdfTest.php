@@ -14,7 +14,7 @@ it('can read pdf', function () {
     expect($archive->objects())->toBeArray();
     expect($archive->pages())->toBeArray();
     expect($archive->text())->toBeString();
-    expect($archive->count())->toBeGreaterThan(0);
+    expect($archive->count())->toBeGreaterThanOrEqual(2);
 });
 
 it('can failed with archive', function () {

@@ -34,7 +34,7 @@ it('can read', function () {
         expect($archive->path())->toBe($path);
         expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
         expect($files)->toBeIterable();
-        expect($archive->count())->toBeGreaterThan(0);
+        expect($archive->count())->toBeGreaterThanOrEqual(4);
     }
 });
 
