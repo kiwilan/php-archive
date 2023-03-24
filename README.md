@@ -50,7 +50,8 @@ It designed to works with any system with `p7zip` installed. But for `macOS`, `p
 ### Archives
 
 -   List files
--   Extract file
+-   Content of file
+-   [ ] Extract file
 -   [ ] Extract all files
 -   Find files
 -   [ ] Extract files with a pattern
@@ -59,7 +60,8 @@ It designed to works with any system with `p7zip` installed. But for `macOS`, `p
 
 ### PDF
 
--   Extract any page as image
+-   Content of any page as image
+-   [ ] Extract any page as image
 -   [ ] Extract all pages as images
 -   Extract text content
 -   Get metadata
