@@ -1,5 +1,6 @@
 {
     "name": "kiwilan/php-archive",
+    "version": "0.1.0",
     "description": "PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF.",
     "keywords": [
         "php",
@@ -7,7 +8,15 @@
         "zip",
         "rar",
         "tar",
-        "pdf"
+        "pdf",
+        "ebook",
+        "epub",
+        "cbz",
+        "cbr",
+        "cbt",
+        "cb7",
+        "7z",
+        "7zip"
     ],
     "homepage": "https://github.com/kiwilan/php-archive",
     "license": "MIT",
