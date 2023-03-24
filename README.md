@@ -81,10 +81,10 @@ $archive = Archive::make('path/to/archive.zip');
 
 $files = $archive->files(); // ArchiveItem[]
 $count = $archive->count(); // int of files count
-$content = $archive->extractFile('archive/cover.jpeg'); // string of file content
+$content = $archive->contentFile('archive/cover.jpeg'); // string of file content
 $images = $archive->findAll('jpeg'); // ArchiveItem[]
 $specificFile = $archive->find('metadata.xml'); // ArchiveItem|null
-$extractIt = $archive->extractFile($specificFile->path()); // string of `metadata.xml` file content
+$contentOfFile = $archive->contentFile($specificFile->path()); // string of `metadata.xml` file content
 ```
 
 With PDF file
@@ -94,7 +94,7 @@ $pdf = ArchivePdf::make('path/to/file.pdf');
 
 $files = $pdf->metadata(); // PdfMetadata
 $count = $pdf->count(); // int of PDF pages count
-$content = $pdf->extractPage(index: 0, format: 'png', isBase64: true ); // string of PDF page index 0 as PNG base64 encoded (ImageMagick required)
+$content = $pdf->contentPage(index: 0, format: 'png', isBase64: true ); // string of PDF page index 0 as PNG base64 encoded (ImageMagick required)
 $text = $pdf->text(); // string of PDF text content
 ```
 

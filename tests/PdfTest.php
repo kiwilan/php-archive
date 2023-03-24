@@ -31,7 +31,7 @@ it('can failed with zip', function () {
 
 it('can extract pdf cover', function () {
     $archive = ArchivePdf::make(PDF);
-    $content = $archive->extractPage(index: 0, isBase64: false);
+    $content = $archive->contentPage(index: 0, isBase64: false);
     $path = 'tests/output/cover-PDF.jpg';
 
     ArchiveUtils::stringToImage($content, $path);
@@ -39,7 +39,7 @@ it('can extract pdf cover', function () {
     expect($content)->toBeString();
     expect($path)->toBeReadableFile();
 
-    $content = $archive->extractPage(index: 0);
+    $content = $archive->contentPage(index: 0);
     $path = 'tests/output/coverBase64-PDF.jpg';
     $isBase64 = ArchiveUtils::isBase64($content);
     ArchiveUtils::base64ToImage($content, $path);

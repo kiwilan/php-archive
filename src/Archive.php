@@ -86,7 +86,7 @@ class Archive
         return $this->isDarwin;
     }
 
-    public function extractFile(string $path, bool $base64 = false): ?string
+    public function contentFile(string $path, bool $base64 = false): ?string
     {
         return $this->extract($path, $base64);
     }

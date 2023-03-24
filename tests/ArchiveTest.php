@@ -45,7 +45,7 @@ it('can failed', function () {
 it('can extract', function () {
     foreach (ARCHIVES as $name => $path) {
         $archive = Archive::make($path);
-        $content = $archive->extractFile('archive/cover.jpeg');
+        $content = $archive->contentFile('archive/cover.jpeg');
 
         expect($content)->toBeString();
     }
@@ -54,7 +54,7 @@ it('can extract', function () {
 it('can extract with base64', function () {
     foreach (ARCHIVES as $name => $path) {
         $archive = Archive::make($path);
-        $content = $archive->extractFile('archive/cover.jpeg', true);
+        $content = $archive->contentFile('archive/cover.jpeg', true);
         $isBase64 = ArchiveUtils::isBase64($content);
 
         expect($isBase64)->toBeTrue();
@@ -65,7 +65,7 @@ it('can extract failed', function () {
     foreach (ARCHIVES as $name => $path) {
         $archive = Archive::make($path);
 
-        expect(fn () => $archive->extractFile('archive/cover'))->toThrow(\Exception::class);
+        expect(fn () => $archive->contentFile('archive/cover'))->toThrow(\Exception::class);
     }
 });
 
@@ -90,7 +90,7 @@ it('can find file', function () {
 it('can find and extract specific file', function () {
     $archive = Archive::make(ZIP);
     $file = $archive->find('metadata.xml');
-    $content = $archive->extractFile($file->path());
+    $content = $archive->contentFile($file->path());
 
     expect($file)->toBeInstanceOf(ArchiveItem::class);
     expect($content)->toBeString();
