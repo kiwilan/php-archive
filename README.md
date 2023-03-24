@@ -36,8 +36,9 @@ It designed to works with any system with `p7zip` installed. But for `macOS`, `p
 
 -   PHP >= 8.1
 -   `p7zip` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d)
-    -   `macOS` only: `rar` binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos)
--   For PDF `extract` method: [`imagick` PECL extension](https://github.com/Imagick/imagick), you can check [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
+-   Optional:
+    -   `macOS` only: `rar` binary for `.rar` file extract method, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos)
+    -   [`imagick` PECL extension](https://github.com/Imagick/imagick): for PDF `extract` method, you can check [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
 
 ## Installation
 
