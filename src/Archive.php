@@ -37,10 +37,10 @@ class Archive
         }
 
         $self = new self($path, pathinfo($path, PATHINFO_EXTENSION));
-        $self->type = ArchiveEnum::fromExtension($self->extension);
-        if ($self->type === ArchiveEnum::pdf) {
+        if ($self->extension === 'pdf') {
             throw new \Exception('Use `ArchivePdf` class for PDF files.');
         }
+        $self->type = ArchiveEnum::fromExtension($self->extension);
         $self->os = PHP_OS_FAMILY; // 'Windows', 'BSD', 'Darwin', 'Solaris', 'Linux' or 'Unknown'
         $self->isDarwin = $self->os === 'Darwin';
         $self->files = $self->setFiles();
@@ -93,22 +93,76 @@ class Archive
     }
 
     /**
-     * @param  string  $file Can be a filename or extension.
+     * @param  string  $name Find all files which contains `name` (can be a filename or extension).
      * @return ArchiveItem[]
      */
-    public function findAll(string $file): array
+    public function findAll(string $name): array
     {
-        return $this->findFiles($file);
+        return $this->findFiles($name);
     }
 
     /**
-     * @param  string  $file Can be a filename or extension.
+     * @param  string  $name Find first file which contains `name` (can be a filename or extension).
      */
-    public function find(string $file): ?ArchiveItem
+    public function find(string $name): ?ArchiveItem
     {
-        $files = $this->findFiles($file);
+        $files = $this->findFiles($name);
 
         return array_shift($files);
+    }
+
+    public function extractTo(string $path, ?string $file = null): bool
+    {
+        if (! file_exists($path)) {
+            throw new \Exception("Directory does not exist: {$path}");
+        }
+
+        if ($file) {
+            $this->extractFile($file, $path);
+        } else {
+            $this->extractAll($path);
+        }
+
+        return true;
+    }
+
+    private function extractFile(string $file, string $path): bool
+    {
+        $file = $this->find($file);
+        if (! $file) {
+            throw new \Exception("File not found: {$file}");
+        }
+
+        $this->extract($file, $path);
+
+        return true;
+    }
+
+    private function extractAll(string $path): bool
+    {
+        foreach ($this->files as $file) {
+            $this->extract($file, $path);
+        }
+
+        return true;
+    }
+
+    private function extract(ArchiveItem $file, string $path): bool
+    {
+        if ($this->type === ArchiveEnum::rar && $this->isDarwin) {
+            // rar x -y tests/media/archive.rar temp/
+            $output = $this->process('rar', ['x', '-y', $this->path, $path]);
+        } else {
+            // 7z x -y tests/media/archive.tar.gz -otemp
+            if ($this->type === ArchiveEnum::tarExtended) {
+                $this->process('7z', ['x', '-y', $this->path, '-otemp']);
+                $this->process('7z', ['x', '-y', $this->outputDir, "-o{$path}"]);
+            } else {
+                $this->process('7z', ['x', '-y', $this->path, "-o{$path}"]);
+            }
+        }
+
+        return true;
     }
 
     /**

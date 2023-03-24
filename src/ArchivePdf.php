@@ -43,8 +43,8 @@ class ArchivePdf
         }
 
         $self = new self($path, pathinfo($path, PATHINFO_EXTENSION));
-        $self->type = ArchiveEnum::fromExtension($self->extension);
-        if ($self->type !== ArchiveEnum::pdf) {
+
+        if ($self->extension !== 'pdf') {
             throw new \Exception('Use `Archive` class for no PDF files.');
         }
 

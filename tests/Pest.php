@@ -1,5 +1,45 @@
 <?php
 
+define('FAILED', __DIR__.'/media/test.zip');
+define('SEVENZIP', __DIR__.'/media/archive.7z');
+define('RAR', __DIR__.'/media/archive.rar');
+define('TAR', __DIR__.'/media/archive.tar');
+define('TARBZ2', __DIR__.'/media/archive.tar.bz2');
+define('TARGZ', __DIR__.'/media/archive.tar.gz');
+define('TARXZ', __DIR__.'/media/archive.tar.xz');
+define('ZIP', __DIR__.'/media/archive.zip');
+define('PDF', __DIR__.'/media/example.pdf');
+define('ARCHIVES', [
+    'SEVENZIP' => SEVENZIP,
+    'RAR' => RAR,
+    'TAR' => TAR,
+    'TARBZ2' => TARBZ2,
+    'TARGZ' => TARGZ,
+    'TARXZ' => TARXZ,
+    'ZIP' => ZIP,
+]);
+define('EPUB', __DIR__.'/media/epub.epub');
+define('CBZ', __DIR__.'/media/cba.cbz');
+define('CBR', __DIR__.'/media/cba.cbr');
+define('CBT', __DIR__.'/media/cba.cbt');
+define('CB7', __DIR__.'/media/cba.cb7');
+define('CBA_ITEMS', [
+    'CBZ' => CBZ,
+    'CBR' => CBR,
+    // 'CBT' => CBT,
+    'CB7' => CB7,
+]);
+
+function outputPath(): string
+{
+    return __DIR__.'/output/';
+}
+
+function outputPathFake(): string
+{
+    return __DIR__.'/outpu/';
+}
+
 function isImage(?string $extension): bool
 {
     return in_array($extension, [
@@ -54,4 +94,34 @@ function stringToImage(?string $content, string $path): bool
     $res = file_put_contents($path, $content);
 
     return $res;
+}
+
+function listFiles(string $dir): array
+{
+    $files = array_diff(scandir($dir), ['.', '..', '.gitignore']);
+
+    $items = [];
+    foreach ($files as $file) {
+        if (! is_dir("$dir/$file") && ! is_link("$dir/$file")) {
+            $items[] = $file;
+        } else {
+            $items = array_merge($items, listFiles("$dir/$file"));
+        }
+    }
+
+    return $items;
+}
+
+function recurseRmdir(string $dir): void
+{
+    $leave_files = ['.gitignore'];
+
+    foreach (glob("$dir/*") as $file) {
+        if (! in_array(basename($file), $leave_files) && ! is_dir($file)) {
+            unlink($file);
+        } elseif (is_dir($file)) {
+            recurseRmdir($file);
+            rmdir($file);
+        }
+    }
 }

@@ -31,9 +31,3 @@ it('can read tar extended compression', function (string $extension) {
 
     expect($enum)->toBe(ArchiveEnum::tarExtended);
 })->with(['tar.gz', 'tar.bz2', 'tar.xz', 'gz', 'bz2', 'xz', 'phar']);
-
-it('can read pdf', function () {
-    $enum = ArchiveEnum::fromExtension('pdf');
-
-    expect($enum)->toBe(ArchiveEnum::pdf);
-});

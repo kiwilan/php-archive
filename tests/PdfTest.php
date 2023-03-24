@@ -3,8 +3,6 @@
 use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\ArchivePdf;
 
-define('PDF', __DIR__.'/media/example.pdf');
-
 it('can read pdf', function () {
     $archive = ArchivePdf::make(PDF);
 
@@ -25,10 +23,10 @@ it('can failed', function () {
 });
 
 it('can failed with zip', function () {
-    expect(fn () => ArchivePdf::make(ZIP))->toThrow(\Exception::class);
+    expect(fn () => ArchivePdf::make(__DIR__.'/media/archive.zip'))->toThrow(\Exception::class);
 });
 
-it('can extract pdf cover', function () {
+it('can get content pdf cover', function () {
     $archive = ArchivePdf::make(PDF);
     $content = $archive->contentPage(index: 0, toBase64: false);
     $path = 'tests/output/cover-PDF.jpg';

@@ -4,24 +4,6 @@ use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\ArchiveItem;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 
-define('FAILED', __DIR__.'/media/test.zip');
-define('SEVENZIP', __DIR__.'/media/archive.7z');
-define('RAR', __DIR__.'/media/archive.rar');
-define('TAR', __DIR__.'/media/archive.tar');
-define('TARBZ2', __DIR__.'/media/archive.tar.bz2');
-define('TARGZ', __DIR__.'/media/archive.tar.gz');
-define('TARXZ', __DIR__.'/media/archive.tar.xz');
-define('ZIP', __DIR__.'/media/archive.zip');
-define('ARCHIVES', [
-    'SEVENZIP' => SEVENZIP,
-    'RAR' => RAR,
-    'TAR' => TAR,
-    'TARBZ2' => TARBZ2,
-    'TARGZ' => TARGZ,
-    'TARXZ' => TARXZ,
-    'ZIP' => ZIP,
-]);
-
 it('can read', function (string $path) {
     $archive = Archive::make($path);
     $files = $archive->files();
@@ -39,14 +21,24 @@ it('can failed', function () {
     expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
 });
 
-it('can extract', function (string $path) {
+it('can failed on pdf', function () {
+    expect(fn () => Archive::make(__DIR__.'/media/example.pdf'))->toThrow(\Exception::class);
+});
+
+it('can check macos', function () {
+    $archive = Archive::make(ZIP);
+    expect($archive->isDarwin())->toBeBool();
+    expect($archive->isDarwin())->toBeTrue();
+})->skip(PHP_OS_FAMILY !== 'Darwin', 'Only for macOS');
+
+it('can get content', function (string $path) {
     $archive = Archive::make($path);
     $content = $archive->contentFile('archive/cover.jpeg');
 
     expect($content)->toBeString();
 })->with(ARCHIVES);
 
-it('can extract with base64', function (string $path) {
+it('can get content with base64', function (string $path) {
     $archive = Archive::make($path);
     $content = $archive->contentFile('archive/cover.jpeg', true);
     $isBase64 = isBase64($content);
@@ -54,7 +46,7 @@ it('can extract with base64', function (string $path) {
     expect($isBase64)->toBeTrue();
 })->with(ARCHIVES);
 
-it('can extract failed', function (string $path) {
+it('can get content failed', function (string $path) {
     $archive = Archive::make($path);
 
     expect(fn () => $archive->contentFile('archive/cover'))->toThrow(\Exception::class);
@@ -74,11 +66,28 @@ it('can find file', function (string $path) {
     expect($file)->toBeInstanceOf(ArchiveItem::class);
 })->with(ARCHIVES);
 
-it('can find and extract specific file', function () {
-    $archive = Archive::make(ZIP);
+it('can find and get content specific file', function (string $path) {
+    $archive = Archive::make($path);
     $file = $archive->find('metadata.xml');
     $content = $archive->contentFile($file->path());
 
     expect($file)->toBeInstanceOf(ArchiveItem::class);
     expect($content)->toBeString();
 })->with(ARCHIVES);
+
+it('can extract all', function (string $path) {
+    $archive = Archive::make($path);
+    $output = outputPath();
+    $archive->extractTo($output);
+
+    expect($output)->toBeReadableDirectory();
+    expect("{$output}/archive/cover.jpeg")->toBeFile();
+    recurseRmdir($output);
+})->with(ARCHIVES);
+
+it('can failed extract all', function () {
+    $archive = Archive::make(ZIP);
+    $output = outputPathFake();
+
+    expect(fn () => $archive->extractTo($output))->toThrow(\Exception::class);
+});

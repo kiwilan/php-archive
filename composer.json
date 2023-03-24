@@ -52,8 +52,9 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
+        "test": "vendor/bin/pest --parallel",
+        "test-coverage": "vendor/bin/pest --coverage --min=90",
+        "test-parallel-coverage": "vendor/bin/pest --parallel --coverage",
         "analyse": "vendor/bin/phpstan analyse",
         "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes"
     },
