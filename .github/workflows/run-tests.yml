@@ -26,14 +26,14 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install p7zip rar ghostscript
+          brew install p7zip rar ghostscript imagemagick
         shell: bash
 
       - name: Install for Windows
         if: runner.os == 'Windows'
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install 7zip ghostscript
+          scoop install 7zip ghostscript imagemagick
         shell: powershell
 
       - name: Checkout code
