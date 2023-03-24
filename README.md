@@ -135,7 +135,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [version-href]: https://packagist.org/packages/kiwilan/steward-laravel
 [php-version-src]: https://img.shields.io/static/v1?style=flat-square&label=PHP&message=v8.1&color=777BB4&logo=php&logoColor=ffffff&labelColor=18181b
 [php-version-href]: https://www.php.net/
-[downloads-src]: https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[downloads-src]: https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square&label=Downloads&colorA=18181B&colorB=777BB4
 [downloads-href]: https://packagist.org/packages/kiwilan/php-archive
 [license-src]: https://img.shields.io/github/license/kiwilan/php-archive.svg?style=flat-square&label=License&colorA=18181B&colorB=777BB4
 [license-href]: https://github.com/kiwilan/php-archive/blob/main/README.md
