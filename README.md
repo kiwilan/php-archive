@@ -10,7 +10,8 @@
 PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF with p7zip library. It works too with comic book archives like CBZ, CBR, CBT or CB7 or eBooks with EPUB format.
 
 > **Warning**
-> Works with [p7zip](https://www.7-zip.org/)
+>
+> Works with [p7zip](https://www.7-zip.org/) binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d) to install it on your system.
 
 ## About
 
@@ -59,8 +60,8 @@ With archive file (`.zip`, `.rar`, `.tar`, `.7z`, `epub`, `cbz`, `cbr`, `cb7`, `
 $archive = Archive::make('path/to/archive.zip');
 
 $files = $archive->files(); // ArchiveItem[]
-$count = $archive->count(); // int
-$content = $archive->extractFile('archive/cover.jpeg'); // string
+$count = $archive->count(); // int of files count
+$content = $archive->extractFile('archive/cover.jpeg'); // string of file content
 $images = $archive->findAll('jpeg'); // ArchiveItem[]
 $specificFile = $archive->find('metadata.xml'); // ArchiveItem|null
 ```
@@ -71,9 +72,9 @@ With PDF file
 $pdf = ArchivePdf::make('path/to/file.pdf');
 
 $files = $archive->metadata(); // PdfMetadata
-$count = $archive->count(); // int
-$content = $archive->extract(index: 1, format: 'png', isBase64: true ); // PDF page index 1 as PNG base64 encoded (ImageMagick required)
-$text = $archive->text(); // PDF text content
+$count = $archive->count(); // int of PDF pages count
+$content = $archive->extract(index: 0, format: 'png', isBase64: true ); // string of PDF page index 0 as PNG base64 encoded (ImageMagick required)
+$text = $archive->text(); // string of PDF text content
 ```
 
 ## Testing
