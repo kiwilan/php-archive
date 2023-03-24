@@ -9,7 +9,8 @@
 
 PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF with p7zip library. It works too with comic book archives like CBZ, CBR, CBT or CB7 or eBooks with EPUB format.
 
-**Works with [p7zip](https://www.7-zip.org/)**
+> **Warning**
+> Works with [p7zip](https://www.7-zip.org/)
 
 ## About
 
