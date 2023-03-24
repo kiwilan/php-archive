@@ -19,6 +19,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt -y install p7zip-full ghostscript imagemagick
+          sudo sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml
         shell: bash
 
       - name: Install for macOS
