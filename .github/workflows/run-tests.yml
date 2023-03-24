@@ -20,18 +20,20 @@ jobs:
           echo $RUNNER_OS;
           if [ "$RUNNER_OS" == "Linux" ]; then
             sudo apt -y install p7zip-full
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
-            irm get.scoop.sh | iex
-            scoop install 7zip
           elif [ "$RUNNER_OS" == "macOS" ]; then
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             brew install p7zip
-          else
-            echo "$RUNNER_OS not supported"
-            exit 1
           fi
         shell: bash
+
+      - name: Install for Windows
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
+            irm get.scoop.sh | iex
+            scoop install 7zip
+          fi
+        shell: powershell
 
       - name: Checkout code
         uses: actions/checkout@v3
