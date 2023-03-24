@@ -14,7 +14,7 @@ PHP package to read and extract files from archives like ZIP, RAR, TAR or PDF wi
 >
 > Works with [p7zip](https://www.7-zip.org/) binary, you can check [this guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d) to install it on your system.
 
-> **Info**
+> **Note**
 >
 > This package to not handle archive creation.
 
