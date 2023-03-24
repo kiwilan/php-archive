@@ -68,6 +68,9 @@ jobs:
       - name: Execute tests
         run: vendor/bin/pest --coverage
 
+      - name: phpstan
+        uses: php-actions/phpstan@v3
+
       - name: Send code coverage report to Codecov.io
         uses: codecov/codecov-action@v3
         with:
