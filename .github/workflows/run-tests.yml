@@ -15,6 +15,18 @@ jobs:
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
+      - name: Install
+        run: |
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            apt install important_linux_software
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            choco install important_windows_software
+          else
+            echo "$RUNNER_OS not supported"
+            exit 1
+          fi
+        shell: bash
+
       - name: Checkout code
         uses: actions/checkout@v3
 
