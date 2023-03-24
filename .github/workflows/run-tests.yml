@@ -70,7 +70,9 @@ jobs:
         run: vendor/bin/pest --coverage
 
       - name: phpstan
-        uses: php-actions/phpstan@v3
+        if: runner.os == 'Linux'
+        run: vendor/bin/phpstan analyse
+        shell: bash
 
       - name: Send code coverage report to Codecov.io
         uses: codecov/codecov-action@v3
