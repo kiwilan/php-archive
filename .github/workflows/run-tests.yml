@@ -19,9 +19,11 @@ jobs:
         run: |
           echo $RUNNER_OS;
           if [ "$RUNNER_OS" == "Linux" ]; then
-            apt install important_linux_software
+            sudo apt -y install p7zip-full
           elif [ "$RUNNER_OS" == "Windows" ]; then
-            choco install important_windows_software
+            Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time
+            irm get.scoop.sh | iex
+            scoop install 7zip
           else
             echo "$RUNNER_OS not supported"
             exit 1
