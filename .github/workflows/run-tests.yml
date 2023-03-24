@@ -33,7 +33,6 @@ jobs:
             irm get.scoop.sh | iex
             scoop install 7zip
           fi
-        shell: powershell
 
       - name: Checkout code
         uses: actions/checkout@v3
