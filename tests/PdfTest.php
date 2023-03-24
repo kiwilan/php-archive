@@ -46,7 +46,7 @@ it('can extract pdf cover', function () {
 
     expect($isBase64)->toBeTrue();
     expect($path)->toBeReadableFile();
-});
+})->skip(PHP_OS_FAMILY === 'Windows', 'Not supported on Windows');
 
 it('can read pdf metadata', function () {
     $archive = ArchivePdf::make(PDF);
