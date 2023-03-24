@@ -8,7 +8,7 @@
 
 [![codecov][codecov-src]][codecov-href]
 
-PHP package to read and extract from archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with `p7zip` binary, deisgned to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`).
+PHP package to read and extract from archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with `p7zip` binary, designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`).
 
 > **Warning**
 >
