@@ -28,7 +28,7 @@ class ArchivePdf
 
     protected int $count = 0;
 
-    protected string $outputDir = 'php-archive';
+    protected string $outputDir = 'vendor/php-archive';
 
     protected function __construct(
         protected string $path,
