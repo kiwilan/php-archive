@@ -20,7 +20,7 @@ class Archive
 
     protected int $count = 0;
 
-    protected string $outputDir = 'temp';
+    protected string $outputDir = 'php-archive';
 
     protected function __construct(
         protected string $path,
