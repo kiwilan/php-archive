@@ -15,6 +15,10 @@ class Archive
 
     public static function make(string $path): BaseArchive
     {
+        if (! file_exists($path)) {
+            throw new \Exception("File {$path} not found");
+        }
+
         $mimeType = mime_content_type($path);
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $type = ArchiveEnum::fromExtension($extension, $mimeType);

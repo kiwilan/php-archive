@@ -10,16 +10,19 @@ enum ArchiveEnum: string
     case rar = 'rar';
     case pdf = 'pdf';
 
-    public static function fromExtension(string $extension, string $mimeType): self
+    public static function fromExtension(string $extension, ?string $mimeType = null): self
     {
         $extension = strtolower($extension);
+        if (str_contains($extension, '.')) {
+            $extension = pathinfo($extension, PATHINFO_EXTENSION);
+        }
 
         $zips = ['zip', 'epub', 'cbz'];
         if (in_array($extension, $zips)) {
             return self::zip;
         }
 
-        $phars = ['tar', 'gz', 'bz2', 'xz', 'phar'];
+        $phars = ['tar', 'gz', 'bz2', 'xz', 'phar', 'cbt'];
         if (in_array($extension, $phars)) {
             return self::phar;
         }

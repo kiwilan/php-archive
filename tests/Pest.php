@@ -18,6 +18,12 @@ define('ARCHIVES_TAR', [
     'TARBZ2' => TARBZ2,
     'TARGZ' => TARGZ,
 ]);
+define('ARCHIVES_NATIVE', [
+    'TAR' => TAR,
+    'TARBZ2' => TARBZ2,
+    'TARGZ' => TARGZ,
+    'ZIP' => ZIP,
+]);
 define('EPUB', __DIR__.'/media/epub.epub');
 define('CBZ', __DIR__.'/media/cba.cbz');
 define('CBR', __DIR__.'/media/cba.cbr');
@@ -29,10 +35,6 @@ define('CBA_ITEMS', [
     // 'CBT' => CBT,
     'CB7' => CB7,
 ]);
-
-beforeEach(function () {
-    recurseRmdir(outputPath());
-});
 
 function outputPath(?string $path = null, ?string $filename = null): string
 {
