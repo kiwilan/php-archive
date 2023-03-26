@@ -16,7 +16,7 @@ it('can read', function (string $path) {
     expect($archive->extension())->toBe($extension);
     expect($archive->path())->toBe($path);
     expect($archive->type())->toBe($type);
-})->with([...ARCHIVES_NATIVE, EPUB]);
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
 
 it('can failed if not found', function () {
     expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
@@ -28,21 +28,26 @@ it('can get files', function (string $path) {
 
     expect($files)->toBeArray();
     expect($files)->toHaveCount($archive->count());
-})->with([...ARCHIVES_NATIVE, EPUB]);
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
 
 it('can find all images', function (string $path) {
     $archive = Archive::make($path);
-    $files = $archive->findAll('jpeg');
+    $ext = 'jpeg';
+    $files = $archive->findAll($ext);
+    if (empty($files)) {
+        $ext = 'jpg';
+        $files = $archive->findAll($ext);
+    }
 
     expect($files)->toBeArray();
     expect($files)->each(
-        function (Pest\Expectation $item) {
+        function (Pest\Expectation $item) use ($ext) {
             $file = $item->value;
             expect($file)->toBeInstanceOf(ArchiveItem::class);
-            expect($file->extension())->toBe('jpeg');
+            expect($file->extension())->toBe($ext);
         }
     );
-})->with([...ARCHIVES_NATIVE, EPUB]);
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
 
 it('can get cover', function (string $path) {
     $archive = Archive::make($path);
@@ -79,7 +84,7 @@ it('can extract some files', function (string $path) {
     expect($paths)->toHaveCount(2);
     expect($paths[0])->toBeString();
     expect($paths[0])->toBeReadableFile();
-})->with([...ARCHIVES_NATIVE, EPUB]);
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
 
 it('can extract files', function (string $path) {
     $archive = Archive::make($path);
@@ -87,67 +92,4 @@ it('can extract files', function (string $path) {
 
     expect($paths)->toBeArray();
     expect($paths)->toBeGreaterThanOrEqual(5);
-})->with([...ARCHIVES_NATIVE, EPUB]);
-
-// it('can read', function (string $path) {
-//     $archive = Archive::make($path);
-//     $files = $archive->files();
-//     $extension = pathinfo($path, PATHINFO_EXTENSION);
-
-//     expect($archive->os())->toBe(PHP_OS_FAMILY);
-//     expect($archive->extension())->toBe($extension);
-//     expect($archive->path())->toBe($path);
-//     expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
-//     expect($files)->toBeIterable();
-//     expect($archive->count())->toBeGreaterThanOrEqual(4);
-// })->with(ARCHIVES);
-
-// it('can failed on pdf', function () {
-//     expect(fn () => Archive::make(__DIR__.'/media/example.pdf'))->toThrow(\Exception::class);
-// });
-
-// it('can check macos', function () {
-//     $archive = Archive::make(ZIP);
-//     expect($archive->isDarwin())->toBeBool();
-//     expect($archive->isDarwin())->toBeTrue();
-// })->skip(PHP_OS_FAMILY !== 'Darwin', 'Only for macOS');
-
-// it('can get content', function (string $path) {
-//     $archive = Archive::make($path);
-//     $content = $archive->contentFile('archive/cover.jpeg');
-
-//     expect($content)->toBeString();
-// })->with(ARCHIVES);
-
-// it('can find files', function (string $path) {
-//     $archive = Archive::make($path);
-//     $files = $archive->findAll('jpeg');
-
-//     expect($files)->toBeIterable();
-// })->with(ARCHIVES);
-
-// it('can find and get content specific file', function (string $path) {
-//     $archive = Archive::make($path);
-//     $file = $archive->find('metadata.xml');
-//     $content = $archive->contentFile($file->path());
-
-//     expect($file)->toBeInstanceOf(ArchiveItem::class);
-//     expect($content)->toBeString();
-// })->with(ARCHIVES);
-
-// it('can extract all', function (string $path) {
-//     $archive = Archive::make($path);
-//     $output = outputPath();
-//     $archive->extractTo($output);
-
-//     expect($output)->toBeReadableDirectory();
-//     expect("{$output}/archive/cover.jpeg")->toBeFile();
-//     recurseRmdir($output);
-// })->with(ARCHIVES);
-
-// it('can failed extract all', function () {
-//     $archive = Archive::make(ZIP);
-//     $output = outputPathFake();
-
-//     expect(fn () => $archive->extractTo($output))->toThrow(\Exception::class);
-// });
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
