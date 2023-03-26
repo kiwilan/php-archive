@@ -23,6 +23,11 @@ Alternatives:
 -   [Gemorroj/Archive7z](https://github.com/Gemorroj/Archive7z): handle many archives with [p7zip-project/p7zip](https://github.com/p7zip-project/p7zip) binary
 -   [splitbrain/php-archive](https://github.com/splitbrain/php-archive): native PHP solution to handle `.zip` and `.tar` archives
 
+Documenation:
+
+-   List files in .7z, .rar and .tar archives using PHP: <https://stackoverflow.com/a/39163620/11008206>
+-   Compression and Archive Extensions: <https://www.php.net/manual/en/refs.compression.php>
+
 ### Why not use native PHP functions?
 
 To handle `.zip` archives, it's easy with `ZipArchive` native class. But for other formats, it's really a pain. For `.rar` format, you need [PECL `rar`](https://github.com/cataphract/php-rar) extension which is not actively maintained. For `tar` format, you have many possibilities but it's really a pain to manage all of them, with `.gz`, `.bz2`, `.xz` and `.lzma` compression. And for `.7z` format with PHP, it's again a pain.

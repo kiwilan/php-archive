@@ -6,17 +6,17 @@ define('RAR', __DIR__.'/media/archive.rar');
 define('TAR', __DIR__.'/media/archive.tar');
 define('TARBZ2', __DIR__.'/media/archive.tar.bz2');
 define('TARGZ', __DIR__.'/media/archive.tar.gz');
-define('TARXZ', __DIR__.'/media/archive.tar.xz');
 define('ZIP', __DIR__.'/media/archive.zip');
 define('PDF', __DIR__.'/media/example.pdf');
 define('ARCHIVES', [
     'SEVENZIP' => SEVENZIP,
     'RAR' => RAR,
+    'ZIP' => ZIP,
+]);
+define('ARCHIVES_TAR', [
     'TAR' => TAR,
     'TARBZ2' => TARBZ2,
     'TARGZ' => TARGZ,
-    'TARXZ' => TARXZ,
-    'ZIP' => ZIP,
 ]);
 define('EPUB', __DIR__.'/media/epub.epub');
 define('CBZ', __DIR__.'/media/cba.cbz');
@@ -30,9 +30,27 @@ define('CBA_ITEMS', [
     'CB7' => CB7,
 ]);
 
-function outputPath(): string
+beforeEach(function () {
+    recurseRmdir(outputPath());
+});
+
+function outputPath(?string $path = null, ?string $filename = null): string
 {
-    return __DIR__.'/output/';
+    $pathBase = __DIR__.'/output/';
+
+    if ($path) {
+        $pathBase .= $path.'/';
+    }
+
+    if (! file_exists($pathBase)) {
+        mkdir($pathBase, 0755, true);
+    }
+
+    if ($filename) {
+        $pathBase .= $filename;
+    }
+
+    return $pathBase;
 }
 
 function outputPathFake(): string
