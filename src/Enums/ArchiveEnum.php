@@ -42,16 +42,18 @@ enum ArchiveEnum: string
             return self::pdf;
         }
 
-        if (str_contains($mimeType, 'zip')) {
-            return self::zip;
-        }
+        if ($mimeType) {
+            if (str_contains($mimeType, 'zip')) {
+                return self::zip;
+            }
 
-        if (str_contains($mimeType, 'rar')) {
-            return self::rar;
-        }
+            if (str_contains($mimeType, 'rar')) {
+                return self::rar;
+            }
 
-        if (str_contains($mimeType, 'pdf')) {
-            return self::pdf;
+            if (str_contains($mimeType, 'pdf')) {
+                return self::pdf;
+            }
         }
 
         throw new \Exception("Unknown archive type for extension: {$extension}");

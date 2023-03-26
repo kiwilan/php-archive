@@ -26,8 +26,24 @@ it('can read tar', function (string $extension) {
     expect($enum)->toBe(ArchiveEnum::phar);
 })->with(['tar', 'cbt']);
 
-it('can read tar extended compression', function (string $extension) {
+it('can read phar', function (string $extension) {
     $enum = ArchiveEnum::fromExtension($extension);
 
     expect($enum)->toBe(ArchiveEnum::phar);
 })->with(['tar.gz', 'tar.bz2', 'tar.xz', 'gz', 'bz2', 'xz', 'phar']);
+
+it('can read pdf', function (string $extension) {
+    $enum = ArchiveEnum::fromExtension($extension);
+
+    expect($enum)->toBe(ArchiveEnum::pdf);
+})->with(['pdf']);
+
+it('can read others', function () {
+    expect(ArchiveEnum::fromExtension('', 'zip'))->toBe(ArchiveEnum::zip);
+    expect(ArchiveEnum::fromExtension('', 'rar'))->toBe(ArchiveEnum::rar);
+    expect(ArchiveEnum::fromExtension('', 'pdf'))->toBe(ArchiveEnum::pdf);
+});
+
+it('can failed', function () {
+    expect(fn () => ArchiveEnum::fromExtension('jpg'))->toThrow(\Exception::class);
+});
