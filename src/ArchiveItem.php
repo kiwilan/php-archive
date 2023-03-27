@@ -27,6 +27,8 @@ class ArchiveItem
         protected ?DateTime $created = null,
         protected ?DateTime $accessed = null,
 
+        protected array $extraInfos = [],
+
         protected ?string $hostOS = null,
     ) {
     }
@@ -167,6 +169,11 @@ class ArchiveItem
     public function accessed(): ?DateTime
     {
         return $this->accessed;
+    }
+
+    public function extraInfos(): array
+    {
+        return $this->extraInfos;
     }
 
     public function hostOS(): ?string

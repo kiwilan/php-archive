@@ -29,7 +29,7 @@ class Archive
             ArchiveEnum::zip => ArchiveZip::class,
             ArchiveEnum::phar => ArchivePhar::class,
             ArchiveEnum::sevenZip => ArchivePhar::class,
-            ArchiveEnum::rar => ArchivePhar::class,
+            ArchiveEnum::rar => ArchiveRar::class,
             ArchiveEnum::pdf => ArchivePdf::class,
         };
 

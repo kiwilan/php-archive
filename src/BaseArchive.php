@@ -147,6 +147,26 @@ abstract class BaseArchive
         return null;
     }
 
+    protected function convertStream(mixed $stream): string
+    {
+        if (! $stream) {
+            throw new \Exception('Stream is empty.');
+        }
+
+        $content = null;
+
+        // https://www.php.net/manual/en/rarentry.getstream.php
+        while (! feof($stream)) {
+            $buff = fread($stream, 8192);
+
+            if ($buff !== false) {
+                $content .= $buff;
+            }
+        }
+
+        return $content;
+    }
+
     /**
      * @return ArchiveItem[]
      */

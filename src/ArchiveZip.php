@@ -160,6 +160,13 @@ class ArchiveZip extends BaseArchive
             created: null,
             accessed: null,
 
+            extraInfos: [
+                'index' => $index,
+                'crc' => $crc,
+                'comp_method' => $comp_method,
+                'encryption_method' => $encryption_method,
+            ],
+
             hostOS: PHP_OS_FAMILY,
         );
 
