@@ -68,6 +68,8 @@ class ArchivePhar extends BaseArchive
     {
         $phar = new PharData($this->path);
         $phar->extractTo($this->outputDirectory, null, true);
+
+        $this->metadata = new ArchiveMetadata();
         $files = $this->getFiles($this->outputDirectory);
 
         foreach ($files as $item) {

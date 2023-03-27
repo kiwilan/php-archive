@@ -74,6 +74,12 @@ class ArchiveRar extends BaseArchive
             throw new \Exception('rar extension: is not installed, check this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9');
         }
 
+        $archive = RarArchive::open($this->path());
+        $this->metadata = new ArchiveMetadata(
+            comment: $archive->getComment()
+        );
+        $archive->close();
+
         $this->parser(function (ArchiveItem $file) use (&$i) {
             $this->files[] = $file;
         });

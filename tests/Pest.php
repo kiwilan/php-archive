@@ -13,11 +13,6 @@ define('ARCHIVES', [
     'RAR' => RAR,
     'ZIP' => ZIP,
 ]);
-define('ARCHIVES_TAR', [
-    'TAR' => TAR,
-    'TARBZ2' => TARBZ2,
-    'TARGZ' => TARGZ,
-]);
 define('ARCHIVES_NATIVE', [
     'TAR' => TAR,
     'TARBZ2' => TARBZ2,
@@ -33,6 +28,28 @@ define('CBA_ITEMS', [
     'CBZ' => CBZ,
     'CBR' => CBR,
     // 'CBT' => CBT,
+    'CB7' => CB7,
+]);
+
+define('ARCHIVES_TAR', [
+    'TAR' => TAR,
+    'TARBZ2' => TARBZ2,
+    'TARGZ' => TARGZ,
+]);
+define('ARCHIVES_ZIP', [
+    'ZIP' => ZIP,
+    'CBZ' => CBZ,
+    'EPUB' => EPUB,
+]);
+define('ARCHIVES_PDF', [
+    'PDF' => PDF,
+]);
+define('ARCHIVES_RAR', [
+    'RAR' => RAR,
+    'CBR' => CBR,
+]);
+define('ARCHIVES_7Z', [
+    'SEVENZIP' => SEVENZIP,
     'CB7' => CB7,
 ]);
 

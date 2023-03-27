@@ -2,6 +2,7 @@
 
 use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\ArchiveItem;
+use Kiwilan\Archive\ArchiveMetadata;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 
 beforeEach(function () {
@@ -16,7 +17,7 @@ it('can read', function (string $path) {
     expect($archive->extension())->toBe($extension);
     expect($archive->path())->toBe($path);
     expect($archive->type())->toBe($type);
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ, PDF, RAR]);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR]);
 
 it('can get text', function (string $path) {
     $archive = Archive::make($path);
@@ -26,11 +27,18 @@ it('can get text', function (string $path) {
     $text = $archive->text($first);
 
     expect($text)->toBeString();
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ, PDF, RAR]);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR]);
 
 it('can failed if not found', function () {
     expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
 });
+
+it('can get metadata', function (string $path) {
+    $archive = Archive::make($path);
+    $metadata = $archive->metadata();
+
+    expect($metadata)->toBeInstanceOf(ArchiveMetadata::class);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR]);
 
 it('can get files', function (string $path) {
     $archive = Archive::make($path);
@@ -38,13 +46,13 @@ it('can get files', function (string $path) {
 
     expect($files)->toBeArray();
     expect($files)->toHaveCount($archive->count());
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ, RAR]);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR]);
 
 it('can find all images', function (string $path) {
     $archive = Archive::make($path);
     $ext = 'jpeg';
     $files = $archive->findAll($ext);
-    if ($archive->extension() === 'cbz') {
+    if (empty($files)) {
         $ext = 'jpg';
         $files = $archive->findAll($ext);
     }
@@ -57,7 +65,7 @@ it('can find all images', function (string $path) {
             expect($file->extension())->toBe($ext);
         }
     );
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ, RAR]);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR]);
 
 it('can get content first file', function (string $path) {
     $archive = Archive::make($path);
@@ -69,7 +77,7 @@ it('can get content first file', function (string $path) {
 
     expect($content)->toBeString();
     expect($file)->toBeReadableFile();
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ, RAR]);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR]);
 
 it('can get cover', function (string $path) {
     $archive = Archive::make($path);
@@ -106,7 +114,7 @@ it('can extract some files', function (string $path) {
     expect($paths)->toHaveCount(2);
     expect($paths[0])->toBeString();
     expect($paths[0])->toBeReadableFile();
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ, RAR]);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR]);
 
 it('can extract files', function (string $path) {
     $archive = Archive::make($path);
@@ -114,4 +122,4 @@ it('can extract files', function (string $path) {
 
     expect($paths)->toBeArray();
     expect($paths)->toBeGreaterThanOrEqual(5);
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ, RAR]);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR]);
