@@ -58,18 +58,6 @@ class SevenZipProcess
      */
     public function list(): array
     {
-        // tar extended:
-        // 7z x tests/media/archive.tar.gz -so | 7z x -aoa -si -ttar -otemp
-        // 7z x tests/media/archive.tar.gz -so | 7z l -ba -si -ttar -otemp
-        // rm -rf temp ; mkdir temp ; 7z x tests/media/archive.tar.gz -otemp ; 7z l -ba -slt temp ; rm -rf temp
-        // tar -tf tests/media/archive.tar.gz
-        // if ($this->type === ArchiveEnum::tarExtended) {
-        //     $this->recurseRmdir($this->outputDir);
-        //     mkdir($this->outputDir);
-        //     $this->process('7z', ['x', '-y', $this->path, '-otemp']);
-        //     $output = $this->process('7z', ['l', '-ba', '-slt', $this->outputDir]);
-        //     $this->recurseRmdir($this->outputDir);
-        // }
         $output = $this->execute('7z', ['l', '-ba', '-slt', $this->path]);
 
         $output = explode(PHP_EOL, $output);
@@ -125,22 +113,6 @@ class SevenZipProcess
      */
     public function extract(string $toPath, ?array $files = null): bool
     {
-        // if ($this->type === ArchiveEnum::rar && $this->isDarwin) {
-        //     // rar x -y tests/media/archive.rar temp/
-        //     $output = $this->process('rar', ['x', '-y', $this->path, $path]);
-        // } else {
-        //     // 7z x -y tests/media/archive.tar.gz -otemp
-        //     if ($this->type === ArchiveEnum::tarExtended) {
-        //         $this->process('7z', ['x', '-y', $this->path, '-otemp']);
-        //         $this->process('7z', ['x', '-y', $this->outputDir, "-o{$path}"]);
-        //     }
-        // }
-
-        // Extract specific file
-        // 7z e tests/media/archive.7z -otests/output file-1.md -r
-        // Extract all files
-        // rm -rf tests/output ; 7z x tests/media/archive.7z -otests/output -r
-
         if ($this->isRar && $this->isDarwin) {
             if ($files) {
                 $list = array_map(fn (ArchiveItem $item) => $item->path(), $files);
@@ -162,19 +134,6 @@ class SevenZipProcess
 
     public function content(ArchiveItem $file)
     {
-        // rm -rf temp ;  x -y -otemp tests/media/archive.tar archive/cover.jpeg
-        // if ($this->type !== ArchiveEnum::tar && $this->type !== ArchiveEnum::tarExtended) {
-        //     $args[] = $extract;
-        // }
-
-        // rm -rf temp ; unrar x -y tests/media/archive.rar archive/cover.jpeg temp/
-        // rm -rf temp ; rar x -y tests/media/archive.rar archive/cover.jpeg temp/
-        // if ($this->type === ArchiveEnum::rar && $this->isDarwin) {
-        //     $command = 'rar';
-        //     $args = ['x', '-y', $this->path, $extract, $this->outputDir];
-        // }
-        // $this->execute('7z', ['x', '-y', "-o{$this->outputDir}", $this->path]);
-
         $archive = pathinfo($this->path, PATHINFO_BASENAME);
         $output = "{$this->outputDir}/{$archive}";
         $filePath = "{$output}/{$file->path()}";
