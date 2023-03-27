@@ -27,6 +27,15 @@ class ArchivePhar extends BaseArchive
         return $toBase64 ? base64_encode($content) : $content;
     }
 
+    public function text(ArchiveItem $file): ?string
+    {
+        if ($file->isImage()) {
+            throw new \Exception("Error, {$file->filename()} is an image");
+        }
+
+        return $this->content($file);
+    }
+
     public function extract(string $toPath, array $files): array
     {
         $paths = [];

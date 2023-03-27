@@ -108,6 +108,8 @@ abstract class BaseArchive
 
     abstract public function content(ArchiveItem $file, bool $toBase64 = false): ?string;
 
+    abstract public function text(ArchiveItem $file): ?string;
+
     public function find(string $search, bool $skipHidden = true): ?ArchiveItem
     {
         $files = $this->findFiles($search, $skipHidden);

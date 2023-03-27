@@ -18,6 +18,16 @@ it('can read', function (string $path) {
     expect($archive->type())->toBe($type);
 })->with([...ARCHIVES_NATIVE, EPUB, CBZ, PDF]);
 
+it('can get text', function (string $path) {
+    $archive = Archive::make($path);
+    $files = $archive->files();
+    $first = array_filter($files, fn (ArchiveItem $item) => ! $item->isImage());
+    $first = array_shift($first);
+    $text = $archive->text($first);
+
+    expect($text)->toBeString();
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ, PDF]);
+
 it('can failed if not found', function () {
     expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
 });

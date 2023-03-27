@@ -73,6 +73,29 @@ class ArchivePdf extends BaseArchive
             : $content;
     }
 
+    public function text(ArchiveItem $file): ?string
+    {
+        if ($file->isImage()) {
+            throw new \Exception("Error, {$file->filename()} is an image");
+        }
+
+        $index = (int) $file->path();
+
+        $parser = new Parser();
+        $document = $parser->parseFile($this->path());
+
+        $pages = $document->getPages();
+
+        $page = array_filter($pages, fn ($page) => $page->getPageNumber() === $index);
+        if ($page) {
+            $page = array_shift($page);
+
+            return $page->getText();
+        }
+
+        return null;
+    }
+
     private function parse(): static
     {
         $parser = new Parser();
