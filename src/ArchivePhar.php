@@ -7,11 +7,7 @@ use SplFileInfo;
 
 class ArchivePhar extends BaseArchive
 {
-    protected function __construct(
-    ) {
-    }
-
-    public static function make(string $path): self
+    public static function read(string $path): self
     {
         $self = new self();
         $self->setup($path);
@@ -77,6 +73,7 @@ class ArchivePhar extends BaseArchive
             $this->files[] = $this->createItemFromSplFileInfo($file, $this->outputDirectory);
         }
 
+        $this->sortFiles();
         $this->count = count($this->files);
 
         return $this;

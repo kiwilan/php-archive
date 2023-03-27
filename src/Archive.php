@@ -13,7 +13,7 @@ class Archive
     ) {
     }
 
-    public static function make(string $path): BaseArchive
+    public static function read(string $path): BaseArchive
     {
         if (! file_exists($path)) {
             throw new \Exception("File {$path} not found");
@@ -28,12 +28,12 @@ class Archive
         $archive = match ($self->type) {
             ArchiveEnum::zip => ArchiveZip::class,
             ArchiveEnum::phar => ArchivePhar::class,
-            ArchiveEnum::sevenZip => ArchivePhar::class,
+            ArchiveEnum::sevenZip => ArchiveSevenZip::class,
             ArchiveEnum::rar => ArchiveRar::class,
             ArchiveEnum::pdf => ArchivePdf::class,
         };
 
-        return $archive::make($self->path);
+        return $archive::read($self->path);
     }
 
     public function path(): string

@@ -7,11 +7,7 @@ use ZipArchive;
 
 class ArchiveZip extends BaseArchive
 {
-    protected function __construct(
-    ) {
-    }
-
-    public static function make(string $path): self
+    public static function read(string $path): self
     {
         $self = new self();
         $self->setup($path);
@@ -93,6 +89,7 @@ class ArchiveZip extends BaseArchive
         });
 
         $this->files = $items;
+        $this->sortFiles();
         $this->count = count($items);
 
         return $this;

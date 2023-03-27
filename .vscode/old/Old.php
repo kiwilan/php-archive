@@ -7,7 +7,7 @@ use Kiwilan\Archive\Enums\ArchiveEnum;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class Archive
+class Old
 {
     /** @var ArchiveItem[] */
     protected array $files = [];

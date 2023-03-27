@@ -9,13 +9,18 @@ use RarEntry;
 
 class ArchiveRar extends BaseArchive
 {
-    protected function __construct(
-    ) {
-    }
-
-    public static function make(string $path): self
+    public static function read(string $path): BaseArchive
     {
         $self = new self();
+
+        if (! BaseArchive::extensionRarTest(false)) {
+            BaseArchive::binaryP7zipTest();
+
+            $self = ArchiveSevenZip::read($path);
+
+            return $self;
+        }
+
         $self->setup($path);
         $self->parse();
 
@@ -70,9 +75,7 @@ class ArchiveRar extends BaseArchive
 
     private function parse(): static
     {
-        if (! extension_loaded('rar')) {
-            throw new \Exception('rar extension: is not installed, check this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9');
-        }
+        $this->extensionRarTest();
 
         $archive = RarArchive::open($this->path());
         $this->metadata = new ArchiveMetadata(
@@ -80,10 +83,11 @@ class ArchiveRar extends BaseArchive
         );
         $archive->close();
 
-        $this->parser(function (ArchiveItem $file) use (&$i) {
+        $this->parser(function (ArchiveItem $file) {
             $this->files[] = $file;
         });
 
+        $this->sortFiles();
         $this->count = count($this->files);
 
         return $this;
@@ -160,7 +164,7 @@ class ArchiveRar extends BaseArchive
                 'isEncrypted' => $entry->isEncrypted(),
             ],
 
-            hostOS: $entry->getHostOS(),
+            hostOS: "{$entry->getHostOS()}",
         );
 
         return $item;

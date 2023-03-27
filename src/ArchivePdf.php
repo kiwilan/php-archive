@@ -10,11 +10,7 @@ class ArchivePdf extends BaseArchive
 {
     protected string $pdfExt = 'jpg';
 
-    protected function __construct(
-    ) {
-    }
-
-    public static function make(string $path): self
+    public static function read(string $path): self
     {
         $self = new self();
         $self->setup($path);
@@ -50,9 +46,7 @@ class ArchivePdf extends BaseArchive
 
     public function content(ArchiveItem $file, bool $toBase64 = false): ?string
     {
-        if (! extension_loaded('Imagick')) {
-            throw new \Exception("'Error PDF, Imagick extension: is not installed'\nCheck this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9");
-        }
+        $this->extensionImagickTest();
 
         $index = (int) $file->path();
         $format = $this->pdfExt;
@@ -110,6 +104,7 @@ class ArchivePdf extends BaseArchive
             $this->files[] = $this->createArchiveItem($page);
         }
 
+        $this->sortFiles();
         $this->count = $document->getDetails()['Pages'] ?? 0;
 
         return $this;

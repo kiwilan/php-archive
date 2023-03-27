@@ -3,8 +3,13 @@
 namespace Kiwilan\Archive;
 
 use DateTime;
+use Exception;
+use FilesystemIterator;
 use Kiwilan\Archive\Enums\ArchiveEnum;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use SplFileInfo;
+use Symfony\Component\Process\Process;
 
 abstract class BaseArchive
 {
@@ -31,7 +36,7 @@ abstract class BaseArchive
     ) {
     }
 
-    abstract public static function make(string $path): self;
+    abstract public static function read(string $path): self;
 
     protected function setup(string $path): static
     {
@@ -187,6 +192,61 @@ abstract class BaseArchive
         });
     }
 
+    protected function sortFiles()
+    {
+        usort($this->files, fn (ArchiveItem $a, ArchiveItem $b) => strcmp($a->path(), $b->path()));
+    }
+
+    protected static function extensionImagickTest(bool $exception = true): bool
+    {
+        if (! extension_loaded('imagick')) {
+            if ($exception) {
+                throw new \Exception("'Error PDF, `imagick` extension: is not installed'\nCheck this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick");
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    protected static function extensionRarTest(bool $exception = true): bool
+    {
+        if (! extension_loaded('rar')) {
+            if ($exception) {
+                throw new \Exception("'Error WinRAR, `rar` extension: is not installed'\nCheck this guide https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar");
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function binaryP7zipTest(bool $exception = true): bool
+    {
+        $process = new Process(['7z']);
+        $process->run();
+
+        if (! $process->isSuccessful()) {
+            if ($exception) {
+                $osFamily = PHP_OS_FAMILY;
+                $isDarwin = $osFamily === 'Darwin';
+                $message = "p7zip is not installed or not in the PATH. Please install p7zip and try again.\nYou can check this guide: https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d";
+
+                if ($isDarwin) {
+                    $message .= "\nYou have to install `rar` binary with brew on macOS.";
+                }
+
+                throw new Exception($message);
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
     protected function getFiles(string $path): array
     {
         $files = array_diff(scandir($path), ['.', '..']);
@@ -299,5 +359,20 @@ abstract class BaseArchive
         $round = round($bytes / pow(1024, $floor), 2);
 
         return "{$round} {$format}";
+    }
+
+    public static function recurseRmdir(string $dir)
+    {
+        $exclude = ['.gitignore'];
+        $it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
+        $it = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($it as $file) {
+            if ($file->isDir()) {
+                rmdir($file->getPathname());
+            } elseif (! in_array($file->getFilename(), $exclude)) {
+                unlink($file->getPathname());
+            }
+        }
+        // rmdir($dir);
     }
 }

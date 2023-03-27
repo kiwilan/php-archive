@@ -4,7 +4,7 @@ use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 
 it('can read epub', function () {
-    $archive = Archive::make(EPUB);
+    $archive = Archive::read(EPUB);
     $files = $archive->files();
     $extension = pathinfo(EPUB, PATHINFO_EXTENSION);
 
@@ -16,7 +16,7 @@ it('can read epub', function () {
 });
 
 // it('can read cba', function (string $path) {
-//     $archive = Archive::make($path);
+//     $archive = Archive::read($path);
 //     $files = $archive->files();
 //     $extension = pathinfo($path, PATHINFO_EXTENSION);
 
