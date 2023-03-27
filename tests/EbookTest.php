@@ -15,15 +15,14 @@ it('can read epub', function () {
     expect($archive->count())->toBeGreaterThan(0);
 });
 
-// it('can read cba', function (string $path) {
-//     $archive = Archive::read($path);
-//     $files = $archive->files();
-//     $extension = pathinfo($path, PATHINFO_EXTENSION);
+it('can read cba', function (string $path) {
+    $archive = Archive::read($path);
+    $files = $archive->files();
+    $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-//     // expect($archive->os())->toBe(PHP_OS_FAMILY);
-//     // expect($archive->extension())->toBe($extension);
-//     // expect($archive->path())->toBe($path);
-//     // expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
-//     // expect($files)->toBeIterable();
-//     // expect($archive->count())->toBeGreaterThan(0);
-// })->with(CBA_ITEMS);
+    expect($archive->extension())->toBe($extension);
+    expect($archive->path())->toBe($path);
+    expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
+    expect($files)->toBeIterable();
+    expect($archive->count())->toBeGreaterThan(0);
+})->with(CBA_ITEMS);

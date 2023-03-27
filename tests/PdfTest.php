@@ -2,6 +2,10 @@
 
 use Kiwilan\Archive\Archive;
 
+beforeEach(function () {
+    recurseRmdir(outputPath());
+});
+
 it('can get files', function () {
     $archive = Archive::read(PDF);
     $files = $archive->files();
