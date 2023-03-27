@@ -30,7 +30,7 @@ class Archive
             ArchiveEnum::phar => ArchivePhar::class,
             ArchiveEnum::sevenZip => ArchivePhar::class,
             ArchiveEnum::rar => ArchivePhar::class,
-            ArchiveEnum::pdf => ArchivePhar::class,
+            ArchiveEnum::pdf => ArchivePdf::class,
         };
 
         return $archive::make($self->path);

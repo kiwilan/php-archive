@@ -1,59 +1,58 @@
 <?php
 
 use Kiwilan\Archive\Archive;
-use Kiwilan\Archive\ArchivePdf;
 
-// it('can read pdf', function () {
-//     $archive = ArchivePdf::make(PDF);
+it('can get files', function () {
+    $archive = Archive::make(PDF);
+    $files = $archive->files();
 
-//     expect($archive->metadata())->toBeInstanceOf(\Kiwilan\Archive\Pdf\PdfMetadata::class);
-//     expect($archive->dictionary())->toBeArray();
-//     expect($archive->objects())->toBeArray();
-//     expect($archive->pages())->toBeArray();
-//     expect($archive->text())->toBeString();
-//     expect($archive->count())->toBeGreaterThanOrEqual(2);
-// });
+    expect($files)->toBeArray();
+    expect($files)->toHaveCount($archive->count());
+});
 
-// it('can failed with archive', function () {
-//     expect(fn () => Archive::make(PDF))->toThrow(\Exception::class);
-// });
+it('can get content first file', function () {
+    $archive = Archive::make(PDF);
+    $content = $archive->content($archive->first());
 
-// it('can failed', function () {
-//     expect(fn () => ArchivePdf::make('path/to/pdf'))->toThrow(\Exception::class);
-// });
+    $output = outputPath();
+    $file = "{$output}first.jpg";
+    stringToImage($content, $file);
 
-// it('can failed with zip', function () {
-//     expect(fn () => ArchivePdf::make(__DIR__.'/media/archive.zip'))->toThrow(\Exception::class);
-// });
+    expect($content)->toBeString();
+    expect($file)->toBeReadableFile();
+});
 
-// it('can get content pdf cover', function () {
-//     $archive = ArchivePdf::make(PDF);
-//     $content = $archive->contentPage(index: 0, toBase64: false);
-//     $path = 'tests/output/cover-PDF.jpg';
+it('can extract some files', function () {
+    $archive = Archive::make(PDF);
+    $files = $archive->files();
+    $output = outputPath($archive->basename());
 
-//     stringToImage($content, $path);
+    $select = [$files[0], $files[1]];
+    $paths = $archive->extract($output, $select);
 
-//     expect($content)->toBeString();
-//     expect($path)->toBeReadableFile();
+    expect($paths)->toBeArray();
+    expect($paths)->toHaveCount(2);
+    expect($paths[0])->toBeString();
+    expect($paths[0])->toBeReadableFile();
+});
 
-//     $content = $archive->contentPage(index: 0, toBase64: true);
-//     $path = 'tests/output/coverBase64-PDF.jpg';
-//     $isBase64 = isBase64($content);
-//     base64ToImage($content, $path);
+it('can extract files', function () {
+    $archive = Archive::make(PDF);
+    $paths = $archive->extractAll(outputPath());
 
-//     expect($isBase64)->toBeTrue();
-//     expect($path)->toBeReadableFile();
-// })->skip(PHP_OS_FAMILY === 'Windows', 'Not supported on Windows');
+    expect($paths)->toBeArray();
+    expect($paths)->toBeGreaterThanOrEqual(5);
+});
 
-// it('can read pdf metadata', function () {
-//     $archive = ArchivePdf::make(PDF);
-//     $metadata = $archive->metadata();
+it('can read metadata', function () {
+    $archive = Archive::make(PDF);
+    $metadata = $archive->metadata();
 
-//     expect($metadata->title())->toBeString();
-//     expect($metadata->author())->toBeString();
-//     expect($metadata->subject())->toBeString();
-//     expect($metadata->keywords())->toBeArray();
-//     expect($metadata->creator())->toBeString();
-//     expect($metadata->creationDate())->toBeInstanceOf(\DateTime::class);
-//     expect($metadata->modDate())->toBeInstanceOf(\DateTime::class);
-// });
+    expect($metadata->title())->toBeString();
+    expect($metadata->author())->toBeString();
+    expect($metadata->subject())->toBeString();
+    expect($metadata->keywords())->toBeArray();
+    expect($metadata->creator())->toBeString();
+    expect($metadata->creationDate())->toBeInstanceOf(\DateTime::class);
+    expect($metadata->modDate())->toBeInstanceOf(\DateTime::class);
+});

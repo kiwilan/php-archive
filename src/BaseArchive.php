@@ -20,6 +20,8 @@ abstract class BaseArchive
 
     protected ?ArchiveEnum $type = null;
 
+    protected ?ArchiveMetadata $metadata = null;
+
     /** @var ArchiveItem[] */
     protected array $files = [];
 
@@ -79,6 +81,16 @@ abstract class BaseArchive
         return $this->type;
     }
 
+    public function first(): ArchiveItem
+    {
+        return reset($this->files);
+    }
+
+    public function last(): ArchiveItem
+    {
+        return end($this->files);
+    }
+
     public function files(): array
     {
         return $this->files;
@@ -87,6 +99,11 @@ abstract class BaseArchive
     public function count(): int
     {
         return $this->count;
+    }
+
+    public function metadata(): ArchiveMetadata
+    {
+        return $this->metadata;
     }
 
     abstract public function content(ArchiveItem $file, bool $toBase64 = false): ?string;

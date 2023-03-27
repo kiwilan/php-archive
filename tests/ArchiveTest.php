@@ -16,7 +16,7 @@ it('can read', function (string $path) {
     expect($archive->extension())->toBe($extension);
     expect($archive->path())->toBe($path);
     expect($archive->type())->toBe($type);
-})->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ, PDF]);
 
 it('can failed if not found', function () {
     expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
@@ -34,7 +34,7 @@ it('can find all images', function (string $path) {
     $archive = Archive::make($path);
     $ext = 'jpeg';
     $files = $archive->findAll($ext);
-    if (empty($files)) {
+    if ($archive->extension() === 'cbz') {
         $ext = 'jpg';
         $files = $archive->findAll($ext);
     }
@@ -47,6 +47,18 @@ it('can find all images', function (string $path) {
             expect($file->extension())->toBe($ext);
         }
     );
+})->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
+
+it('can get content first file', function (string $path) {
+    $archive = Archive::make($path);
+    $content = $archive->content($archive->first());
+
+    $output = outputPath();
+    $file = "{$output}first.jpg";
+    stringToImage($content, $file);
+
+    expect($content)->toBeString();
+    expect($file)->toBeReadableFile();
 })->with([...ARCHIVES_NATIVE, EPUB, CBZ]);
 
 it('can get cover', function (string $path) {
@@ -63,7 +75,7 @@ it('can get cover', function (string $path) {
     expect($coverPath)->toBeReadableFile();
 })->with([...ARCHIVES_NATIVE, EPUB]);
 
-it('can get content with base64', function (string $path) {
+it('can cover with base64', function (string $path) {
     $archive = Archive::make($path);
     $cover = $archive->find('cover.jpeg');
     $content = $archive->content($cover, true);

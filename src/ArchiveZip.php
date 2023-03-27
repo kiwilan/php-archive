@@ -68,6 +68,16 @@ class ArchiveZip extends BaseArchive
 
     private function parse(): static
     {
+        $archive = new ZipArchive();
+        $archive->open($this->path);
+
+        $this->metadata = new ArchiveMetadata(
+            status: "{$archive->status}",
+            comment: $archive->comment,
+        );
+
+        $archive->close();
+
         $items = [];
         $this->parser(function (ArchiveItem $item) use (&$items) {
             $items[] = $item;
