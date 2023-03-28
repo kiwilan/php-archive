@@ -1,4 +1,4 @@
-name: Tests
+name: Tests pz7ip (no rar)
 
 on: [push, pull_request]
 # on:
