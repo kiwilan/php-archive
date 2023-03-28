@@ -77,6 +77,12 @@ jobs:
           sudo cp ./modules/rar.so $pecl_path
           sudo echo "extension=rar.so" > $phpini_path
 
+      - name: Check extension rar
+        run: php -m | grep rar
+
+      - name: Check extension imagick
+        run: php -m | grep imagick
+
       - name: Execute tests
         run: vendor/bin/pest --coverage
 
