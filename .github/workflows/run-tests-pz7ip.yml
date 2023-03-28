@@ -10,7 +10,7 @@ on: [push, pull_request]
 #       - main
 
 jobs:
-  test:
+  test-pz7ip:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
@@ -45,9 +45,6 @@ jobs:
 
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
-
-      - name: Check extension rar
-        run: php -m | grep rar
 
       - name: Check extension imagick
         run: php -m | grep imagick
