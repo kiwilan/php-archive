@@ -253,7 +253,11 @@ abstract class BaseArchive
 
     public static function clearOutputDirectory(): bool
     {
-        self::recurseRmdir(self::getOutputDirectory());
+        $output = self::getOutputDirectory();
+        if (! is_dir($output)) {
+            mkdir($output, 0755, true);
+        }
+        self::recurseRmdir($output);
 
         return true;
     }
