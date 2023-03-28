@@ -16,7 +16,7 @@ jobs:
       fail-fast: true
       matrix:
         os: [windows-latest]
-        php: [8.1, 8.2]
+        php: [8.1]
         stability: [prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -67,5 +67,5 @@ jobs:
       - name: Check extension imagick
         run: php -m | grep imagick
 
-      # - name: Execute tests
-      #   run: vendor/bin/pest --coverage
+      - name: Execute tests
+        run: vendor/bin/pest

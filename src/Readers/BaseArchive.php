@@ -42,6 +42,8 @@ abstract class BaseArchive
 
     protected function setup(string $path): static
     {
+        BaseArchive::clearOutputDirectory();
+
         $this->path = $path;
         $this->extension = pathinfo($path, PATHINFO_EXTENSION);
         $this->filename = pathinfo($path, PATHINFO_FILENAME);
@@ -249,7 +251,14 @@ abstract class BaseArchive
         return true;
     }
 
-    public static function getOutputDirectory(?string $filename): string
+    public static function clearOutputDirectory(): bool
+    {
+        self::recurseRmdir(self::getOutputDirectory());
+
+        return true;
+    }
+
+    public static function getOutputDirectory(?string $filename = null): string
     {
         $root = getcwd();
         if (is_dir("{$root}/vendor")) {
