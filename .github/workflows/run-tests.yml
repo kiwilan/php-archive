@@ -61,20 +61,21 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-      # - name: Add rar extension
-      #   run: |
-      #     sudo apt-get install -y unrar
-      #     sudo apt-get install -y libunrar-dev
-      #     git clone https://github.com/cataphract/php-rar
-      #     cd php-rar
-      #     phpize
-      #     ./configure
-      #     sudo make
-      #     sudo make install
-      #     pecl_path=$(pecl config-get ext_dir)
-      #     phpini_path=$(php -i | grep /.+/php.ini -oE)
-      #     sudo cp ./modules/rar.so $pecl_path
-      #     sudo echo "extension=rar.so" > $phpini_path
+      - name: Add rar extension
+        if: runner.os == 'Linux' || runner.os == 'macOS'
+        run: |
+          sudo apt-get install -y unrar
+          sudo apt-get install -y libunrar-dev
+          git clone https://github.com/cataphract/php-rar
+          cd php-rar
+          phpize
+          ./configure
+          sudo make
+          sudo make install
+          pecl_path=$(pecl config-get ext_dir)
+          phpini_path=$(php -i | grep /.+/php.ini -oE)
+          sudo cp ./modules/rar.so $pecl_path
+          sudo echo "extension=rar.so" > $phpini_path
 
       - name: Execute tests
         run: vendor/bin/pest --coverage
