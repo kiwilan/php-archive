@@ -46,7 +46,7 @@ abstract class BaseArchive
         $this->extension = pathinfo($path, PATHINFO_EXTENSION);
         $this->filename = pathinfo($path, PATHINFO_FILENAME);
         $this->basename = pathinfo($path, PATHINFO_BASENAME);
-        $this->outputDirectory = sys_get_temp_dir().DIRECTORY_SEPARATOR.$this->basename;
+        $this->outputDirectory = BaseArchive::getOutputDirectory($this->basename);
         $this->type = ArchiveEnum::fromExtension($this->extension, mime_content_type($path));
 
         return $this;
@@ -247,6 +247,22 @@ abstract class BaseArchive
         }
 
         return true;
+    }
+
+    public static function getOutputDirectory(?string $filename): string
+    {
+        $root = getcwd();
+        if (is_dir("{$root}/vendor")) {
+            $outputDirectory = "{$root}/vendor/temp";
+        } else {
+            $outputDirectory = "{$root}/temp";
+        }
+
+        if ($filename) {
+            $outputDirectory .= DIRECTORY_SEPARATOR.$filename;
+        }
+
+        return $outputDirectory;
     }
 
     protected function getFiles(string $path): array

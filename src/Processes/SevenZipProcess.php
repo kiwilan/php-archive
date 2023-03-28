@@ -28,7 +28,7 @@ class SevenZipProcess
         }
 
         $self = new self($path);
-        $self->outputDir = sys_get_temp_dir();
+        $self->outputDir = BaseArchive::getOutputDirectory($path);
         $self->isDarwin = PHP_OS_FAMILY === 'Darwin';
 
         $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
