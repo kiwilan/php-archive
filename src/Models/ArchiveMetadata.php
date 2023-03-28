@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Models;
 
 use DateTime;
 

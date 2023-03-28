@@ -1,11 +1,13 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Readers;
 
 use DateTime;
 use Exception;
 use FilesystemIterator;
 use Kiwilan\Archive\Enums\ArchiveEnum;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;

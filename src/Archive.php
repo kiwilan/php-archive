@@ -3,6 +3,12 @@
 namespace Kiwilan\Archive;
 
 use Kiwilan\Archive\Enums\ArchiveEnum;
+use Kiwilan\Archive\Readers\ArchivePdf;
+use Kiwilan\Archive\Readers\ArchivePhar;
+use Kiwilan\Archive\Readers\ArchiveRar;
+use Kiwilan\Archive\Readers\ArchiveSevenZip;
+use Kiwilan\Archive\Readers\ArchiveZip;
+use Kiwilan\Archive\Readers\BaseArchive;
 
 class Archive
 {
@@ -34,6 +40,13 @@ class Archive
         };
 
         return $archive::read($self->path);
+    }
+
+    public static function create(string $path): ArchiveZipCreate
+    {
+        $archive = ArchiveZipCreate::create($path);
+
+        return $archive;
     }
 
     public function path(): string

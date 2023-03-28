@@ -1,9 +1,9 @@
 <?php
 
 use Kiwilan\Archive\Archive;
-use Kiwilan\Archive\ArchiveItem;
-use Kiwilan\Archive\ArchiveMetadata;
 use Kiwilan\Archive\Enums\ArchiveEnum;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
 
 beforeEach(function () {
     recurseRmdir(outputPath());

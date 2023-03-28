@@ -53,6 +53,13 @@ define('ARCHIVES_7Z', [
     'CB7' => CB7,
 ]);
 
+function mediaPath(string $filename): string
+{
+    $pathBase = __DIR__.'/media/';
+
+    return $pathBase.$filename;
+}
+
 function outputPath(?string $path = null, ?string $filename = null): string
 {
     $pathBase = __DIR__.'/output/';

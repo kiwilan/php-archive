@@ -1,7 +1,7 @@
 <?php
 
-use Kiwilan\Archive\ArchiveItem;
-use Kiwilan\Archive\BaseArchive;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Readers\BaseArchive;
 
 it('can create ArchiveItem', function () {
     $item = ArchiveItem::fromP7zip([

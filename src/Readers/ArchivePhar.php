@@ -1,7 +1,9 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Readers;
 
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
 use PharData;
 use SplFileInfo;
 

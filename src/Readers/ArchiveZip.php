@@ -1,8 +1,10 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Readers;
 
 use Closure;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
 use ZipArchive;
 
 class ArchiveZip extends BaseArchive

@@ -1,8 +1,10 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Processes;
 
 use Exception;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Readers\BaseArchive;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 

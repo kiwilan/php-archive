@@ -1,8 +1,10 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Readers;
 
 use Imagick;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
 use Smalot\PdfParser\Page;
 use Smalot\PdfParser\Parser;
 

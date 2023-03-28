@@ -1,9 +1,11 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Readers;
 
 use Closure;
 use DateTime;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
 use RarArchive;
 use RarEntry;
 

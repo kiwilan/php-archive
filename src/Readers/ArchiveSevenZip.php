@@ -1,6 +1,10 @@
 <?php
 
-namespace Kiwilan\Archive;
+namespace Kiwilan\Archive\Readers;
+
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Processes\SevenZipProcess;
 
 class ArchiveSevenZip extends BaseArchive
 {
