@@ -82,7 +82,7 @@ jobs:
 
       - name: on Linux run phpstan
         if: runner.os == 'Linux'
-        run: vendor/bin/phpstan analyse
+        run: vendor/bin/phpstan analyse --memory-limit=2G
         shell: bash
 
       - name: on Linux send code coverage
