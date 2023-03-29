@@ -140,6 +140,10 @@ class SevenZipProcess
         $output = "{$this->outputDir}/{$archive}";
         $filePath = "{$output}/{$file->path()}";
 
+        if (! file_exists($filePath)) {
+            mkdir($output, 0755, true);
+        }
+
         if ($this->isRar && $this->isDarwin) {
             $this->execute('rar', ['x', '-y', $this->path, $file->path(), "{$output}/"]);
         } else {
