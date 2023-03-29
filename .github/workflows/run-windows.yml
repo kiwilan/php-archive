@@ -31,9 +31,9 @@ jobs:
           scoop install 7zip ghostscript imagemagick curl ffmpeg
           php -i | find "Thread Safety"
           php -i | grep "Architecture"
-          curl https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip --output php_rar-4.2.0-8.1-nts-vs16-x64.zip
-          7z x php_rar-4.2.0-8.1-nts-vs16-x64.zip
-          cd php_rar-4.2.0-8.1-nts-vs16-x64
+          Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
+          7z x php_rar.zip
+          cd php_rar.zip
           ls
         shell: powershell
 
