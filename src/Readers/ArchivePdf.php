@@ -55,7 +55,7 @@ class ArchivePdf extends BaseArchive
 
         $imagick = new Imagick();
 
-        $imagick->setResolution(300, 300);
+        $imagick->setResolution(600, 600);
         $imagick->readimage("{$this->path}[{$index}]");
         $imagick->setImageFormat($format);
 
