@@ -28,7 +28,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install ghostscript@9.54.0
+          scoop install ghostscript@9.54.0 -a x86
           scoop install 7zip imagemagick ffmpeg
           php -i | find "Thread Safety"
           php -i | grep "Architecture"
