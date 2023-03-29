@@ -29,6 +29,9 @@ jobs:
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop install 7zip ghostscript imagemagick curl
+          php -i | find "Thread Safety"
+          php -i | grep "Architecture"
+          curl https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip
         shell: powershell
 
       - name: Checkout code
