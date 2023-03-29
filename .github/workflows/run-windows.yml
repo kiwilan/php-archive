@@ -27,6 +27,8 @@ jobs:
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop install 7zip ghostscript imagemagick
+          php -i | find "Thread Safety"
+          php -i | grep "Architecture"
         shell: powershell
 
       - name: Checkout code
