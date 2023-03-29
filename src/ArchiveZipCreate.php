@@ -27,6 +27,11 @@ class ArchiveZipCreate
     {
         $self = new self($path, pathinfo($path, PATHINFO_BASENAME));
 
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        if ($extension !== 'zip') {
+            throw new \Exception("File {$path} is not a zip file, only zip files are supported.");
+        }
+
         return $self;
     }
 
