@@ -36,7 +36,7 @@ jobs:
           cd php_rar
           ls
           php --ini
-          which gs
+          gs
         shell: powershell
 
       - name: Checkout code
