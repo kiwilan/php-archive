@@ -38,6 +38,7 @@ jobs:
           ls
           php --ini
           ls C:\tools\php\
+          ls SCOOP_GLOBAL
         shell: powershell
 
       - name: Checkout code
