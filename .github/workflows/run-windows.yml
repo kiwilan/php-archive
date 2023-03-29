@@ -28,7 +28,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install 7zip ghostscript imagemagick curl ffmpeg
+          scoop install 7zip imagemagick ghostscript@9.54.0 ffmpeg
           php -i | find "Thread Safety"
           php -i | grep "Architecture"
           Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
@@ -36,6 +36,7 @@ jobs:
           cd php_rar
           ls
           php --ini
+          which gs
         shell: powershell
 
       - name: Checkout code
