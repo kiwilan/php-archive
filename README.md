@@ -8,7 +8,7 @@
 [![tests][tests-src]][tests-href]
 [![codecov][codecov-src]][codecov-href]
 
-PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hybrid solution (native and with `p7zip` binary), designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`).
+PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hybrid solution (native and with `p7zip` binary), designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`). Supports Linux, macOS and Windows.
 
 > **Warning**
 >
@@ -33,6 +33,14 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 > On macOS, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
 
 [**More about this package**](#about).
+
+### Examples
+
+-   You want to handle `.zip` and `.epub` files => **you don't need to install anything**
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr` files => **you need to install [`rar` extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary**
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** (`rar` extension could be installed too to handle `.rar` and `.cbr`)
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf` files => \*\*you need to install [`p7zip`](https://www.7-zip.org/) binary and [`imagick` extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf`, `.tar`, `.tar.gz`, `.cbt` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** and [`imagick` extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
 
 ## Features
 

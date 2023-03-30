@@ -38,7 +38,6 @@ jobs:
           php --ini
           $env:GIT_INSTALL_ROOT
           ls C:\tools\php\
-          ls SCOOP_GLOBAL
         shell: powershell
 
       - name: Checkout code
