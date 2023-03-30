@@ -29,7 +29,7 @@ it('can read cba', function (string $path) {
 
 it('can get cover with cba', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->findAll('jpg');
+    $files = $archive->filter('jpg');
 
     expect($files[0])->not()->toBeNull();
 })->with(CBA_ITEMS);

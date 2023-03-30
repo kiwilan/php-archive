@@ -17,13 +17,9 @@ jobs:
     steps:
       - name: scoop
         run: |
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install git 7zip imagemagick ghostscript ffmpeg unrar
-        shell: powershell
-
-      - name: Set paths
-        run: |
-
+          scoop install 7zip imagemagick ghostscript unrar
         shell: powershell
 
       - name: Checkout code

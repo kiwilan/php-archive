@@ -130,22 +130,10 @@ abstract class BaseArchive
         return null;
     }
 
-    public function findAndContent(string $search, bool $skipHidden = true): ?string
-    {
-        $file = $this->find($search, $skipHidden);
-        if (! $file) {
-            return null;
-        }
-
-        $content = $this->content($file);
-
-        return $content;
-    }
-
     /**
      * @return ArchiveItem[]|null
      */
-    public function findAll(string $search, bool $skipHidden = true): ?array
+    public function filter(string $search, bool $skipHidden = true): ?array
     {
         $files = $this->findFiles($search, $skipHidden);
 

@@ -52,10 +52,10 @@ it('can get files', function (string $path) {
 it('can find all images', function (string $path) {
     $archive = Archive::read($path);
     $ext = 'jpeg';
-    $files = $archive->findAll($ext);
+    $files = $archive->filter($ext);
     if (empty($files)) {
         $ext = 'jpg';
-        $files = $archive->findAll($ext);
+        $files = $archive->filter($ext);
     }
 
     expect($files)->toBeArray();
