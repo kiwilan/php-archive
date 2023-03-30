@@ -199,6 +199,7 @@ abstract class BaseArchive
     protected function sortFiles()
     {
         usort($this->files, fn (ArchiveItem $a, ArchiveItem $b) => strcmp($a->path(), $b->path()));
+        $this->files = array_values($this->files);
     }
 
     protected static function extensionImagickTest(bool $exception = true): bool
