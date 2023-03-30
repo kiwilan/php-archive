@@ -272,8 +272,11 @@ abstract class BaseArchive
         }
 
         if ($filename) {
+            $filename = pathinfo($filename, PATHINFO_BASENAME);
             $outputDirectory .= DIRECTORY_SEPARATOR.$filename;
         }
+
+        $outputDirectory = self::pathToOsPath($outputDirectory);
 
         return $outputDirectory;
     }
@@ -330,6 +333,11 @@ abstract class BaseArchive
         );
     }
 
+    public static function pathToOsPath(string $path): string
+    {
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
+    }
+
     public static function fileIsImage(?string $extension): bool
     {
         return in_array($extension, [
@@ -362,6 +370,8 @@ abstract class BaseArchive
 
     public static function fileIsHidden(string $filename): bool
     {
+        $filename = pathinfo($filename, PATHINFO_BASENAME);
+
         return str_starts_with($filename, '.');
     }
 

@@ -151,7 +151,7 @@ class ArchiveRar extends BaseArchive
             packedSize: $packedSize,
 
             isDirectory: $isDirectory,
-            isImage: BaseArchive::fileIsImage($name),
+            isImage: BaseArchive::fileIsImage(pathinfo($name, PATHINFO_EXTENSION)),
             isHidden: BaseArchive::fileIsHidden($name),
 
             modified: $dateTime,
