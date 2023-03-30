@@ -39,35 +39,35 @@ jobs:
           cd php_rar
           cp php_rar.dll C:\tools\php\ext\php_rar.dll
           Add-Content C:\tools\php\php.ini "`nextension=rar`n"
-          Get-Content C:\tools\php\php.ini) -replace “memory_limit = 128M”, “memory_limit = -1” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=bz2”, “extension=bz2” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=curl, “extension=curl” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=ftp, “extension=ftp” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=fileinfo, “extension=fileinfo” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=gd2”, “extension=gd2” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=gettext”, “extension=gettext” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=gmp”, “extension=gmp” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=intl”, “extension=intl” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=imap”, “extension=imap” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=ldap”, “extension=ldap” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=mbstring”, “extension=mbstring” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=exif”, “extension=exif” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=mysqli”, “extension=mysqli” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=odbc”, “extension=odbc” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=openssl”, “extension=openssl” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=pdo_mysql”, “extension=pdo_mysql” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=pdo_odbc”, “extension=pdo_odbc” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=pdo_pgsql”, “extension=pdo_pgsql” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=pdo_sqlite”, “extension=pdo_sqlite” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=pgsql”, “extension=pgsql” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=shmop”, “extension=shmop” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=soap”, “extension=soap” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=sockets”, “extension=sockets” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=sodium”, “extension=sodium” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=sqlite3”, “extension=sqlite3” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=tidy”, “extension=tidy” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=xmlrpc”, “extension=xmlrpc” | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace “;extension=xsl”, “extension=xsl” | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace "memory_limit = 128M", "memory_limit = -1" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=bz2", "extension=bz2" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=curl", "extension=curl" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=ftp", "extension=ftp" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=fileinfo", "extension=fileinfo" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=gd2", "extension=gd2" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=gettext", "extension=gettext" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=gmp", "extension=gmp" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=intl", "extension=intl" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=imap", "extension=imap" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=ldap", "extension=ldap" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=mbstring", "extension=mbstring" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=exif", "extension=exif" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=mysqli", "extension=mysqli" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=odbc", "extension=odbc" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=openssl", "extension=openssl" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_mysql", "extension=pdo_mysql" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_odbc", "extension=pdo_odbc" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_pgsql", "extension=pdo_pgsql" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_sqlite", "extension=pdo_sqlite" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=pgsql", "extension=pgsql" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=shmop", "extension=shmop" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=soap", "extension=soap" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=sockets", "extension=sockets" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=sodium", "extension=sodium" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=sqlite3", "extension=sqlite3" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=tidy", "extension=tidy" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=xmlrpc", "extension=xmlrpc" | Set-Content C:\tools\php\php.ini
+          Get-Content C:\tools\php\php.ini) -replace ";extension=xsl", "extension=xsl" | Set-Content C:\tools\php\php.ini
           cat C:\tools\php\php.ini
         shell: powershell
 
