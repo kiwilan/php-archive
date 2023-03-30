@@ -22,11 +22,15 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
     -   ✅ `.tar`, `.tar.gz`, `.cbt` handled with native PHP solution
     -   ❌ `.rar`, `.cbr` handled with [`rar` extension](https://github.com/cataphract/php-rar) or `p7zip` binary => **You need to install [`rar` extension](https://github.com/cataphract/php-rar) OR `p7zip` binary**
     -   ❌ `.7z`, `.cb7` handled with [`p7zip`](https://www.7-zip.org/) binary => **You need to install `p7zip` binary**
-    -   ✅ `.pdf` handled with `smalot/pdfparser` embedded
+    -   ✅ `.pdf` handled with `smalot/pdfparser` embedded => **You need to install [`imagick` extension](https://github.com/Imagick/imagick)**
 
 > **Install help**
 >
-> If you want to install these requirements, you can read [`p7zip` guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d) or [`rar` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar).
+> If you want to install these requirements, you can read [`p7zip` guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d), [`rar` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar) or [`imagick` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick).
+
+> **Warning**
+>
+> On macOS, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
 
 [**More about this package**](#about).
 
@@ -138,7 +142,7 @@ PHP can't handle `.7z` archives natively, so I choose to use `p7zip` binary. You
 
 ### Case of `pdf`
 
-PHP can't handle `.pdf` archives natively, so I choose to use `smalot/pdfparser` package, embedded in this package.
+PHP can't handle `.pdf` archives natively, so I choose to use `smalot/pdfparser` package, embedded in this package. To extract pages as images, you have to install [`imagick` extension](https://github.com/Imagick/imagick) you could read [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick) if you want to install it.
 
 ### eBooks
 
