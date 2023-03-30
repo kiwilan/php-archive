@@ -42,6 +42,16 @@
                 "revealProblems": "onProblem",
                 "close": true
             }
+        },
+        {
+            "label": "pull-main",
+            "type": "shell",
+            "command": "git checkout main && git pull && git checkout develop && git merge main",
+            "problemMatcher": [],
+            "presentation": {
+                "revealProblems": "onProblem",
+                "close": true
+            }
         }
     ]
 }
