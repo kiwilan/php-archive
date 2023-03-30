@@ -12,7 +12,7 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 
 > **Warning**
 >
-> For some formats [`rar` extension](https://github.com/cataphract/php-rar) or [p7zip](https://www.7-zip.org/) binary could be necessary, see [Requirements](#requirements).
+> For some formats (`.rar` and `.7z`) [`rar` extension](https://github.com/cataphract/php-rar) or [p7zip](https://www.7-zip.org/) binary could be necessary, see [Requirements](#requirements).
 
 ## Requirements
 
@@ -30,7 +30,11 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 
 > **Warning**
 >
-> On macOS, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
+> On macOS, for `.rar` extract, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
+
+> **Warning**
+>
+> On Windows, for `.pdf` extract, [`imagick` extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 [**More about this package**](#about).
 
