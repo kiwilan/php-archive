@@ -62,8 +62,4 @@ jobs:
         run: php -m | grep rar
 
       - name: Execute tests
-        run: |
-          $env:GIT_INSTALL_ROOT
-          new-alias gs C:\Users\runneradmin\scoop\apps\ghostscript\current\bin\gswin64c.exe
-          gs -v
-          .\vendor\bin\pest.bat
+        run: .\vendor\bin\pest.bat
