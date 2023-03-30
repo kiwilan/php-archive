@@ -33,33 +33,40 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 > Here you can read some installation guides for dependencies
 >
 > -   [`p7zip` guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d)
-> -   [`rar` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar)
-> -   [`imagick` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
+> -   [`rar` PHP extension guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar)
+> -   [`imagick` PHP extension guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
 
 > **Warning**
 >
 > -   **On macOS**, for `.rar` extract, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
-> -   **On Windows**, for `.pdf` extract, [`imagick` extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
+> -   **On Windows**, for `.pdf` extract, [`imagick` PHP extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 If you want more informations, you can read section [**About**](#about).
 
-### Examples
-
--   You want to handle `.zip` and `.epub` files => **you don't need to install anything**
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr` files => **you need to install [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary**
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** (`rar` PHP extension could be installed too to handle `.rar` and `.cbr`)
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf` files => \*\*you need to install [`p7zip`](https://www.7-zip.org/) binary and [`imagick` PHP extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf`, `.tar`, `.tar.gz`, `.cbt` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** and [`imagick` PHP extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
-
 ## Features
 
--   List files
--   Content of file (as string to handle binary files)
+-   List files as `ArchiveItem` array
+    -   With `files` method from `Archive`: list of files
+    -   With `first` method from `Archive`: first file
+    -   With `last` method from `Archive`: last file
+-   Content of file
+    -   With `content` method from `Archive`: content of file as string (useful for images)
+    -   With `text` method from `Archive`: content of text file (binaries files return `null`)
 -   Extract files
+    -   With `extract` method from `Archive`: extract files to directory
+    -   With `extractAll` method from `Archive`: extract all files to directory
 -   Find files
+    -   With `find` method from `Archive`: find first file that match with name
+    -   With `findAll` method from `Archive`: find all files that match with extension
 -   Metadata of archive
+    -   With `metadata` method from `Archive`: metadata of archive
 -   Count files
--   Create archive
+-   Create archive, only with `.zip` format
+    -   With `create` method from `Archive`: create archive
+    -   With `addFiles` method from `Archive`: add files to archive
+    -   With `addFromString` method from `Archive`: add string to archive
+    -   With `addDirectory` and `addDirectories` methods from `Archive`: add directories to archive
+    -   With `save` method from `Archive`: save archive
 
 ## Installation
 
