@@ -36,16 +36,16 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, bz2, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: pcov
 
-      - name: Install rar extension
-        run: |
-          php -i | find "Thread Safety"
-          php -i | grep "Architecture"
-          Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
-          7z x php_rar.zip -ophp_rar
-          cd php_rar
-          cp php_rar.dll C:\tools\php\ext\php_rar.dll
-          Add-Content C:\tools\php\php.ini "`nextension=rar`n"
-        shell: powershell
+      # - name: Install rar extension
+      #   run: |
+      #     php -i | find "Thread Safety"
+      #     php -i | grep "Architecture"
+      #     Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
+      #     7z x php_rar.zip -ophp_rar
+      #     cd php_rar
+      #     cp php_rar.dll C:\tools\php\ext\php_rar.dll
+      #     Add-Content C:\tools\php\php.ini "`nextension=rar`n"
+      #   shell: powershell
 
       - name: Setup problem matchers
         run: |
@@ -58,8 +58,8 @@ jobs:
       - name: Check extension imagick
         run: php -m | grep imagick
 
-      - name: Check extension rar
-        run: php -m | grep rar
+      # - name: Check extension rar
+      #   run: php -m | grep rar
 
       - name: Execute tests
         run: .\vendor\bin\pest.bat --colors=always
