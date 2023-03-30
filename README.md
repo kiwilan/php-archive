@@ -46,27 +46,26 @@ If you want more informations, you can read section [**About**](#about).
 ## Features
 
 -   List files as `ArchiveItem` array
-    -   With `files` method from `Archive`: list of files
-    -   With `first` method from `Archive`: first file
-    -   With `last` method from `Archive`: last file
+    -   With `files` method: list of files
+    -   With `first` method: first file
+    -   With `last` method: last file
+    -   With `find` method: find first file that match with `path` property
+    -   With `filter` method: find all files that match with `path` property
 -   Content of file
-    -   With `content` method from `Archive`: content of file as string (useful for images)
-    -   With `text` method from `Archive`: content of text file (binaries files return `null`)
+    -   With `content` method: content of file as string (useful for images)
+    -   With `text` method: content of text file (binaries files return `null`)
 -   Extract files
-    -   With `extract` method from `Archive`: extract files to directory
-    -   With `extractAll` method from `Archive`: extract all files to directory
--   Find files
-    -   With `find` method from `Archive`: find first file that match with name
-    -   With `findAll` method from `Archive`: find all files that match with extension
+    -   With `extract` method: extract files to directory
+    -   With `extractAll` method: extract all files to directory
 -   Metadata of archive with `title`, `author`, `subject`, `creator`, `creationDate`, `modDate`, `status` and `comment` properties
     -   Useful for PDF files
 -   Count files
 -   Create archive, only with `.zip` format
-    -   With `create` method from `Archive`: create archive
-    -   With `addFiles` method from `Archive`: add files to archive
-    -   With `addFromString` method from `Archive`: add string to archive
-    -   With `addDirectory` and `addDirectories` methods from `Archive`: add directories to archive
-    -   With `save` method from `Archive`: save archive
+    -   With `create` method: create archive
+    -   With `addFiles` method: add files to archive
+    -   With `addFromString` method: add string to archive
+    -   With `addDirectory` and `addDirectories` methods: add directories to archive
+    -   With `save` method: save archive
 
 ## Installation
 

@@ -22,11 +22,6 @@ jobs:
           scoop install 7zip imagemagick ghostscript unrar
         shell: powershell
 
-      - name: Set paths
-        run: |
-
-        shell: powershell
-
       - name: Checkout code
         uses: actions/checkout@v3
 
