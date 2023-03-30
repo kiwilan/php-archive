@@ -30,47 +30,6 @@ jobs:
           scoop install git 7zip imagemagick ghostscript ffmpeg unrar
         shell: powershell
 
-      - name: Install rar extension
-        run: |
-          php -i | find "Thread Safety"
-          php -i | grep "Architecture"
-          Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
-          7z x php_rar.zip -ophp_rar
-          cd php_rar
-          cp php_rar.dll C:\tools\php\ext\php_rar.dll
-          Add-Content C:\tools\php\php.ini "`nextension=rar`n"
-          Get-Content C:\tools\php\php.ini) -replace "memory_limit = 128M", "memory_limit = -1" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=bz2", "extension=bz2" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=curl", "extension=curl" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=ftp", "extension=ftp" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=fileinfo", "extension=fileinfo" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=gd2", "extension=gd2" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=gettext", "extension=gettext" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=gmp", "extension=gmp" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=intl", "extension=intl" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=imap", "extension=imap" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=ldap", "extension=ldap" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=mbstring", "extension=mbstring" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=exif", "extension=exif" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=mysqli", "extension=mysqli" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=odbc", "extension=odbc" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=openssl", "extension=openssl" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_mysql", "extension=pdo_mysql" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_odbc", "extension=pdo_odbc" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_pgsql", "extension=pdo_pgsql" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=pdo_sqlite", "extension=pdo_sqlite" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=pgsql", "extension=pgsql" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=shmop", "extension=shmop" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=soap", "extension=soap" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=sockets", "extension=sockets" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=sodium", "extension=sodium" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=sqlite3", "extension=sqlite3" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=tidy", "extension=tidy" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=xmlrpc", "extension=xmlrpc" | Set-Content C:\tools\php\php.ini
-          Get-Content C:\tools\php\php.ini) -replace ";extension=xsl", "extension=xsl" | Set-Content C:\tools\php\php.ini
-          cat C:\tools\php\php.ini
-        shell: powershell
-
       - name: Set paths
         run: |
           $env:GIT_INSTALL_ROOT
@@ -86,6 +45,18 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: pcov
+
+      - name: Install rar extension
+        run: |
+          php -i | find "Thread Safety"
+          php -i | grep "Architecture"
+          Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
+          7z x php_rar.zip -ophp_rar
+          cd php_rar
+          cp php_rar.dll C:\tools\php\ext\php_rar.dll
+          Add-Content C:\tools\php\php.ini "`nextension=rar`n"
+          cat C:\tools\php\php.ini
+        shell: powershell
 
       - name: Setup problem matchers
         run: |
