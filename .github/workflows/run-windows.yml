@@ -39,7 +39,8 @@ jobs:
           cd php_rar
           cp php_rar.dll C:\tools\php\ext\php_rar.dll
           cd ..
-          Add-Content -Path C:\tools\php\php.ini -Value (Get-Content "extension=rar")
+          Add-Content -Path  -Value (Get-Content "")
+          Add-Content C:\tools\php\php.ini "`nextension=rar`n"
         shell: powershell
 
       - name: Set paths
