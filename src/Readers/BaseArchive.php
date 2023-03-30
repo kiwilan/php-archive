@@ -183,7 +183,7 @@ abstract class BaseArchive
     {
         $files = $this->files();
 
-        return array_filter($files, function (ArchiveItem $file) use ($search, $skipHidden) {
+        $filtered = array_filter($files, function (ArchiveItem $file) use ($search, $skipHidden) {
             $isExtension = ! str_contains($search, '.');
             if ($skipHidden && $file->isHidden()) {
                 return false;
@@ -194,6 +194,10 @@ abstract class BaseArchive
                 return str_contains($file->path(), $search);
             }
         });
+
+        $filtered = array_values($filtered);
+
+        return $filtered;
     }
 
     protected function sortFiles()

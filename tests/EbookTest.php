@@ -20,10 +20,16 @@ it('can read cba', function (string $path) {
     $files = $archive->files();
     $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-    expect($archive->files()[0])->not()->toBeNull();
     expect($archive->extension())->toBe($extension);
     expect($archive->path())->toBe($path);
     expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
     expect($files)->toBeIterable();
     expect($archive->count())->toBeGreaterThan(0);
+})->with(CBA_ITEMS);
+
+it('can get cover with cba', function (string $path) {
+    $archive = Archive::read($path);
+    $files = $archive->findAll('jpg');
+
+    expect($files[0])->not()->toBeNull();
 })->with(CBA_ITEMS);
