@@ -1,7 +1,7 @@
 {
     "name": "kiwilan/php-archive",
-    "version": "0.1.1",
-    "description": "PHP package to read and extract from archives (.zip, .rar, .tar, .7z) or .pdf with p7zip binary, designed to works with eBooks (.epub, .cbz, .cbr, .cb7, .cbt).",
+    "version": "1.0.0",
+    "description": "PHP package to handle archives (.zip, .rar, .tar, .7z) or .pdf with hybrid solution (native and with p7zip binary), designed to works with eBooks (.epub, .cbz, .cbr, .cb7, .cbt).",
     "keywords": [
         "php",
         "archive",
@@ -28,7 +28,8 @@
         }
     ],
     "suggest": {
-        "ext-imagick": "*"
+        "ext-imagick": "*",
+        "ext-rar": "*"
     },
     "require": {
         "php": "^8.1",
@@ -53,7 +54,10 @@
     },
     "scripts": {
         "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
+        "test-filter": "vendor/bin/pest --filter",
+        "test-parallel": "vendor/bin/pest --parallel",
+        "test-coverage": "vendor/bin/pest --coverage --min=90",
+        "test-coverage-parallel": "vendor/bin/pest --parallel --coverage",
         "analyse": "vendor/bin/phpstan analyse",
         "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes"
     },

@@ -4,57 +4,56 @@ namespace Kiwilan\Archive\Enums;
 
 enum ArchiveEnum: string
 {
-    /** `.zip` archive file. */
     case zip = 'zip';
-    /** `.tar` archive file. */
-    case tar = 'tar';
-    /** `.tar` archive file with extended compression. */
-    case tarExtended = 'tar_ext';
-    /** `.7z` archive file. */
+    case phar = 'phar';
     case sevenZip = '7z';
-    /** `.rar` archive file. */
     case rar = 'rar';
-    /** `.pdf` file. */
     case pdf = 'pdf';
 
-    public static function fromExtension(string $extension): self
+    public static function fromExtension(string $extension, ?string $mimeType = null): self
     {
-        if ($extension === 'tar') {
-            return self::tar;
+        $extension = strtolower($extension);
+        if (str_contains($extension, '.')) {
+            $extension = pathinfo($extension, PATHINFO_EXTENSION);
         }
 
-        if (str_contains($extension, 'gz') || str_contains($extension, 'bz2') || str_contains($extension, 'xz') || str_contains($extension, 'phar')) {
-            return self::tarExtended;
-        }
-
-        $zipExts = ['zip', 'epub', 'cbz'];
-        $tarExts = ['tar', 'cbt'];
-        $tarExtendedExts = ['tar.gz', 'tar.bz2', 'tar.xz', 'gz', 'bz2', 'xz', 'phar'];
-        $sevenZipExts = ['7z', 'cb7', '7zip'];
-        $rarExts = ['rar', 'cbr'];
-
-        if (in_array($extension, $zipExts)) {
+        $zips = ['zip', 'epub', 'cbz'];
+        if (in_array($extension, $zips)) {
             return self::zip;
         }
 
-        if (in_array($extension, $tarExts)) {
-            return self::tar;
+        $phars = ['tar', 'gz', 'bz2', 'xz', 'phar', 'cbt'];
+        if (in_array($extension, $phars)) {
+            return self::phar;
         }
 
-        if (in_array($extension, $tarExtendedExts)) {
-            return self::tarExtended;
-        }
-
-        if (in_array($extension, $sevenZipExts)) {
+        $sevenZips = ['7z', 'cb7', '7zip'];
+        if (in_array($extension, $sevenZips)) {
             return self::sevenZip;
         }
 
-        if (in_array($extension, $rarExts)) {
+        $rars = ['rar', 'cbr'];
+        if (in_array($extension, $rars)) {
             return self::rar;
         }
 
-        if (in_array($extension, ['pdf'])) {
+        $pdfs = ['pdf'];
+        if (in_array($extension, $pdfs)) {
             return self::pdf;
+        }
+
+        if ($mimeType) {
+            if (str_contains($mimeType, 'zip')) {
+                return self::zip;
+            }
+
+            if (str_contains($mimeType, 'rar')) {
+                return self::rar;
+            }
+
+            if (str_contains($mimeType, 'pdf')) {
+                return self::pdf;
+            }
         }
 
         throw new \Exception("Unknown archive type for extension: {$extension}");

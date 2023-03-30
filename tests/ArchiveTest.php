@@ -1,97 +1,126 @@
 <?php
 
 use Kiwilan\Archive\Archive;
-use Kiwilan\Archive\ArchiveItem;
-use Kiwilan\Archive\ArchiveUtils;
 use Kiwilan\Archive\Enums\ArchiveEnum;
+use Kiwilan\Archive\Models\ArchiveItem;
+use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Readers\BaseArchive;
 
-define('FAILED', __DIR__.'/media/test.zip');
-define('SEVENZIP', __DIR__.'/media/archive.7z');
-define('RAR', __DIR__.'/media/archive.rar');
-define('TAR', __DIR__.'/media/archive.tar');
-define('TARBZ2', __DIR__.'/media/archive.tar.bz2');
-define('TARGZ', __DIR__.'/media/archive.tar.gz');
-define('TARXZ', __DIR__.'/media/archive.tar.xz');
-define('ZIP', __DIR__.'/media/archive.zip');
-define('ARCHIVES', [
-    'SEVENZIP' => SEVENZIP,
-    'RAR' => RAR,
-    'TAR' => TAR,
-    'TARBZ2' => TARBZ2,
-    'TARGZ' => TARGZ,
-    'TARXZ' => TARXZ,
-    'ZIP' => ZIP,
-]);
+beforeEach(function () {
+    recurseRmdir(outputPath());
+});
 
-it('can read', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $files = $archive->files();
-        $extension = ArchiveUtils::getExtension($path);
+it('can read', function (string $path) {
+    $archive = Archive::read($path);
+    $extension = pathinfo($path, PATHINFO_EXTENSION);
+    $type = ArchiveEnum::fromExtension($extension, mime_content_type($path));
 
-        expect($archive->os())->toBe(PHP_OS_FAMILY);
-        expect($archive->extension())->toBe($extension);
-        expect($archive->path())->toBe($path);
-        expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
-        expect($files)->toBeIterable();
-        expect($archive->count())->toBeGreaterThanOrEqual(4);
+    expect($archive->extension())->toBe($extension);
+    expect($archive->path())->toBe($path);
+    expect($archive->type())->toBe($type);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
+
+it('can get text', function (string $path) {
+    $archive = Archive::read($path);
+    $files = $archive->files();
+    $first = array_filter($files, fn (ArchiveItem $item) => ! $item->isImage());
+    $first = array_shift($first);
+    $text = $archive->text($first);
+
+    expect($text)->toBeString();
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
+
+it('can failed if not found', function () {
+    expect(fn () => Archive::read(FAILED))->toThrow(\Exception::class);
+});
+
+it('can get metadata', function (string $path) {
+    $archive = Archive::read($path);
+    $metadata = $archive->metadata();
+
+    expect($metadata)->toBeInstanceOf(ArchiveMetadata::class);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
+
+it('can get files', function (string $path) {
+    $archive = Archive::read($path);
+    $files = $archive->files();
+
+    expect($files)->toBeArray();
+    expect($files)->toHaveCount($archive->count());
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
+
+it('can find all images', function (string $path) {
+    $archive = Archive::read($path);
+    $ext = 'jpeg';
+    $files = $archive->findAll($ext);
+    if (empty($files)) {
+        $ext = 'jpg';
+        $files = $archive->findAll($ext);
     }
-});
 
-it('can failed', function () {
-    expect(fn () => Archive::make(FAILED))->toThrow(\Exception::class);
-});
+    expect($files)->toBeArray();
+    expect($files)->each(
+        function (Pest\Expectation $item) use ($ext) {
+            $file = $item->value;
+            expect($file)->toBeInstanceOf(ArchiveItem::class);
+            expect($file->extension())->toBe($ext);
+        }
+    );
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);
 
-it('can extract', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $content = $archive->contentFile('archive/cover.jpeg');
+it('can get content first file', function (string $path) {
+    $archive = Archive::read($path);
+    $content = $archive->content($archive->first());
 
-        expect($content)->toBeString();
-    }
-});
+    $output = outputPath();
+    $file = BaseArchive::pathToOsPath("{$output}first.jpg");
+    stringToImage($content, $file);
 
-it('can extract with base64', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $content = $archive->contentFile('archive/cover.jpeg', true);
-        $isBase64 = ArchiveUtils::isBase64($content);
-
-        expect($isBase64)->toBeTrue();
-    }
-});
-
-it('can extract failed', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-
-        expect(fn () => $archive->contentFile('archive/cover'))->toThrow(\Exception::class);
-    }
-});
-
-it('can find files', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $files = $archive->findAll('jpeg');
-
-        expect($files)->toBeIterable();
-    }
-});
-
-it('can find file', function () {
-    foreach (ARCHIVES as $name => $path) {
-        $archive = Archive::make($path);
-        $file = $archive->find('jpeg');
-
-        expect($file)->toBeInstanceOf(ArchiveItem::class);
-    }
-});
-
-it('can find and extract specific file', function () {
-    $archive = Archive::make(ZIP);
-    $file = $archive->find('metadata.xml');
-    $content = $archive->contentFile($file->path());
-
-    expect($file)->toBeInstanceOf(ArchiveItem::class);
     expect($content)->toBeString();
-});
+    expect($file)->toBeReadableFile();
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);
+
+it('can get cover', function (string $path) {
+    $archive = Archive::read($path);
+    $cover = $archive->find('cover.jpeg');
+    $content = $archive->content($cover);
+
+    $output = outputPath();
+    $coverPath = "{$output}cover.jpeg";
+    stringToImage($content, $coverPath);
+
+    expect($cover)->toBeInstanceOf(ArchiveItem::class);
+    expect($content)->toBeString();
+    expect($coverPath)->toBeReadableFile();
+})->with([...ARCHIVES_NATIVE, EPUB, RAR, SEVENZIP]);
+
+it('can cover with base64', function (string $path) {
+    $archive = Archive::read($path);
+    $cover = $archive->find('cover.jpeg');
+    $content = $archive->content($cover, true);
+    $isBase64 = isBase64($content);
+
+    expect($isBase64)->toBeTrue();
+})->with([...ARCHIVES_NATIVE, EPUB, RAR, SEVENZIP]);
+
+it('can extract some files', function (string $path) {
+    $archive = Archive::read($path);
+    $files = $archive->files();
+    $output = outputPath($archive->basename());
+
+    $select = [$files[0], $files[1]];
+    $paths = $archive->extract($output, $select);
+
+    expect($paths)->toBeArray();
+    expect($paths)->toHaveCount(2);
+    expect($paths[0])->toBeString();
+    expect($paths[0])->toBeReadableFile();
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);
+
+it('can extract files', function (string $path) {
+    $archive = Archive::read($path);
+    $paths = $archive->extractAll(outputPath());
+
+    expect($paths)->toBeArray();
+    expect($paths)->toBeGreaterThanOrEqual(5);
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);

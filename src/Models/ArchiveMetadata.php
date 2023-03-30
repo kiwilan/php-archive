@@ -1,26 +1,27 @@
 <?php
 
-namespace Kiwilan\Archive\Utils;
+namespace Kiwilan\Archive\Models;
 
 use DateTime;
 
-class PdfMetadata
+class ArchiveMetadata
 {
     /** @var array<string> */
     protected array $keywords = [];
 
-    protected function __construct(
-        protected ?string $title,
-        protected ?string $author,
-        protected ?string $subject,
-        protected ?string $creator,
-        protected ?DateTime $creationDate,
-        protected ?DateTime $modDate,
-        protected ?int $pages,
+    public function __construct(
+        protected ?string $title = null,
+        protected ?string $author = null,
+        protected ?string $subject = null,
+        protected ?string $creator = null,
+        protected ?DateTime $creationDate = null,
+        protected ?DateTime $modDate = null,
+        protected ?string $status = null,
+        protected ?string $comment = null,
     ) {
     }
 
-    public static function make(array $details): self
+    public static function fromPdf(array $details): self
     {
         $title = $details['Title'] ?? null;
         $author = $details['Author'] ?? null;
@@ -46,7 +47,6 @@ class PdfMetadata
             creator: $creator,
             creationDate: $creationDate,
             modDate: $modDate,
-            pages: $pages,
         );
 
         $self->keywords = explode(',', $keywords);
@@ -92,8 +92,13 @@ class PdfMetadata
         return $this->modDate;
     }
 
-    public function pages(): ?int
+    public function status(): ?string
     {
-        return $this->pages;
+        return $this->status;
+    }
+
+    public function comment(): ?string
+    {
+        return $this->comment;
     }
 }
