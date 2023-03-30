@@ -1,15 +1,6 @@
 name: Tests on windows
 
 on: [push, pull_request]
-# on:
-#   push:
-#     branches:
-#       - main
-#       - develop
-#   pull_request:
-#     branches:
-#       - main
-#       - develop
 
 jobs:
   test:
@@ -24,21 +15,15 @@ jobs:
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
-      - name: Install for Windows
-        if: runner.os == 'Windows'
+      - name: scoop
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install ghostscript@9.54.0 -a x86
-          scoop install 7zip imagemagick ffmpeg
-          php -i | find "Thread Safety"
-          php -i | grep "Architecture"
-          Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
-          7z x php_rar.zip -ophp_rar
-          cd php_rar
-          ls
-          php --ini
-          ls C:\tools\php\
-          ls SCOOP_GLOBAL
+          scoop install git 7zip imagemagick ghostscript ffmpeg unrar
+        shell: powershell
+
+      - name: Set paths
+        run: |
+
         shell: powershell
 
       - name: Checkout code
@@ -48,8 +33,19 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, bz2, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: pcov
+
+      # - name: Install rar extension
+      #   run: |
+      #     php -i | find "Thread Safety"
+      #     php -i | grep "Architecture"
+      #     Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
+      #     7z x php_rar.zip -ophp_rar
+      #     cd php_rar
+      #     cp php_rar.dll C:\tools\php\ext\php_rar.dll
+      #     Add-Content C:\tools\php\php.ini "`nextension=rar`n"
+      #   shell: powershell
 
       - name: Setup problem matchers
         run: |
@@ -59,25 +55,11 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-      # - name: Add rar extension
-      #   if: runner.os == 'Linux' || runner.os == 'macOS'
-      #   run: |
-      #     git clone https://github.com/cataphract/php-rar
-      #     cd php-rar
-      #     phpize
-      #     ./configure
-      #     sudo make
-      #     sudo make install
-      #     pecl_path=$(pecl config-get ext_dir)
-      #     phpini_path=$(php -i | grep /.+/php.ini -oE)
-      #     sudo cp ./modules/rar.so $pecl_path
-      #     sudo echo "extension=rar.so" > $phpini_path
+      - name: Check extension imagick
+        run: php -m | grep imagick
 
       # - name: Check extension rar
       #   run: php -m | grep rar
 
-      - name: Check extension imagick
-        run: php -m | grep imagick
-
       - name: Execute tests
-        run: vendor/bin/pest
+        run: .\vendor\bin\pest.bat --colors=always

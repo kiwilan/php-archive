@@ -138,7 +138,8 @@ class SevenZipProcess
     {
         $archive = pathinfo($this->path, PATHINFO_BASENAME);
         $output = "{$this->outputDir}/{$archive}";
-        $filePath = "{$output}/{$file->path()}";
+        $filePath = "{$output}/{$file->rootPath()}";
+        $filePath = BaseArchive::pathToOsPath($filePath);
 
         if (! file_exists($filePath)) {
             mkdir($output, 0755, true);

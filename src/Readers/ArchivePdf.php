@@ -52,17 +52,28 @@ class ArchivePdf extends BaseArchive
 
         $index = (int) $file->path();
         $format = $this->pdfExt;
+        $format = 'jpg';
 
-        $imagick = new Imagick();
+        $content = null;
+        try {
+            $imagick = new Imagick();
 
-        $imagick->setResolution(300, 300);
-        $imagick->readimage("{$this->path}[{$index}]");
-        $imagick->setImageFormat($format);
+            $imagick->setResolution(300, 300);
+            $path = BaseArchive::pathToOsPath("{$this->path}[{$index}]");
+            $imagick->readimage($path);
+            $imagick->setImageFormat($format);
 
-        $content = $imagick->getImageBlob();
+            $content = $imagick->getImageBlob();
 
-        $imagick->clear();
-        $imagick->destroy();
+            $imagick->clear();
+            $imagick->destroy();
+        } catch (\Throwable $th) {
+            throw new \Exception("Error, {$file->filename()} is not an image");
+        }
+
+        if (! $content) {
+            return null;
+        }
 
         return $toBase64
             ? base64_encode($content)

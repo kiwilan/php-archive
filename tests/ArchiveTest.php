@@ -4,6 +4,7 @@ use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Models\ArchiveItem;
 use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Readers\BaseArchive;
 
 beforeEach(function () {
     recurseRmdir(outputPath());
@@ -72,7 +73,7 @@ it('can get content first file', function (string $path) {
     $content = $archive->content($archive->first());
 
     $output = outputPath();
-    $file = "{$output}first.jpg";
+    $file = BaseArchive::pathToOsPath("{$output}first.jpg");
     stringToImage($content, $file);
 
     expect($content)->toBeString();
