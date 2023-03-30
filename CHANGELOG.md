@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.0.02 - 2023-03-30
+
+- Fix: `findAll` method with index
+
 ## 1.0.01 - 2023-03-30
 
 - `sortFiles` reindex all `files`
