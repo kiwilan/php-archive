@@ -24,7 +24,7 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
     -   ❌ `.7z`, `.cb7` handled with [`p7zip`](https://www.7-zip.org/) binary => **You need to install `p7zip` binary**
     -   ✅ `.pdf` handled with `smalot/pdfparser` embedded => **You need to install [`imagick` extension](https://github.com/Imagick/imagick)**
 
-> **Install help**
+> **Note**
 >
 > If you want to install these requirements, you can read [`p7zip` guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d), [`rar` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar) or [`imagick` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick).
 
