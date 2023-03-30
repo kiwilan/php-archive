@@ -1,15 +1,6 @@
 name: Tests on windows
 
 on: [push, pull_request]
-# on:
-#   push:
-#     branches:
-#       - main
-#       - develop
-#   pull_request:
-#     branches:
-#       - main
-#       - develop
 
 jobs:
   test:
@@ -75,4 +66,4 @@ jobs:
           $env:GIT_INSTALL_ROOT
           new-alias gs C:\Users\runneradmin\scoop\apps\ghostscript\current\bin\gswin64c.exe
           gs -v
-          vendor/bin/pest
+          .\vendor\bin\pest.bat
