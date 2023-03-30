@@ -38,8 +38,8 @@ jobs:
           7z x php_rar.zip -ophp_rar
           cd php_rar
           cp php_rar.dll C:\tools\php\ext\php_rar.dll
-          cd ..
           Add-Content C:\tools\php\php.ini "`nextension=rar`n"
+          cat C:\tools\php\php.ini
         shell: powershell
 
       - name: Set paths
