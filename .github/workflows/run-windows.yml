@@ -62,4 +62,4 @@ jobs:
         run: php -m | grep rar
 
       - name: Execute tests
-        run: .\vendor\bin\pest.bat
+        run: .\vendor\bin\pest.bat --colors=always
