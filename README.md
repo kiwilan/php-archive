@@ -12,21 +12,21 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 
 > **Warning**
 >
-> For some formats (`.rar` and `.7z`) [`rar` extension](https://github.com/cataphract/php-rar) or [p7zip](https://www.7-zip.org/) binary could be necessary, see [Requirements](#requirements).
+> For some formats (`.rar` and `.7z`) [`rar` PHP extension](https://github.com/cataphract/php-rar) or [p7zip](https://www.7-zip.org/) binary could be necessary, see [Requirements](#requirements).
 
 ## Requirements
 
 -   PHP >= 8.1
 -   Depends of archive type and features you want to use.
 
-|           Type            | Is native |                                                                                       Dependency                                                                                       |
-| :-----------------------: | :-------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|  `.zip`, `.epub`, `.cbz`  |    ✅     |                                                                                          N/A                                                                                           |
-| `.tar`, `.tar.gz`, `.cbt` |    ✅     |                                                                                          N/A                                                                                           |
-|      `.rar`, `.cbr`       |    ❌     |                                        [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary                                        |
-|       `.7z`, `.cb7`       |    ❌     |                                                                        [`p7zip`](https://www.7-zip.org/) binary                                                                        |
-|          `.pdf`           |    ✅     |                                                Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)                                                 |
-|            ALL            |    ❌     | [`p7zip`](https://www.7-zip.org/) binary ([`rar` PHP extension](https://github.com/cataphract/php-rar) and [`imagick` PHP extension](https://github.com/Imagick/imagick) are optional) |
+|           Type            | Native |                                                                                       Dependency                                                                                       |
+| :-----------------------: | :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|  `.zip`, `.epub`, `.cbz`  |   ✅   |                                                                                          N/A                                                                                           |
+| `.tar`, `.tar.gz`, `.cbt` |   ✅   |                                                                                          N/A                                                                                           |
+|      `.rar`, `.cbr`       |   ❌   |                                        [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary                                        |
+|       `.7z`, `.cb7`       |   ❌   |                                                                        [`p7zip`](https://www.7-zip.org/) binary                                                                        |
+|          `.pdf`           |   ✅   |                                                Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)                                                 |
+|            ALL            |   ❌   | [`p7zip`](https://www.7-zip.org/) binary ([`rar` PHP extension](https://github.com/cataphract/php-rar) and [`imagick` PHP extension](https://github.com/Imagick/imagick) are optional) |
 
 > **Note**
 >
