@@ -17,34 +17,39 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 ## Requirements
 
 -   PHP >= 8.1
--   Depends of archive type (if you want to handle all archives types)
-    -   ✅ `.zip`, `.epub`, `.cbz` handled with native PHP solution
-    -   ✅ `.tar`, `.tar.gz`, `.cbt` handled with native PHP solution
-    -   ❌ `.rar`, `.cbr` handled with [`rar` extension](https://github.com/cataphract/php-rar) or `p7zip` binary => **You need to install [`rar` extension](https://github.com/cataphract/php-rar) OR `p7zip` binary**
-    -   ❌ `.7z`, `.cb7` handled with [`p7zip`](https://www.7-zip.org/) binary => **You need to install `p7zip` binary**
-    -   ✅ `.pdf` handled with `smalot/pdfparser` embedded => **You need to install [`imagick` extension](https://github.com/Imagick/imagick)**
+-   Depends of archive type and features you want to use.
+
+|           Type            | Is native |                                                                                       Dependency                                                                                       |
+| :-----------------------: | :-------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|  `.zip`, `.epub`, `.cbz`  |    ✅     |                                                                                          N/A                                                                                           |
+| `.tar`, `.tar.gz`, `.cbt` |    ✅     |                                                                                          N/A                                                                                           |
+|      `.rar`, `.cbr`       |    ❌     |                                        [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary                                        |
+|       `.7z`, `.cb7`       |    ❌     |                                                                        [`p7zip`](https://www.7-zip.org/) binary                                                                        |
+|          `.pdf`           |    ✅     |                                                Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)                                                 |
+|            ALL            |    ❌     | [`p7zip`](https://www.7-zip.org/) binary ([`rar` PHP extension](https://github.com/cataphract/php-rar) and [`imagick` PHP extension](https://github.com/Imagick/imagick) are optional) |
 
 > **Note**
 >
-> If you want to install these requirements, you can read [`p7zip` guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d), [`rar` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar) or [`imagick` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick).
+> Here you can read some installation guides for dependencies
+>
+> -   [`p7zip` guide](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d)
+> -   [`rar` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar)
+> -   [`imagick` guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
 
 > **Warning**
 >
-> On macOS, for `.rar` extract, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
+> -   **On macOS**, for `.rar` extract, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
+> -   **On Windows**, for `.pdf` extract, [`imagick` extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-> **Warning**
->
-> On Windows, for `.pdf` extract, [`imagick` extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
-
-[**More about this package**](#about).
+If you want more informations, you can read section [**About**](#about).
 
 ### Examples
 
 -   You want to handle `.zip` and `.epub` files => **you don't need to install anything**
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr` files => **you need to install [`rar` extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary**
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** (`rar` extension could be installed too to handle `.rar` and `.cbr`)
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf` files => \*\*you need to install [`p7zip`](https://www.7-zip.org/) binary and [`imagick` extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
--   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf`, `.tar`, `.tar.gz`, `.cbt` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** and [`imagick` extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr` files => **you need to install [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary**
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** (`rar` PHP extension could be installed too to handle `.rar` and `.cbr`)
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf` files => \*\*you need to install [`p7zip`](https://www.7-zip.org/) binary and [`imagick` PHP extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
+-   You want to handle `.zip`, `.epub`, `.cbz`, `.cbr`, `.7z`, `.cb7`, `.pdf`, `.tar`, `.tar.gz`, `.cbt` files => **you need to install [`p7zip`](https://www.7-zip.org/) binary** and [`imagick` PHP extension](https://github.com/Imagick/imagick) if you want to convert `.pdf` pages into images
 
 ## Features
 
