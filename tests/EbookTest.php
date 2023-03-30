@@ -20,6 +20,7 @@ it('can read cba', function (string $path) {
     $files = $archive->files();
     $extension = pathinfo($path, PATHINFO_EXTENSION);
 
+    expect($archive->files()[0])->not()->toBeNull();
     expect($archive->extension())->toBe($extension);
     expect($archive->path())->toBe($path);
     expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
