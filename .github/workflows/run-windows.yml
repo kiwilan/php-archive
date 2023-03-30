@@ -81,5 +81,8 @@ jobs:
       - name: Check extension imagick
         run: php -m | grep imagick
 
+      - name: Check extension rar
+        run: php -m | grep rar
+
       - name: Execute tests
         run: vendor/bin/pest
