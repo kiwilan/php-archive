@@ -34,6 +34,9 @@ jobs:
           Invoke-WebRequest -Uri https://windows.php.net/downloads/pecl/releases/rar/4.2.0/php_rar-4.2.0-8.1-nts-vs16-x64.zip -OutFile php_rar.zip
           7z x php_rar.zip -ophp_rar
           cd php_rar
+          cp php_rar.dll C:\tools\php\ext
+          cd ..
+          echo "extension=rar" | Out-File -FilePath C:\tools\php\php.ini -Encoding ascii -Append
           ls
           php --ini
           $env:GIT_INSTALL_ROOT
