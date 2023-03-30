@@ -18,7 +18,7 @@ jobs:
       - name: scoop
         run: |
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop install git 7zip imagemagick ghostscript ffmpeg unrar
+          scoop install 7zip imagemagick ghostscript unrar
         shell: powershell
 
       - name: Set paths
