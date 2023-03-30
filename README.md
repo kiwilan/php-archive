@@ -58,8 +58,8 @@ If you want more informations, you can read section [**About**](#about).
 -   Find files
     -   With `find` method from `Archive`: find first file that match with name
     -   With `findAll` method from `Archive`: find all files that match with extension
--   Metadata of archive
-    -   With `metadata` method from `Archive`: metadata of archive
+-   Metadata of archive with `title`, `author`, `subject`, `creator`, `creationDate`, `modDate`, `status` and `comment` properties
+    -   Useful for PDF files
 -   Count files
 -   Create archive, only with `.zip` format
     -   With `create` method from `Archive`: create archive
