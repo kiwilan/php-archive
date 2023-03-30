@@ -87,7 +87,7 @@ $archive = Archive::test('path/to/archive.zip');
 $files = $archive->files(); // ArchiveItem[]
 $count = $archive->count(); // int of files count
 
-$images = $archive->findAll('jpeg'); // ArchiveItem[] with `jpeg` extension
+$images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` extension
 $metadataXml = $archive->find('metadata.xml'); // ArchiveItem of `metadata.xml` file if exists
 $content = $archive->content($metadataXml); // `metadata.xml` file content
 

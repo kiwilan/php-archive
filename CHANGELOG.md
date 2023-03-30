@@ -2,6 +2,12 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.1.0 - 2023-03-30
+
+- improve documentation
+- remove `findAndContent`
+- `findAll` is now `filter`
+
 ## 1.0.02 - 2023-03-30
 
 - Fix: `findAll` method with index
