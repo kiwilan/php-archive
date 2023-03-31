@@ -8,7 +8,9 @@
 [![tests][tests-src]][tests-href]
 [![codecov][codecov-src]][codecov-href]
 
-PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hybrid solution (native and with `p7zip` binary), designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`). Supports Linux, macOS and Windows.
+PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hybrid solution (native/`p7zip`), designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`).
+
+Supports Linux, macOS and Windows.
 
 > **Warning**
 >
@@ -17,7 +19,7 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 ## Requirements
 
 -   PHP >= 8.1
--   Depends of archive type and features you want to use.
+-   Depends of archive type and features you want to use
 
 |           Type            | Native |                                                                                       Dependency                                                                                       |
 | :-----------------------: | :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -60,8 +62,8 @@ If you want more informations, you can read section [**About**](#about).
 -   Metadata of archive with `title`, `author`, `subject`, `creator`, `creationDate`, `modDate`, `status` and `comment` properties
     -   Useful for PDF files
 -   Count files
--   Create archive, only with `.zip` format
-    -   With `create` method: create archive
+-   Create or edit archives, only with `.zip` format
+    -   With `make` method: create or edit archive
     -   With `addFiles` method: add files to archive
     -   With `addFromString` method: add string to archive
     -   With `addDirectory` and `addDirectories` methods: add directories to archive
@@ -87,8 +89,8 @@ $archive = Archive::test('path/to/archive.zip');
 $files = $archive->files(); // ArchiveItem[]
 $count = $archive->count(); // int of files count
 
-$images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` extension
-$metadataXml = $archive->find('metadata.xml'); // ArchiveItem of `metadata.xml` file if exists
+$images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` in their path
+$metadataXml = $archive->find('metadata.xml'); // First ArchiveItem with `metadata.xml` in their path
 $content = $archive->content($metadataXml); // `metadata.xml` file content
 
 $paths = $archive->extract('/path/to/directory', [$metadataXml]); // string[] of extracted files paths
@@ -108,10 +110,12 @@ $text = $archive->text($archive->first()); // PDF page as text
 
 ### Create
 
+You can create archive with method `Archive::make` method.
+
 Works only with `.zip` archives.
 
 ```php
-$archive = Archive::create('path/to/archive.zip');
+$archive = Archive::make('path/to/archive.zip');
 $archive->addFiles([
     'path/to/file1.txt',
     'path/to/file2.txt',
@@ -119,6 +123,16 @@ $archive->addFiles([
 ]);
 $archive->addFromString('test.txt', 'Hello World!');
 $archive->addDirectory('path/to/directory');
+$archive->save();
+```
+
+### Edit
+
+You can edit archive with same method `Archive::make` method.
+
+```php
+$archive = Archive::make('path/to/archive.zip');
+$archive->addFromString('test.txt', 'Hello World!');
 $archive->save();
 ```
 
@@ -155,9 +169,9 @@ PHP can handle natively some archive formats, but not all. So I choose to use na
 
 ### Case of `rar`
 
-The [`rar` extension](https://github.com/cataphract/php-rar) is not installed by default on PHP, developers have to install it manually. This extension is not actively maintained and users could have some compilation problems. To install it with PHP 8.1 or 8.2, it's necessary to compile manually the extension, you could read [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar) if you want to install it (for PHP 8.2, you will have a warning message but it's not a problem, the extension will work).
+The [`rar` PHP extension](https://github.com/cataphract/php-rar) is not installed by default on PHP, developers have to install it manually. This extension is not actively maintained and users could have some compilation problems. To install it with PHP 8.1 or 8.2, it's necessary to compile manually the extension, you could read [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar) if you want to install it (for PHP 8.2, you will have a warning message but it's not a problem, the extension will work).
 
-But `rar` extension is a problem because it's not sure to have a compatibility with future PHP versions. So I choose to handle `rar` archives with `p7zip` binary if `rar` extension is not installed.
+But `rar` PHP extension is a problem because it's not sure to have a compatibility with future PHP versions. So I choose to handle `rar` archives with `p7zip` binary if `rar` PHP extension is not installed.
 
 ### Case of `7zip`
 
@@ -167,7 +181,7 @@ PHP can't handle `.7z` archives natively, so I choose to use `p7zip` binary. You
 
 PHP can't handle `.pdf` archives natively, so I choose to use `smalot/pdfparser` package, embedded in this package. To extract pages as images, you have to install [`imagick` extension](https://github.com/Imagick/imagick) you could read [this guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick) if you want to install it.
 
-### eBooks
+### eBooks and comics
 
 This package can handle `.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt` archives, it's depends of the extension, check [requirements](#requirements) section.
 
@@ -180,7 +194,7 @@ Alternatives:
 
 Documentation:
 
--   List files in .7z, .rar and .tar archives using PHP: <https://stackoverflow.com/a/39163620/11008206>
+-   List files in `.7z`, `.rar` and `.tar` archives using PHP: <https://stackoverflow.com/a/39163620/11008206>
 -   Compression and Archive Extensions: <https://www.php.net/manual/en/refs.compression.php>
 
 ## Changelog

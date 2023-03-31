@@ -42,9 +42,9 @@ class Archive
         return $archive::read($self->path);
     }
 
-    public static function create(string $path): ArchiveZipCreate
+    public static function make(string $path): ArchiveZipCreate
     {
-        $archive = ArchiveZipCreate::create($path);
+        $archive = ArchiveZipCreate::make($path);
 
         return $archive;
     }
