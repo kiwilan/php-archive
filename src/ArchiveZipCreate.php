@@ -23,7 +23,7 @@ class ArchiveZipCreate
     ) {
     }
 
-    public static function create(string $path): self
+    public static function make(string $path): self
     {
         $self = new self($path, pathinfo($path, PATHINFO_BASENAME));
 

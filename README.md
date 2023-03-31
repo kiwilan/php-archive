@@ -62,8 +62,8 @@ If you want more informations, you can read section [**About**](#about).
 -   Metadata of archive with `title`, `author`, `subject`, `creator`, `creationDate`, `modDate`, `status` and `comment` properties
     -   Useful for PDF files
 -   Count files
--   Create archive, only with `.zip` format
-    -   With `create` method: create archive
+-   Create or edit archives, only with `.zip` format
+    -   With `make` method: create or edit archive
     -   With `addFiles` method: add files to archive
     -   With `addFromString` method: add string to archive
     -   With `addDirectory` and `addDirectories` methods: add directories to archive
@@ -89,8 +89,8 @@ $archive = Archive::test('path/to/archive.zip');
 $files = $archive->files(); // ArchiveItem[]
 $count = $archive->count(); // int of files count
 
-$images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` extension
-$metadataXml = $archive->find('metadata.xml'); // ArchiveItem of `metadata.xml` file if exists
+$images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` in their path
+$metadataXml = $archive->find('metadata.xml'); // First ArchiveItem with `metadata.xml` in their path
 $content = $archive->content($metadataXml); // `metadata.xml` file content
 
 $paths = $archive->extract('/path/to/directory', [$metadataXml]); // string[] of extracted files paths
@@ -110,10 +110,12 @@ $text = $archive->text($archive->first()); // PDF page as text
 
 ### Create
 
+You can create archive with method `Archive::make` method.
+
 Works only with `.zip` archives.
 
 ```php
-$archive = Archive::create('path/to/archive.zip');
+$archive = Archive::make('path/to/archive.zip');
 $archive->addFiles([
     'path/to/file1.txt',
     'path/to/file2.txt',
@@ -121,6 +123,16 @@ $archive->addFiles([
 ]);
 $archive->addFromString('test.txt', 'Hello World!');
 $archive->addDirectory('path/to/directory');
+$archive->save();
+```
+
+### Edit
+
+You can edit archive with same method `Archive::make` method.
+
+```php
+$archive = Archive::make('path/to/archive.zip');
+$archive->addFromString('test.txt', 'Hello World!');
 $archive->save();
 ```
 

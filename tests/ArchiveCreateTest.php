@@ -15,7 +15,7 @@ it('can create', function () {
         mediaPath('archive/file-3.md'),
         mediaPath('archive/metadata.xml'),
     ];
-    $archive = Archive::create($path);
+    $archive = Archive::make($path);
     $archive->addFiles($medias);
     $archive->save();
 
@@ -30,7 +30,7 @@ it('can create', function () {
 it('can create with files', function () {
     $path = outputPath(filename: 'test.zip');
 
-    $archive = Archive::create($path);
+    $archive = Archive::make($path);
     $archive->addFiles([
         mediaPath('archive/cover.jpeg'),
         mediaPath('archive/file-1.md'),
@@ -48,7 +48,7 @@ it('can create with files', function () {
 it('can create with strings', function () {
     $path = outputPath(filename: 'test.zip');
 
-    $archive = Archive::create($path);
+    $archive = Archive::make($path);
     $archive->addFromString('test.txt', 'Hello World!');
     $archive->addFromString('test-2.txt', 'Hello World!');
     $archive->save();
@@ -60,10 +60,25 @@ it('can create with strings', function () {
 it('can create with directory', function () {
     $path = outputPath(filename: 'test.zip');
 
-    $archive = Archive::create($path);
+    $archive = Archive::make($path);
     $archive->addDirectory(mediaPath('archive'));
     $archive->save();
 
     expect($archive->path())->toBeReadableFile($path);
     expect($archive->count())->toBe(5);
+});
+
+it('can edit', function () {
+    $path = outputPath(filename: 'test.zip');
+
+    $archive = Archive::make($path);
+    $archive->addDirectory(mediaPath('archive'));
+    $archive->save();
+
+    $archive = Archive::make($path);
+    $archive->addFromString('test.txt', 'Hello World!');
+    $archive->save();
+
+    expect($archive->path())->toBeReadableFile($path);
+    expect($archive->count())->toBe(6);
 });
