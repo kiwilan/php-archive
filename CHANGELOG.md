@@ -2,6 +2,11 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.2.0 - 2023-03-31
+
+- Improve documentation
+- `Archive::create` is now `Archive::make`: can create or edit archives
+
 ## 1.1.0 - 2023-03-30
 
 - improve documentation
