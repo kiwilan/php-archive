@@ -230,6 +230,6 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [license-src]: https://img.shields.io/github/license/kiwilan/php-archive.svg?style=flat-square&colorA=18181B&colorB=777BB4
 [license-href]: https://github.com/kiwilan/php-archive/blob/main/README.md
 [tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=tests&style=flat-square&colorA=18181B
-[tests-href]: https://packagist.org/packages/kiwilan/php-archive
+[tests-href]: https://github.com/kiwilan/php-archive/actions/workflows/run-tests.yml
 [codecov-src]: https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G
 [codecov-href]: https://codecov.io/gh/kiwilan/php-archive
