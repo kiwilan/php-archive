@@ -49,7 +49,14 @@ class ArchiveMetadata
             modDate: $modDate,
         );
 
+        if (is_array($keywords)) {
+            $keywords = implode(',', $keywords);
+        }
         $self->keywords = explode(',', $keywords);
+
+        $self->keywords = array_map(fn ($keyword) => trim($keyword), $self->keywords);
+        $self->keywords = array_filter($self->keywords);
+        $self->keywords = array_unique($self->keywords);
 
         return $self;
     }
