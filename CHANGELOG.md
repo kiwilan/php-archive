@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.2.01 - 2023-05-05
+
+- `ArchiveMetadata` keywords bug array fix
+
 ## 1.2.0 - 2023-03-31
 
 - Improve documentation
