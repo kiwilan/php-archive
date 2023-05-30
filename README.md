@@ -84,7 +84,7 @@ composer require kiwilan/php-archive
 With archive file (`.zip`, `.rar`, `.tar`, `.7z`, `epub`, `cbz`, `cbr`, `cb7`, `cbt`, `tar.gz`, `.pdf`).
 
 ```php
-$archive = Archive::test('path/to/archive.zip');
+$archive = Archive::read('path/to/archive.zip');
 
 $files = $archive->files(); // ArchiveItem[]
 $count = $archive->count(); // int of files count
@@ -100,7 +100,7 @@ $paths = $archive->extractAll('/path/to/directory'); // string[] of extracted fi
 PDF files works with same API than archives but with some differences.
 
 ```php
-$archive = Archive::test('path/to/file.pdf');
+$archive = Archive::read('path/to/file.pdf');
 
 $metadata = $archive->metadata(); // Metadata of PDF
 
