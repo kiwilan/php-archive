@@ -17,8 +17,12 @@ class ArchiveSevenZip extends BaseArchive
         return $self;
     }
 
-    public function content(ArchiveItem $file, bool $toBase64 = false): ?string
+    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
+        if (! $file) {
+            return null;
+        }
+
         $process = SevenZipProcess::make($this->path);
         $content = $process->content($file);
 

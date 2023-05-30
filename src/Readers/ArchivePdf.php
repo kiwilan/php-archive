@@ -46,8 +46,12 @@ class ArchivePdf extends BaseArchive
         return $paths;
     }
 
-    public function content(ArchiveItem $file, bool $toBase64 = false): ?string
+    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
+        if (! $file) {
+            return null;
+        }
+
         $this->extensionImagickTest();
 
         $index = (int) $file->path();

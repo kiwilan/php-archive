@@ -18,8 +18,12 @@ class ArchivePhar extends BaseArchive
         return $self;
     }
 
-    public function content(ArchiveItem $file, bool $toBase64 = false): ?string
+    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
+        if (! $file) {
+            return null;
+        }
+
         $content = file_get_contents($file->path());
 
         return $toBase64 ? base64_encode($content) : $content;

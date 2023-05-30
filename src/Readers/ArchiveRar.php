@@ -53,8 +53,12 @@ class ArchiveRar extends BaseArchive
         return $paths;
     }
 
-    public function content(ArchiveItem $item, bool $toBase64 = false): ?string
+    public function content(?ArchiveItem $item, bool $toBase64 = false): ?string
     {
+        if (! $item) {
+            return null;
+        }
+
         $content = $this->parser(function (ArchiveItem $file, $stream) use ($item) {
             if ($file->rootPath() === $item->rootPath()) {
                 return $this->convertStream($stream);
