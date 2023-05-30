@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.3.0 - 2023-05-30
+
+- Archive `content` allow `ArchiveItem` nullable for `$file` param
+
 ## 1.2.01 - 2023-05-05
 
 - `ArchiveMetadata` keywords bug array fix
