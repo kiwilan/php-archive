@@ -51,8 +51,12 @@ class ArchiveZip extends BaseArchive
         return $files;
     }
 
-    public function content(ArchiveItem $file, bool $toBase64 = false): ?string
+    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
+        if (! $file) {
+            return null;
+        }
+
         $content = $this->parser(function (ArchiveItem $item, ZipArchive $archive, int $i) use ($file) {
             if ($item->filename() === $file->filename()) {
                 return $archive->getFromIndex($i);
