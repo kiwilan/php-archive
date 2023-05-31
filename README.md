@@ -183,7 +183,7 @@ PHP can't handle `.pdf` archives natively, so I choose to use `smalot/pdfparser`
 
 ### eBooks and comics
 
-This package can handle `.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt` archives, it's depends of the extension, check [requirements](#requirements) section.
+This package can handle `.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt` archives, it's depends on the extension, check [requirements](#requirements) section.
 
 ### More
 
