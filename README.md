@@ -191,6 +191,7 @@ Alternatives:
 
 -   [Gemorroj/Archive7z](https://github.com/Gemorroj/Archive7z): handle many archives with [p7zip-project/p7zip](https://github.com/p7zip-project/p7zip) binary
 -   [splitbrain/php-archive](https://github.com/splitbrain/php-archive): native PHP solution to handle `.zip` and `.tar` archives
+-   [maennchen/ZipStream-PHP](https://github.com/maennchen/ZipStream-PHP): A fast and simple streaming zip file downloader for PHP. Using this library will save you from having to write the Zip to disk.
 
 Documentation:
 
@@ -200,14 +201,6 @@ Documentation:
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
