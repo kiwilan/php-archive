@@ -115,7 +115,7 @@ abstract class BaseArchive
         return $this->metadata;
     }
 
-    abstract public function content(ArchiveItem $file, bool $toBase64 = false): ?string;
+    abstract public function content(?ArchiveItem $file, bool $toBase64 = false): ?string;
 
     abstract public function text(ArchiveItem $file): ?string;
 
