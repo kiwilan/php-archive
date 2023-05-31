@@ -1,6 +1,6 @@
 {
     "name": "kiwilan/php-archive",
-    "version": "1.3.0",
+    "version": "1.3.01",
     "description": "PHP package to handle archives (.zip, .rar, .tar, .7z) or .pdf with hybrid solution (native/p7zip), designed to works with eBooks (.epub, .cbz, .cbr, .cb7, .cbt).",
     "keywords": [
         "php",
