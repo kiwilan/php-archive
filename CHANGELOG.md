@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.3.02 - 2023-06-01
+
+- `ArchiveMetadata` add `toArray` methods
+
 ## 1.3.01 - 2023-05-31
 
 - `BaseArchive` fix for `ArchiveItem` nullable safe
