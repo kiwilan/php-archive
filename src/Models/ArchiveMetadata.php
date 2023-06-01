@@ -108,4 +108,29 @@ class ArchiveMetadata
     {
         return $this->comment;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'author' => $this->author,
+            'subject' => $this->subject,
+            'keywords' => $this->keywords,
+            'creator' => $this->creator,
+            'creationDate' => $this->creationDate,
+            'modDate' => $this->modDate,
+            'status' => $this->status,
+            'comment' => $this->comment,
+        ];
+    }
+
+    public function toJson(): string
+    {
+        return json_encode($this->toArray());
+    }
+
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }
