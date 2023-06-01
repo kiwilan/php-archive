@@ -59,4 +59,9 @@ it('can read metadata', function () {
     expect($metadata->creator())->toBeString();
     expect($metadata->creationDate())->toBeInstanceOf(\DateTime::class);
     expect($metadata->modDate())->toBeInstanceOf(\DateTime::class);
+    expect($metadata->status())->toBeNull();
+    expect($metadata->comment())->toBeNull();
+    expect($metadata->keywords())->toBeArray();
+    expect($metadata->toArray())->toBeArray();
+    expect($metadata->toJson())->toBeString();
 });
