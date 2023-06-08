@@ -5,7 +5,7 @@ namespace Kiwilan\Archive\Readers;
 use Closure;
 use DateTime;
 use Kiwilan\Archive\Models\ArchiveItem;
-use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Models\ArchiveStat;
 use RarArchive;
 use RarEntry;
 
@@ -83,10 +83,9 @@ class ArchiveRar extends BaseArchive
     {
         $this->extensionRarTest();
 
-        $archive = RarArchive::open($this->path());
-        $this->metadata = new ArchiveMetadata(
-            comment: $archive->getComment()
-        );
+        $archive = RarArchive::open($this->path);
+        $this->stat = ArchiveStat::make($this->path);
+        $this->stat->setComment($archive->getComment());
         $archive->close();
 
         $this->parser(function (ArchiveItem $file) {

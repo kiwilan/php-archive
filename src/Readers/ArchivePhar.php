@@ -3,7 +3,7 @@
 namespace Kiwilan\Archive\Readers;
 
 use Kiwilan\Archive\Models\ArchiveItem;
-use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Models\ArchiveStat;
 use PharData;
 use SplFileInfo;
 
@@ -71,7 +71,7 @@ class ArchivePhar extends BaseArchive
         $phar = new PharData($this->path);
         $phar->extractTo($this->outputDirectory, null, true);
 
-        $this->metadata = new ArchiveMetadata();
+        $this->stat = ArchiveStat::make($this->path);
         $files = $this->getFiles($this->outputDirectory);
 
         foreach ($files as $item) {

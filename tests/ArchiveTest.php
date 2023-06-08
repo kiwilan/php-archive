@@ -3,7 +3,7 @@
 use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Models\ArchiveItem;
-use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Models\ArchiveStat;
 use Kiwilan\Archive\Readers\BaseArchive;
 
 beforeEach(function () {
@@ -36,9 +36,9 @@ it('can failed if not found', function () {
 
 it('can get metadata', function (string $path) {
     $archive = Archive::read($path);
-    $metadata = $archive->metadata();
+    $stat = $archive->stat();
 
-    expect($metadata)->toBeInstanceOf(ArchiveMetadata::class);
+    expect($stat)->toBeInstanceOf(ArchiveStat::class);
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
 
 it('can get files', function (string $path) {

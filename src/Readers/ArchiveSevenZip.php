@@ -3,7 +3,7 @@
 namespace Kiwilan\Archive\Readers;
 
 use Kiwilan\Archive\Models\ArchiveItem;
-use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Models\ArchiveStat;
 use Kiwilan\Archive\Processes\SevenZipProcess;
 
 class ArchiveSevenZip extends BaseArchive
@@ -72,7 +72,7 @@ class ArchiveSevenZip extends BaseArchive
         $items = $process->list();
 
         $this->files = $items;
-        $this->metadata = new ArchiveMetadata();
+        $this->stat = ArchiveStat::make($this->path);
         $this->sortFiles();
         $this->count = count($items);
 
