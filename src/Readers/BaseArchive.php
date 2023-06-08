@@ -7,7 +7,8 @@ use Exception;
 use FilesystemIterator;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Models\ArchiveItem;
-use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Models\ArchiveStat;
+use Kiwilan\Archive\Models\PdfMetadata;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -27,7 +28,9 @@ abstract class BaseArchive
 
     protected ?ArchiveEnum $type = null;
 
-    protected ?ArchiveMetadata $metadata = null;
+    protected ?ArchiveStat $stat = null;
+
+    protected ?PdfMetadata $pdf = null;
 
     /** @var ArchiveItem[] */
     protected array $files = [];
@@ -110,9 +113,14 @@ abstract class BaseArchive
         return $this->count;
     }
 
-    public function metadata(): ArchiveMetadata
+    public function stat(): ?ArchiveStat
     {
-        return $this->metadata;
+        return $this->stat;
+    }
+
+    public function pdf(): ?PdfMetadata
+    {
+        return $this->pdf;
     }
 
     abstract public function content(?ArchiveItem $file, bool $toBase64 = false): ?string;
