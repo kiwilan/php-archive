@@ -4,7 +4,8 @@ namespace Kiwilan\Archive\Readers;
 
 use Imagick;
 use Kiwilan\Archive\Models\ArchiveItem;
-use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Models\ArchiveStat;
+use Kiwilan\Archive\Models\PdfMetadata;
 use Smalot\PdfParser\Page;
 use Smalot\PdfParser\Parser;
 
@@ -112,7 +113,9 @@ class ArchivePdf extends BaseArchive
         $parser = new Parser();
         $document = $parser->parseFile($this->path());
 
-        $this->metadata = ArchiveMetadata::fromPdf($document->getDetails());
+        $this->stat = ArchiveStat::make($this->path);
+        $this->pdf = PdfMetadata::make($document->getDetails());
+
         // $dictionary = $document->getDictionary();
         // $objects = $document->getObjects();
         $pages = $document->getPages();
