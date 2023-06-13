@@ -24,4 +24,11 @@ it('can read', function (string $path) {
     expect($stat->modifiedAt())->toBeInstanceOf(DateTime::class);
     expect($stat->blockSize())->toBeInt();
     expect($stat->numberOfBlocks())->toBeInt();
+    if ($stat->status()) {
+        expect($stat->status())->toBeString();
+    }
+
+    expect($stat->toArray())->toBeArray();
+    expect($stat->toJson())->toBeString();
+    expect($stat->__toString())->toBeString();
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
