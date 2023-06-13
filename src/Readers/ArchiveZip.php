@@ -4,7 +4,7 @@ namespace Kiwilan\Archive\Readers;
 
 use Closure;
 use Kiwilan\Archive\Models\ArchiveItem;
-use Kiwilan\Archive\Models\ArchiveMetadata;
+use Kiwilan\Archive\Models\ArchiveStat;
 use ZipArchive;
 
 class ArchiveZip extends BaseArchive
@@ -82,10 +82,9 @@ class ArchiveZip extends BaseArchive
         $archive = new ZipArchive();
         $archive->open($this->path);
 
-        $this->metadata = new ArchiveMetadata(
-            status: "{$archive->status}",
-            comment: $archive->comment,
-        );
+        $this->stat = ArchiveStat::make($this->path);
+        $this->stat->setStatus("{$archive->status}");
+        $this->stat->setComment($archive->comment);
 
         $archive->close();
 

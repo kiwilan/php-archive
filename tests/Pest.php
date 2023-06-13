@@ -8,6 +8,7 @@ define('TARBZ2', __DIR__.'/media/archive.tar.bz2');
 define('TARGZ', __DIR__.'/media/archive.tar.gz');
 define('ZIP', __DIR__.'/media/archive.zip');
 define('PDF', __DIR__.'/media/example.pdf');
+
 define('ARCHIVES', [
     'SEVENZIP' => SEVENZIP,
     'RAR' => RAR,

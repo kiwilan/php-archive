@@ -50,18 +50,17 @@ it('can extract files', function () {
 
 it('can read metadata', function () {
     $archive = Archive::read(PDF);
-    $metadata = $archive->metadata();
+    $pdf = $archive->pdf();
 
-    expect($metadata->title())->toBeString();
-    expect($metadata->author())->toBeString();
-    expect($metadata->subject())->toBeString();
-    expect($metadata->keywords())->toBeArray();
-    expect($metadata->creator())->toBeString();
-    expect($metadata->creationDate())->toBeInstanceOf(\DateTime::class);
-    expect($metadata->modDate())->toBeInstanceOf(\DateTime::class);
-    expect($metadata->status())->toBeNull();
-    expect($metadata->comment())->toBeNull();
-    expect($metadata->keywords())->toBeArray();
-    expect($metadata->toArray())->toBeArray();
-    expect($metadata->toJson())->toBeString();
+    expect($pdf->title())->toBe('Example PDF');
+    expect($pdf->author())->toBe('Ewilan Rivière');
+    expect($pdf->subject())->toBe('This is an example PDF for php-archive package tests.');
+    expect($pdf->keywords())->toBe(['test', 'pdf', 'example']);
+    expect($pdf->creator())->toBe('Kiwilan');
+    expect($pdf->creationDate())->toBeInstanceOf(\DateTime::class);
+    expect($pdf->modDate())->toBeInstanceOf(\DateTime::class);
+    expect($pdf->pages())->toBe(4);
+    expect($pdf->keywords())->toBeArray();
+    expect($pdf->toArray())->toBeArray();
+    expect($pdf->toJson())->toBeString();
 });

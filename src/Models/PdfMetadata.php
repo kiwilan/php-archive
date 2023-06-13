@@ -4,7 +4,7 @@ namespace Kiwilan\Archive\Models;
 
 use DateTime;
 
-class ArchiveMetadata
+class PdfMetadata
 {
     /** @var array<string> */
     protected array $keywords = [];
@@ -16,12 +16,11 @@ class ArchiveMetadata
         protected ?string $creator = null,
         protected ?DateTime $creationDate = null,
         protected ?DateTime $modDate = null,
-        protected ?string $status = null,
-        protected ?string $comment = null,
+        protected ?int $pages = null,
     ) {
     }
 
-    public static function fromPdf(array $details): self
+    public static function make(array $details): self
     {
         $title = $details['Title'] ?? null;
         $author = $details['Author'] ?? null;
@@ -47,6 +46,7 @@ class ArchiveMetadata
             creator: $creator,
             creationDate: $creationDate,
             modDate: $modDate,
+            pages: $pages,
         );
 
         if (is_array($keywords)) {
@@ -99,14 +99,9 @@ class ArchiveMetadata
         return $this->modDate;
     }
 
-    public function status(): ?string
+    public function pages(): ?int
     {
-        return $this->status;
-    }
-
-    public function comment(): ?string
-    {
-        return $this->comment;
+        return $this->pages;
     }
 
     public function toArray(): array
@@ -119,8 +114,7 @@ class ArchiveMetadata
             'creator' => $this->creator,
             'creationDate' => $this->creationDate,
             'modDate' => $this->modDate,
-            'status' => $this->status,
-            'comment' => $this->comment,
+            'pages' => $this->pages,
         ];
     }
 
