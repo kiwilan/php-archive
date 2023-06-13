@@ -19,7 +19,13 @@ Supports Linux, macOS and Windows.
 ## Requirements
 
 -   PHP >= 8.1
--   Depends of archive type and features you want to use
+-   **Extensions**:
+    -   [`zip`](https://www.php.net/manual/en/book.zip.php) (native, optional)
+    -   [`fileinfo`](https://www.php.net/manual/en/book.fileinfo.php) (native, optional)
+    -   [`rar`](https://www.php.net/manual/en/book.rar.php) (optional)
+    -   [`imagick`](https://www.php.net/manual/en/book.imagick.php) (optional)
+    -   [`bz2`](https://www.php.net/manual/en/book.bzip2.php) (optional)
+-   Depend of archive type and features you want to use
 
 |           Type            | Native |                                                                                       Dependency                                                                                       |
 | :-----------------------: | :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -43,7 +49,7 @@ Supports Linux, macOS and Windows.
 > -   **On macOS**, for `.rar` extract, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
 > -   **On Windows**, for `.pdf` extract, [`imagick` PHP extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-If you want more informations, you can read section [**About**](#about).
+If you want more information, you can read section [**About**](#about).
 
 ## Features
 

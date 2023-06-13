@@ -9,10 +9,18 @@ on:
       - main
 
 jobs:
-  codecov:
+  test:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install for Linux
+        run: |
+          sudo apt -y install p7zip-full ghostscript imagemagick
+          sudo apt-get install -y unrar
+          sudo apt-get install -y libunrar-dev
+          sudo sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml
+        shell: bash
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -20,17 +28,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          extensions: imagick, zip, fileinfo, bz2
           coverage: pcov
 
-      - name: apt
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install vorbis-tools flac
-        shell: bash
-
       - name: Add rar extension
-        if: runner.os == 'Linux' || runner.os == 'macOS'
         run: |
           git clone https://github.com/cataphract/php-rar
           cd php-rar

@@ -5,6 +5,7 @@ namespace Kiwilan\Archive\Readers;
 use DateTime;
 use Exception;
 use FilesystemIterator;
+use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Models\ArchiveItem;
 use Kiwilan\Archive\Models\ArchiveStat;
@@ -52,7 +53,7 @@ abstract class BaseArchive
         $this->filename = pathinfo($path, PATHINFO_FILENAME);
         $this->basename = pathinfo($path, PATHINFO_BASENAME);
         $this->outputDirectory = BaseArchive::getOutputDirectory($this->basename);
-        $this->type = ArchiveEnum::fromExtension($this->extension, mime_content_type($path));
+        $this->type = ArchiveEnum::fromExtension($this->extension, Archive::getMimeType($path));
 
         return $this;
     }
