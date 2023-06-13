@@ -14,7 +14,6 @@ jobs:
 
     steps:
       - name: Install for Linux
-        if: runner.os == 'Linux'
         run: |
           sudo apt -y install p7zip-full ghostscript imagemagick
           sudo apt-get install -y unrar
@@ -32,14 +31,7 @@ jobs:
           extensions: imagick, zip
           coverage: pcov
 
-      - name: apt
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install vorbis-tools flac
-        shell: bash
-
       - name: Add rar extension
-        if: runner.os == 'Linux' || runner.os == 'macOS'
         run: |
           git clone https://github.com/cataphract/php-rar
           cd php-rar
