@@ -102,10 +102,37 @@ PDF files works with same API than archives but with some differences.
 ```php
 $archive = Archive::read('path/to/file.pdf');
 
-$metadata = $archive->metadata(); // Metadata of PDF
+$pdf = $archive->pdf(); // Metadata of PDF
 
 $content = $archive->content($archive->first()); // PDF page as image
 $text = $archive->text($archive->first()); // PDF page as text
+```
+
+### Stat
+
+From `stat` PHP function: <https://www.php.net/manual/en/function.stat.php>
+
+> Gives information about a file
+
+```php
+$archive = Archive::read('path/to/file.zip');
+$stat = $archive->stat();
+
+$stat->path(); // Path of file
+$stat->deviceNumber(); // Device number
+$stat->inodeNumber(); // Inode number
+$stat->inodeProtectionMode(); // Inode protection mode
+$stat->numberOfLinks(); // Number of links
+$stat->userId(); // User ID
+$stat->groupId(); // Group ID
+$stat->deviceType(); // Device type
+$stat->size(); // Size of file
+$stat->lastAccessAt(); // Last access time
+$stat->createdAt(); // Creation time
+$stat->modifiedAt(); // Last modification time
+$stat->blockSize(); // Block size
+$stat->numberOfBlocks(); // Number of blocks
+$stat->status(); // Status
 ```
 
 ### Create
