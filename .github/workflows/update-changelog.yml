@@ -32,7 +32,7 @@ jobs:
 
       - name: Merge on develop
         run: |
-          git checkout develop
-          git merge main
-          git push origin develop
+          git checkout origin/develop
+          git merge origin/main
+          git push
         shell: bash
