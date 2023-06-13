@@ -39,6 +39,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: imagick, zip, fileinfo, bz2
+          # extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: pcov
 
       - name: Setup problem matchers
