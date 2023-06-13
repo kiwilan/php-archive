@@ -42,8 +42,8 @@ class ArchiveStat
         $self->lastAccessAt = $stat['atime'] ? new DateTime('@'.$stat['atime']) : null;
         $self->createdAt = $stat['ctime'] ? new DateTime('@'.$stat['ctime']) : null;
         $self->modifiedAt = $stat['mtime'] ? new DateTime('@'.$stat['mtime']) : null;
-        $self->blockSize = $stat['blksize'] ?? null;
-        $self->numberOfBlocks = $stat['blocks'] ?? null;
+        $self->blockSize = $stat['blksize'] ?: null;
+        $self->numberOfBlocks = $stat['blocks'] ?: null;
 
         return $self;
     }
