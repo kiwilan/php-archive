@@ -3,14 +3,12 @@ name: Tests on windows
 on: [push, pull_request]
 
 jobs:
-  windows:
+  test:
     runs-on: windows-latest
 
     steps:
       - name: Install scoop
         uses: MinoruSekine/setup-scoop@v1
-        with:
-          scoop_checkup: "true"
 
       - name: Install scoop
         run: |
