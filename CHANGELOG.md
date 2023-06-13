@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.4.01 - 2023-06-13
+
+- rename `PdfMetadata` to `PdfMeta`
+
 ## 1.4.0 - 2023-06-13
 
 - replace `ArchiveMetadata::class` with `ArchiveStat::class`: `$archive->stat()` from `stat` native function
