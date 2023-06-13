@@ -4,7 +4,7 @@ namespace Kiwilan\Archive\Models;
 
 use DateTime;
 
-class PdfMetadata
+class PdfMeta
 {
     /** @var array<string> */
     protected array $keywords = [];
