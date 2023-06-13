@@ -15,12 +15,16 @@ jobs:
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
-      - name: scoop
+      - name: Install scoop
         run: |
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
           scoop update
+        shell: powershell
+
+      - name: Install dependencies
+        run: |
           scoop install 7zip imagemagick ghostscript unrar
         shell: powershell
 
