@@ -3,16 +3,19 @@ name: Tests on windows
 on: [push, pull_request]
 
 jobs:
-  test:
+  windows:
     runs-on: windows-latest
 
     steps:
       - name: Install scoop
-        uses: MinoruSekine/setup-scoop@v1
-
-      - name: Install scoop
         run: |
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+          scoop update
+          scoop checkup
           scoop install 7zip imagemagick ghostscript unrar
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        shell: powershell
 
       - name: Checkout code
         uses: actions/checkout@v3
