@@ -13,7 +13,7 @@ beforeEach(function () {
 it('can read', function (string $path) {
     $archive = Archive::read($path);
     $extension = pathinfo($path, PATHINFO_EXTENSION);
-    $type = ArchiveEnum::fromExtension($extension, mime_content_type($path));
+    $type = ArchiveEnum::fromExtension($extension, Archive::getMimeType($path));
 
     expect($archive->extension())->toBe($extension);
     expect($archive->path())->toBe($path);
