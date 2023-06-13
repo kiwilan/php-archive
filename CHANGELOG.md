@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.4.02 - 2023-06-13
+
+`ArchivePdf` disable `Exception` for `content`
+
 ## 1.4.01 - 2023-06-13
 
 - rename `PdfMetadata` to `PdfMeta`
