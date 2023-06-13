@@ -59,8 +59,8 @@ If you want more informations, you can read section [**About**](#about).
 -   Extract files
     -   With `extract` method: extract files to directory
     -   With `extractAll` method: extract all files to directory
--   Metadata of archive with `title`, `author`, `subject`, `creator`, `creationDate`, `modDate`, `status` and `comment` properties
-    -   Useful for PDF files
+-   Stat of archive with `path`, `deviceNumber`, `inodeNumber`, `inodeProtectionMode`, `numberOfLinks`, `userId`, `groupId`, `deviceType`, `size`, `lastAccessAt`, `createdAt`, `modifiedAt`, `blockSize`, `numberOfBlocks`, `status`, `comment` properties
+-   PDF metadata: `title`, `author`, `subject`, `creator`, `creationDate`, `modDate`, `pages`,
 -   Count files
 -   Create or edit archives, only with `.zip` format
     -   With `make` method: create or edit archive
