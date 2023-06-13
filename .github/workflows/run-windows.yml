@@ -3,7 +3,7 @@ name: Tests on windows
 on: [push, pull_request]
 
 jobs:
-  codecov:
+  windows:
     runs-on: windows-latest
 
     steps:
