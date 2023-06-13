@@ -70,16 +70,9 @@ jobs:
         run: php -m | grep imagick
 
       - name: Execute tests
-        run: vendor/bin/pest --coverage
+        run: vendor/bin/pest
 
       - name: on Linux run phpstan
         if: runner.os == 'Linux'
         run: vendor/bin/phpstan analyse --memory-limit=2G
         shell: bash
-
-      - name: on Linux send code coverage
-        if: runner.os == 'Linux'
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: false
