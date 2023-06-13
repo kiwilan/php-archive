@@ -9,7 +9,7 @@ use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Models\ArchiveItem;
 use Kiwilan\Archive\Models\ArchiveStat;
-use Kiwilan\Archive\Models\PdfMetadata;
+use Kiwilan\Archive\Models\PdfMeta;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -31,7 +31,7 @@ abstract class BaseArchive
 
     protected ?ArchiveStat $stat = null;
 
-    protected ?PdfMetadata $pdf = null;
+    protected ?PdfMeta $pdf = null;
 
     /** @var ArchiveItem[] */
     protected array $files = [];
@@ -119,7 +119,7 @@ abstract class BaseArchive
         return $this->stat;
     }
 
-    public function pdf(): ?PdfMetadata
+    public function pdf(): ?PdfMeta
     {
         return $this->pdf;
     }
