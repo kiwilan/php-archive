@@ -19,6 +19,12 @@ Supports Linux, macOS and Windows.
 ## Requirements
 
 -   PHP >= 8.1
+-   **Extensions**:
+    -   [`zip`](https://www.php.net/manual/en/book.zip.php) (native, optional)
+    -   [`fileinfo`](https://www.php.net/manual/en/book.fileinfo.php) (native, optional)
+    -   [`rar`](https://www.php.net/manual/en/book.rar.php) (optional)
+    -   [`imagick`](https://www.php.net/manual/en/book.imagick.php) (optional)
+    -   [`bz2`](https://www.php.net/manual/en/book.bzip2.php) (optional)
 -   Depend of archive type and features you want to use
 
 |           Type            | Native |                                                                                       Dependency                                                                                       |
