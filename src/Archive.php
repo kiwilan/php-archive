@@ -25,7 +25,11 @@ class Archive
             throw new \Exception("File {$path} not found");
         }
 
-        $mimeType = mime_content_type($path);
+        $mimeType = null;
+        try {
+            $mimeType = mime_content_type($path);
+        } catch (\Throwable $th) {
+        }
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $type = ArchiveEnum::fromExtension($extension, $mimeType);
         $self = new self($path, $extension, $type);
