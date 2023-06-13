@@ -73,7 +73,8 @@ class ArchivePdf extends BaseArchive
             $imagick->clear();
             $imagick->destroy();
         } catch (\Throwable $th) {
-            throw new \Exception("Error, {$file->filename()} is not an image");
+            // throw new \Exception("Error, {$file->filename()} is not an image");
+            error_log("Error, {$file->filename()} is not an image");
         }
 
         if (! $content) {
