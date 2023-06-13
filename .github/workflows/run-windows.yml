@@ -8,13 +8,13 @@ jobs:
 
     steps:
       - name: Install scoop
+        uses: MinoruSekine/setup-scoop@v1
+        with:
+          scoop_checkup: "true"
+
+      - name: Install scoop
         run: |
-          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-          iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-          scoop update
           scoop install 7zip imagemagick ghostscript unrar
-          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        shell: powershell
 
       - name: Checkout code
         uses: actions/checkout@v3
