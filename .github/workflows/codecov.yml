@@ -29,6 +29,26 @@ jobs:
           sudo apt-get install vorbis-tools flac
         shell: bash
 
+      - name: Add rar extension
+        if: runner.os == 'Linux' || runner.os == 'macOS'
+        run: |
+          git clone https://github.com/cataphract/php-rar
+          cd php-rar
+          phpize
+          ./configure
+          sudo make
+          sudo make install
+          pecl_path=$(pecl config-get ext_dir)
+          phpini_path=$(php -i | grep /.+/php.ini -oE)
+          sudo cp ./modules/rar.so $pecl_path
+          sudo echo "extension=rar.so" > $phpini_path
+
+      - name: Check extension rar
+        run: php -m | grep rar
+
+      - name: Check extension imagick
+        run: php -m | grep imagick
+
       - name: Setup problem matchers
         run: |
           echo "::add-matcher::${{ runner.tool_cache }}/php.json"
