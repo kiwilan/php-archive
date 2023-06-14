@@ -12,6 +12,8 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 
 Supports Linux, macOS and Windows.
 
+![banner](tests/media/banner.jpg)
+
 > **Warning**
 >
 > For some formats (`.rar` and `.7z`) [`rar` PHP extension](https://github.com/cataphract/php-rar) or [p7zip](https://www.7-zip.org/) binary could be necessary, see [Requirements](#requirements).
