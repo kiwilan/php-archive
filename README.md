@@ -12,7 +12,9 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hy
 
 Supports Linux, macOS and Windows.
 
-![banner](tests/media/banner.jpg)
+<p align="center">
+  <img src="tests/media/banner.jpg" style="width: 80%;" alt="Banner with archives picture in background and PHP archive title" />
+</p>
 
 > **Warning**
 >
