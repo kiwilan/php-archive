@@ -30,14 +30,13 @@ Supports Linux, macOS and Windows.
     -   [`imagick`](https://www.php.net/manual/en/book.imagick.php) (optional) for `.PDF`
     -   [`bz2`](https://www.php.net/manual/en/book.bzip2.php) (optional) for `.BZ2` archives
 
-|           Type            | Native |                                                                                       Dependency                                                                                       |         Uses         |
-| :-----------------------: | :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------: |
-|  `.zip`, `.epub`, `.cbz`  |   ✅   |                                                                                          N/A                                                                                           |         PHP          |
-| `.tar`, `.tar.gz`, `.cbt` |   ✅   |                                                                                          N/A                                                                                           |         PHP          |
-|      `.rar`, `.cbr`       |   ❌   |                                        [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary                                        | PHP `rar` or `p7zip` |
-|       `.7z`, `.cb7`       |   ❌   |                                                                        [`p7zip`](https://www.7-zip.org/) binary                                                                        |       `p7zip`        |
-|          `.pdf`           |   ✅   |                                                Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)                                                 |  `smalot/pdfparser`  |
-|            ALL            |   ❌   | [`p7zip`](https://www.7-zip.org/) binary ([`rar` PHP extension](https://github.com/cataphract/php-rar) and [`imagick` PHP extension](https://github.com/Imagick/imagick) are optional) |                      |
+|           Type            | Supported |                                               Requirement                                                |         Uses         |
+| :-----------------------: | :-------: | :------------------------------------------------------------------------------------------------------: | :------------------: |
+|  `.zip`, `.epub`, `.cbz`  |    ✅     |                                                   N/A                                                    |         N/A          |
+| `.tar`, `.tar.gz`, `.cbt` |    ✅     |                                                   N/A                                                    |         N/A          |
+|      `.rar`, `.cbr`       |    ✅     | [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary | PHP `rar` or `p7zip` |
+|       `.7z`, `.cb7`       |    ✅     |                                 [`p7zip`](https://www.7-zip.org/) binary                                 |    `p7zip` binary    |
+|          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |  `smalot/pdfparser`  |
 
 > **Note**
 >
