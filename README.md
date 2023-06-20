@@ -1,16 +1,21 @@
 # PHP Archive
 
+![Banner with archives picture in background and PHP Archive title](docs/banner.jpg)
+
 [![php][php-version-src]][php-version-href]
 [![version][version-src]][version-href]
 [![downloads][downloads-src]][downloads-href]
 [![license][license-src]][license-href]
-
 [![tests][tests-src]][tests-href]
 [![codecov][codecov-src]][codecov-href]
 
 PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hybrid solution (native/`p7zip`), designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`).
 
 Supports Linux, macOS and Windows.
+
+<p align="center">
+  <img src="tests/media/banner.jpg" style="width: 80%;" alt="Banner with archives picture in background and PHP archive title" />
+</p>
 
 > **Warning**
 >
@@ -26,14 +31,13 @@ Supports Linux, macOS and Windows.
     -   [`imagick`](https://www.php.net/manual/en/book.imagick.php) (optional) for `.PDF`
     -   [`bz2`](https://www.php.net/manual/en/book.bzip2.php) (optional) for `.BZ2` archives
 
-|           Type            | Native |                                                                                       Dependency                                                                                       |
-| :-----------------------: | :----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|  `.zip`, `.epub`, `.cbz`  |   ✅   |                                                                                          N/A                                                                                           |
-| `.tar`, `.tar.gz`, `.cbt` |   ✅   |                                                                                          N/A                                                                                           |
-|      `.rar`, `.cbr`       |   ❌   |                                        [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary                                        |
-|       `.7z`, `.cb7`       |   ❌   |                                                                        [`p7zip`](https://www.7-zip.org/) binary                                                                        |
-|          `.pdf`           |   ✅   |                                                Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)                                                 |
-|            ALL            |   ❌   | [`p7zip`](https://www.7-zip.org/) binary ([`rar` PHP extension](https://github.com/cataphract/php-rar) and [`imagick` PHP extension](https://github.com/Imagick/imagick) are optional) |
+|           Type            | Supported |                                               Requirement                                                |         Uses         |
+| :-----------------------: | :-------: | :------------------------------------------------------------------------------------------------------: | :------------------: |
+|  `.zip`, `.epub`, `.cbz`  |    ✅     |                                                   N/A                                                    |         N/A          |
+| `.tar`, `.tar.gz`, `.cbt` |    ✅     |                                                   N/A                                                    |         N/A          |
+|      `.rar`, `.cbr`       |    ✅     | [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary | PHP `rar` or `p7zip` |
+|       `.7z`, `.cb7`       |    ✅     |                                 [`p7zip`](https://www.7-zip.org/) binary                                 |    `p7zip` binary    |
+|          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |  `smalot/pdfparser`  |
 
 > **Note**
 >
