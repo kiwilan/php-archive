@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.5.1 - 2023-07-06
+
+- Fix Windows temporary path issue
+
 ## 1.5.0 - 2023-07-06
 
 - add `spatie/temporary-directory` for temporary directory management
