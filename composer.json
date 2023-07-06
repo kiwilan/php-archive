@@ -1,6 +1,6 @@
 {
     "name": "kiwilan/php-archive",
-    "version": "1.4.02",
+    "version": "1.5.0",
     "description": "PHP package to handle archives (.zip, .rar, .tar, .7z) or .pdf with hybrid solution (native/p7zip), designed to works with eBooks (.epub, .cbz, .cbr, .cb7, .cbt).",
     "keywords": [
         "php",
@@ -34,6 +34,7 @@
     "require": {
         "php": "^8.1",
         "smalot/pdfparser": "^2.4",
+        "spatie/temporary-directory": "^2.1",
         "symfony/process": "^6.2"
     },
     "require-dev": {
