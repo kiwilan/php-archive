@@ -3,6 +3,7 @@
 namespace Kiwilan\Archive\Processes;
 
 use Exception;
+use Kiwilan\Archive\ArchiveTemporaryDirectory;
 use Kiwilan\Archive\Models\ArchiveItem;
 use Kiwilan\Archive\Readers\BaseArchive;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -28,7 +29,8 @@ class SevenZipProcess
         }
 
         $self = new self($path);
-        $self->outputDir = BaseArchive::getOutputDirectory($path);
+        $temp = ArchiveTemporaryDirectory::make();
+        $self->outputDir = $temp->path();
         $self->isDarwin = PHP_OS_FAMILY === 'Darwin';
 
         $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));

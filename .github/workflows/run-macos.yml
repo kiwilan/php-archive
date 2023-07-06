@@ -1,8 +1,6 @@
 name: Tests on macOS
 
-on:
-  release:
-    types: [released]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -12,7 +10,10 @@ jobs:
       - name: Install dependencies
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install p7zip rar ghostscript imagemagick
+          brew install p7zip
+          brew install rar
+          brew install ghostscript
+          brew install imagemagick
         shell: bash
 
       - name: Checkout code

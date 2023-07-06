@@ -1,8 +1,6 @@
 name: Tests on Windows
 
-on:
-  release:
-    types: [released]
+on: [push, pull_request]
 
 jobs:
   test:
