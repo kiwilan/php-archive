@@ -238,7 +238,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 -   [Kiwilan](https://github.com/kiwilan)
 -   [All Contributors](../../contributors)
--   [spatie](https://github.com/spatie) for `spatie/package-skeleton-php`
+-   [spatie](https://github.com/spatie) for `spatie/package-skeleton-php` and `spatie/temporary-directory`
 -   [`smalot/pdfparser`](https://github.com/smalot/pdfparser) for PDF parser
 -   [`7-zip`](https://www.7-zip.org/) for `p7zip` binary
 

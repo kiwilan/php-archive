@@ -12,6 +12,7 @@ use Kiwilan\Archive\Models\ArchiveStat;
 use Kiwilan\Archive\Models\PdfMeta;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Spatie\TemporaryDirectory\TemporaryDirectory;
 use SplFileInfo;
 use Symfony\Component\Process\Process;
 
@@ -255,32 +256,20 @@ abstract class BaseArchive
 
     public static function clearOutputDirectory(): bool
     {
-        $output = self::getOutputDirectory();
-        if (! is_dir($output)) {
-            mkdir($output, 0755, true);
-        }
-        self::recurseRmdir($output);
+        (new TemporaryDirectory())->name('php-archive')->force()->delete();
 
         return true;
     }
 
     public static function getOutputDirectory(?string $filename = null): string
     {
-        $root = getcwd();
-        if (is_dir("{$root}/vendor")) {
-            $outputDirectory = "{$root}/vendor/temp";
-        } else {
-            $outputDirectory = "{$root}/temp";
+        $temp = (new TemporaryDirectory())->name('php-archive');
+
+        if (! $temp->exists()) {
+            $temp->force()->create();
         }
 
-        if ($filename) {
-            $filename = pathinfo($filename, PATHINFO_BASENAME);
-            $outputDirectory .= DIRECTORY_SEPARATOR.$filename;
-        }
-
-        $outputDirectory = self::pathToOsPath($outputDirectory);
-
-        return $outputDirectory;
+        return $temp->path($filename);
     }
 
     protected function getFiles(string $path): array
