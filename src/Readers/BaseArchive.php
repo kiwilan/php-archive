@@ -6,13 +6,13 @@ use DateTime;
 use Exception;
 use FilesystemIterator;
 use Kiwilan\Archive\Archive;
+use Kiwilan\Archive\ArchiveTemporaryDirectory;
 use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Models\ArchiveItem;
 use Kiwilan\Archive\Models\ArchiveStat;
 use Kiwilan\Archive\Models\PdfMeta;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Spatie\TemporaryDirectory\TemporaryDirectory;
 use SplFileInfo;
 use Symfony\Component\Process\Process;
 
@@ -39,6 +39,8 @@ abstract class BaseArchive
 
     protected int $count = 0;
 
+    protected ?string $tempDir = null;
+
     protected function __construct(
     ) {
     }
@@ -47,13 +49,14 @@ abstract class BaseArchive
 
     protected function setup(string $path): static
     {
-        BaseArchive::clearOutputDirectory();
 
         $this->path = $path;
         $this->extension = pathinfo($path, PATHINFO_EXTENSION);
         $this->filename = pathinfo($path, PATHINFO_FILENAME);
         $this->basename = pathinfo($path, PATHINFO_BASENAME);
-        $this->outputDirectory = BaseArchive::getOutputDirectory($this->basename);
+        $temp = ArchiveTemporaryDirectory::make();
+        $temp->clear();
+        $this->outputDirectory = $temp->path();
         $this->type = ArchiveEnum::fromExtension($this->extension, Archive::getMimeType($path));
 
         return $this;
@@ -252,24 +255,6 @@ abstract class BaseArchive
         }
 
         return true;
-    }
-
-    public static function clearOutputDirectory(): bool
-    {
-        (new TemporaryDirectory())->name('php-archive')->force()->delete();
-
-        return true;
-    }
-
-    public static function getOutputDirectory(?string $filename = null): string
-    {
-        $temp = (new TemporaryDirectory())->name('php-archive');
-
-        if (! $temp->exists()) {
-            $temp->force()->create();
-        }
-
-        return $temp->path($filename);
     }
 
     protected function getFiles(string $path): array
