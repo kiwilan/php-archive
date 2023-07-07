@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.5.12 - 2023-07-07
+
+- `BaseArchive` can now `findFiles` with auto sort
+
 ## 1.5.11 - 2023-07-07
 
 - `BaseArchive`, `findFiles` can now sort natural files
