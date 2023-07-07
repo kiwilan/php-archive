@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 1.5.11 - 2023-07-07
+
+- `BaseArchive`, `findFiles` can now sort natural files
+
 ## 1.5.1 - 2023-07-06
 
 - Fix Windows temporary path issue
