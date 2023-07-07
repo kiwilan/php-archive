@@ -49,7 +49,6 @@ abstract class BaseArchive
 
     protected function setup(string $path): static
     {
-
         $this->path = $path;
         $this->extension = pathinfo($path, PATHINFO_EXTENSION);
         $this->filename = pathinfo($path, PATHINFO_FILENAME);
@@ -186,9 +185,11 @@ abstract class BaseArchive
 
         $filtered = array_filter($files, function (ArchiveItem $file) use ($search, $skipHidden) {
             $isExtension = ! str_contains($search, '.');
+
             if ($skipHidden && $file->isHidden()) {
                 return false;
             }
+
             if ($isExtension) {
                 return $file->extension() === $search;
             } else {
@@ -196,12 +197,11 @@ abstract class BaseArchive
             }
         });
 
-        $filtered = array_values($filtered);
         $property = 'rootPath';
         $sort = fn ($a, $b) => strnatcmp($a->{$property}(), $b->{$property}());
-        usort($files, $sort);
+        usort($filtered, $sort);
 
-        return $filtered;
+        return array_values($filtered);
     }
 
     protected function sortFiles()
@@ -265,8 +265,10 @@ abstract class BaseArchive
         $files = array_diff(scandir($path), ['.', '..']);
 
         $items = [];
+
         foreach ($files as $file) {
             $fullPath = $path.DIRECTORY_SEPARATOR.$file;
+
             if (is_dir($fullPath)) {
                 $items = array_merge($items, $this->getFiles($fullPath));
             } else {
@@ -275,6 +277,7 @@ abstract class BaseArchive
         }
 
         $list = [];
+
         foreach ($items as $item) {
             $item = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $item);
             $list[] = $item;
@@ -386,6 +389,7 @@ abstract class BaseArchive
         $exclude = ['.gitignore'];
         $it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
         $it = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+
         foreach ($it as $file) {
             if ($file->isDir()) {
                 rmdir($file->getPathname());
