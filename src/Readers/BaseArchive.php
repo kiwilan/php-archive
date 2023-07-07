@@ -197,6 +197,9 @@ abstract class BaseArchive
         });
 
         $filtered = array_values($filtered);
+        $property = 'rootPath';
+        $sort = fn ($a, $b) => strnatcmp($a->{$property}(), $b->{$property}());
+        usort($files, $sort);
 
         return $filtered;
     }
