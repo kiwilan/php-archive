@@ -1,6 +1,6 @@
 # PHP Archive
 
-![Banner with archives picture in background and PHP Archive title](docs/banner.jpg)
+![Banner with archives picture in background and PHP Archive title](https://raw.githubusercontent.com/kiwilan/php-archive/main/docs/banner.jpg)
 
 [![php][php-version-src]][php-version-href]
 [![version][version-src]][version-href]
