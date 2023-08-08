@@ -12,8 +12,9 @@ jobs:
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop update
+          scoop install 7zip
           scoop checkup
-          scoop install 7zip unrar
+          scoop install unrar
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         shell: powershell
 
