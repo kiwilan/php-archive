@@ -124,3 +124,7 @@ it('can extract files', function (string $path) {
     expect($paths)->toBeArray();
     expect($paths)->toBeGreaterThanOrEqual(5);
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);
+
+it('can handle bad archive', function (string $path) {
+    expect(fn () => Archive::read($path))->toThrow(ValueError::class);
+})->with([EPUB_BAD_FILE]);
