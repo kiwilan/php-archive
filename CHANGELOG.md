@@ -2,6 +2,15 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## 2.0.0 - 2023-08-08
+
+### BREAKING CHANGES
+
+- All simple getters have now `get` prefix. For example, `getPath()` instead of `path()`, `getFilename()` instead of `filename()`, etc. It concerns all simple getters of `BasicArchive`, `ArchiveItem`, `ArchiveStat`, `PdfMeta`, `ArchiveCreate` classes.
+
+> Why?
+All these classes have some methods like setters or actions. To be consistent and clear, all simple getters have now `get` prefix.
+
 ## 1.5.12 - 2023-07-07
 
 - `BaseArchive` can now `findFiles` with auto sort
