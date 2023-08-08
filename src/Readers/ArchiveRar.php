@@ -39,7 +39,7 @@ class ArchiveRar extends BaseArchive
         $paths = [];
         $this->parser(function (ArchiveItem $file, $stream) use ($files, $toPath, &$paths) {
             if (in_array($file, $files)) {
-                $toPathFile = "{$toPath}{$file->rootPath()}";
+                $toPathFile = "{$toPath}{$file->getRootPath()}";
 
                 if (! is_dir(dirname($toPathFile))) {
                     mkdir(dirname($toPathFile), 0755, true);
@@ -53,14 +53,14 @@ class ArchiveRar extends BaseArchive
         return $paths;
     }
 
-    public function content(?ArchiveItem $item, bool $toBase64 = false): ?string
+    public function getContent(?ArchiveItem $item, bool $toBase64 = false): ?string
     {
         if (! $item) {
             return null;
         }
 
         $content = $this->parser(function (ArchiveItem $file, $stream) use ($item) {
-            if ($file->rootPath() === $item->rootPath()) {
+            if ($file->getRootPath() === $item->getRootPath()) {
                 return $this->convertStream($stream);
             }
         });
@@ -70,13 +70,13 @@ class ArchiveRar extends BaseArchive
             : $content;
     }
 
-    public function text(ArchiveItem $file): ?string
+    public function getText(ArchiveItem $file): ?string
     {
         if ($file->isImage()) {
-            throw new \Exception("Error, {$file->filename()} is an image");
+            throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        return $this->content($file);
+        return $this->getContent($file);
     }
 
     private function parse(): static
@@ -103,10 +103,10 @@ class ArchiveRar extends BaseArchive
      */
     private function parser(Closure $closure): mixed
     {
-        $archive = RarArchive::open($this->path());
+        $archive = RarArchive::open($this->getPath());
 
         if ($archive->isBroken()) {
-            throw new \Exception("Archive is broken {$this->path()}");
+            throw new \Exception("Archive is broken {$this->getPath()}");
         }
 
         foreach ($archive->getEntries() as $key => $entry) {

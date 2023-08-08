@@ -32,8 +32,8 @@ class ArchivePdf extends BaseArchive
         $paths = [];
         foreach ($this->files as $file) {
             if (in_array($file, $files)) {
-                $content = $this->content($file);
-                $toPathFile = "{$toPath}{$file->path()}.{$this->pdfExt}";
+                $content = $this->getContent($file);
+                $toPathFile = "{$toPath}{$file->getPath()}.{$this->pdfExt}";
 
                 if (! is_dir(dirname($toPathFile))) {
                     mkdir(dirname($toPathFile), 0755, true);
@@ -47,7 +47,7 @@ class ArchivePdf extends BaseArchive
         return $paths;
     }
 
-    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
+    public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
         if (! $file) {
             return null;
@@ -55,7 +55,7 @@ class ArchivePdf extends BaseArchive
 
         $this->extensionImagickTest();
 
-        $index = (int) $file->path();
+        $index = (int) $file->getPath();
         $format = $this->pdfExt;
         $format = 'jpg';
 
@@ -73,8 +73,8 @@ class ArchivePdf extends BaseArchive
             $imagick->clear();
             $imagick->destroy();
         } catch (\Throwable $th) {
-            // throw new \Exception("Error, {$file->filename()} is not an image");
-            error_log("Error, {$file->filename()} is not an image");
+            // throw new \Exception("Error, {$file->getFilename()} is not an image");
+            error_log("Error, {$file->getFilename()} is not an image");
         }
 
         if (! $content) {
@@ -86,16 +86,16 @@ class ArchivePdf extends BaseArchive
             : $content;
     }
 
-    public function text(ArchiveItem $file): ?string
+    public function getText(ArchiveItem $file): ?string
     {
         if ($file->isImage()) {
-            throw new \Exception("Error, {$file->filename()} is an image");
+            throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        $index = (int) $file->path();
+        $index = (int) $file->getPath();
 
         $parser = new Parser();
-        $document = $parser->parseFile($this->path());
+        $document = $parser->parseFile($this->getPath());
 
         $pages = $document->getPages();
 
@@ -112,7 +112,7 @@ class ArchivePdf extends BaseArchive
     private function parse(): static
     {
         $parser = new Parser();
-        $document = $parser->parseFile($this->path());
+        $document = $parser->parseFile($this->getPath());
 
         $this->stat = ArchiveStat::make($this->path);
         $this->pdf = PdfMeta::make($document->getDetails());

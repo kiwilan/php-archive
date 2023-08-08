@@ -15,17 +15,17 @@ it('can read', function (string $path) {
     $extension = pathinfo($path, PATHINFO_EXTENSION);
     $type = ArchiveEnum::fromExtension($extension, Archive::getMimeType($path));
 
-    expect($archive->extension())->toBe($extension);
-    expect($archive->path())->toBe($path);
-    expect($archive->type())->toBe($type);
+    expect($archive->getExtension())->toBe($extension);
+    expect($archive->getPath())->toBe($path);
+    expect($archive->getType())->toBe($type);
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
 
 it('can get text', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->files();
+    $files = $archive->getFiles();
     $first = array_filter($files, fn (ArchiveItem $item) => ! $item->isImage());
     $first = array_shift($first);
-    $text = $archive->text($first);
+    $text = $archive->getText($first);
 
     expect($text)->toBeString();
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
@@ -36,17 +36,17 @@ it('can failed if not found', function () {
 
 it('can get metadata', function (string $path) {
     $archive = Archive::read($path);
-    $stat = $archive->stat();
+    $stat = $archive->getStat();
 
     expect($stat)->toBeInstanceOf(ArchiveStat::class);
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
 
 it('can get files', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->files();
+    $files = $archive->getFiles();
 
     expect($files)->toBeArray();
-    expect($files)->toHaveCount($archive->count());
+    expect($files)->toHaveCount($archive->getCount());
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_PDF, ...ARCHIVES_RAR, SEVENZIP]);
 
 it('can find all images', function (string $path) {
@@ -63,14 +63,14 @@ it('can find all images', function (string $path) {
         function (Pest\Expectation $item) use ($ext) {
             $file = $item->value;
             expect($file)->toBeInstanceOf(ArchiveItem::class);
-            expect($file->extension())->toBe($ext);
+            expect($file->getExtension())->toBe($ext);
         }
     );
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);
 
 it('can get content first file', function (string $path) {
     $archive = Archive::read($path);
-    $content = $archive->content($archive->first());
+    $content = $archive->getContent($archive->getFirst());
 
     $output = outputPath();
     $file = BaseArchive::pathToOsPath("{$output}first.jpg");
@@ -83,7 +83,7 @@ it('can get content first file', function (string $path) {
 it('can get cover', function (string $path) {
     $archive = Archive::read($path);
     $cover = $archive->find('cover.jpeg');
-    $content = $archive->content($cover);
+    $content = $archive->getContent($cover);
 
     $output = outputPath();
     $coverPath = "{$output}cover.jpeg";
@@ -97,7 +97,7 @@ it('can get cover', function (string $path) {
 it('can cover with base64', function (string $path) {
     $archive = Archive::read($path);
     $cover = $archive->find('cover.jpeg');
-    $content = $archive->content($cover, true);
+    $content = $archive->getContent($cover, true);
     $isBase64 = isBase64($content);
 
     expect($isBase64)->toBeTrue();
@@ -105,8 +105,8 @@ it('can cover with base64', function (string $path) {
 
 it('can extract some files', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->files();
-    $output = outputPath($archive->basename());
+    $files = $archive->getFiles();
+    $output = outputPath($archive->getBasename());
 
     $select = [$files[0], $files[1]];
     $paths = $archive->extract($output, $select);

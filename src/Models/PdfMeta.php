@@ -61,17 +61,17 @@ class PdfMeta
         return $self;
     }
 
-    public function title(): ?string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function author(): ?string
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
 
-    public function subject(): ?string
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
@@ -79,27 +79,27 @@ class PdfMeta
     /**
      * @return array<string>
      */
-    public function keywords(): array
+    public function getKeywords(): array
     {
         return $this->keywords;
     }
 
-    public function creator(): ?string
+    public function getCreator(): ?string
     {
         return $this->creator;
     }
 
-    public function creationDate(): ?DateTime
+    public function getCreationDate(): ?DateTime
     {
         return $this->creationDate;
     }
 
-    public function modDate(): ?DateTime
+    public function getModDate(): ?DateTime
     {
         return $this->modDate;
     }
 
-    public function pages(): ?int
+    public function getPages(): ?int
     {
         return $this->pages;
     }

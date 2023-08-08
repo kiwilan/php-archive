@@ -72,64 +72,64 @@ abstract class BaseArchive
      */
     abstract public function extract(string $toPath, array $files): array;
 
-    public function path(): string
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    public function extension(): string
+    public function getExtension(): string
     {
         return $this->extension;
     }
 
-    public function filename(): string
+    public function getFilename(): string
     {
         return $this->filename;
     }
 
-    public function basename(): string
+    public function getBasename(): string
     {
         return $this->basename;
     }
 
-    public function type(): ArchiveEnum
+    public function getType(): ArchiveEnum
     {
         return $this->type;
     }
 
-    public function first(): ArchiveItem
+    public function getFirst(): ArchiveItem
     {
         return reset($this->files);
     }
 
-    public function last(): ArchiveItem
+    public function getLast(): ArchiveItem
     {
         return end($this->files);
     }
 
-    public function files(): array
+    public function getFiles(): array
     {
         return $this->files;
     }
 
-    public function count(): int
+    public function getCount(): int
     {
         return $this->count;
     }
 
-    public function stat(): ?ArchiveStat
+    public function getStat(): ?ArchiveStat
     {
         return $this->stat;
     }
 
-    public function pdf(): ?PdfMeta
+    public function getPdf(): ?PdfMeta
     {
         return $this->pdf;
     }
 
-    abstract public function content(?ArchiveItem $file, bool $toBase64 = false): ?string;
+    abstract public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string;
 
-    abstract public function text(ArchiveItem $file): ?string;
+    abstract public function getText(ArchiveItem $file): ?string;
 
     public function find(string $search, bool $skipHidden = true): ?ArchiveItem
     {
@@ -181,7 +181,7 @@ abstract class BaseArchive
      */
     protected function findFiles(string $search, bool $skipHidden): array
     {
-        $files = $this->files();
+        $files = $this->getFiles();
 
         $filtered = array_filter($files, function (ArchiveItem $file) use ($search, $skipHidden) {
             $isExtension = ! str_contains($search, '.');
@@ -191,13 +191,13 @@ abstract class BaseArchive
             }
 
             if ($isExtension) {
-                return $file->extension() === $search;
+                return $file->getExtension() === $search;
             } else {
-                return str_contains($file->path(), $search);
+                return str_contains($file->getPath(), $search);
             }
         });
 
-        $property = 'rootPath';
+        $property = 'getRootPath';
         $sort = fn ($a, $b) => strnatcmp($a->{$property}(), $b->{$property}());
         usort($filtered, $sort);
 
@@ -206,7 +206,7 @@ abstract class BaseArchive
 
     protected function sortFiles()
     {
-        usort($this->files, fn (ArchiveItem $a, ArchiveItem $b) => strcmp($a->path(), $b->path()));
+        usort($this->files, fn (ArchiveItem $a, ArchiveItem $b) => strcmp($a->getPath(), $b->getPath()));
         $this->files = array_values($this->files);
     }
 
@@ -260,7 +260,7 @@ abstract class BaseArchive
         return true;
     }
 
-    protected function getFiles(string $path): array
+    protected function getAllFiles(string $path): array
     {
         $files = array_diff(scandir($path), ['.', '..']);
 
@@ -270,7 +270,7 @@ abstract class BaseArchive
             $fullPath = $path.DIRECTORY_SEPARATOR.$file;
 
             if (is_dir($fullPath)) {
-                $items = array_merge($items, $this->getFiles($fullPath));
+                $items = array_merge($items, $this->getAllFiles($fullPath));
             } else {
                 $items[] = $fullPath;
             }

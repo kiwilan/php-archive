@@ -19,11 +19,11 @@ it('can create', function () {
     $archive->addFiles($medias);
     $archive->save();
 
-    expect($archive->path())->toBe($path);
-    expect($archive->name())->toBe('test.zip');
-    expect($archive->path())->toBeReadableFile($path);
-    expect($archive->count())->toBe(5);
-    expect($archive->files())->toBeArray()
+    expect($archive->getPath())->toBe($path);
+    expect($archive->getName())->toBe('test.zip');
+    expect($archive->getPath())->toBeReadableFile($path);
+    expect($archive->getCount())->toBe(5);
+    expect($archive->getFiles())->toBeArray()
         ->each(fn ($file) => expect($file->value)->toBeInstanceOf(SplFileInfo::class));
 });
 
@@ -41,8 +41,8 @@ it('can create with files', function () {
     $archive->addFromString('test.txt', 'Hello World!');
     $archive->save();
 
-    expect($archive->path())->toBeReadableFile($path);
-    expect($archive->count())->toBe(6);
+    expect($archive->getPath())->toBeReadableFile($path);
+    expect($archive->getCount())->toBe(6);
 });
 
 it('can create with strings', function () {
@@ -53,8 +53,8 @@ it('can create with strings', function () {
     $archive->addFromString('test-2.txt', 'Hello World!');
     $archive->save();
 
-    expect($archive->path())->toBeReadableFile($path);
-    expect($archive->count())->toBe(2);
+    expect($archive->getPath())->toBeReadableFile($path);
+    expect($archive->getCount())->toBe(2);
 });
 
 it('can create with directory', function () {
@@ -64,8 +64,8 @@ it('can create with directory', function () {
     $archive->addDirectory(mediaPath('archive'));
     $archive->save();
 
-    expect($archive->path())->toBeReadableFile($path);
-    expect($archive->count())->toBe(5);
+    expect($archive->getPath())->toBeReadableFile($path);
+    expect($archive->getCount())->toBe(5);
 });
 
 it('can edit', function () {
@@ -79,6 +79,6 @@ it('can edit', function () {
     $archive->addFromString('test.txt', 'Hello World!');
     $archive->save();
 
-    expect($archive->path())->toBeReadableFile($path);
-    expect($archive->count())->toBe(6);
+    expect($archive->getPath())->toBeReadableFile($path);
+    expect($archive->getCount())->toBe(6);
 });

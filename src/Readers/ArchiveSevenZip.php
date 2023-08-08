@@ -17,7 +17,7 @@ class ArchiveSevenZip extends BaseArchive
         return $self;
     }
 
-    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
+    public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
         if (! $file) {
             return null;
@@ -31,13 +31,13 @@ class ArchiveSevenZip extends BaseArchive
             : $content;
     }
 
-    public function text(ArchiveItem $file): ?string
+    public function getText(ArchiveItem $file): ?string
     {
         if ($file->isImage()) {
-            throw new \Exception("Error, {$file->filename()} is an image");
+            throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        return $this->content($file);
+        return $this->getContent($file);
     }
 
     public function extract(string $toPath, array $files): array

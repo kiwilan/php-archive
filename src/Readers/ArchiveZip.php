@@ -23,8 +23,8 @@ class ArchiveZip extends BaseArchive
         $paths = [];
         $this->parser(function (ArchiveItem $item, ZipArchive $archive, int $i) use (&$files, $toPath, &$paths) {
             if (in_array($item, $files)) {
-                $content = $this->content($item);
-                $toPathFile = "{$toPath}{$item->rootPath()}";
+                $content = $this->getContent($item);
+                $toPathFile = "{$toPath}{$item->getRootPath()}";
 
                 if (! is_dir(dirname($toPathFile))) {
                     mkdir(dirname($toPathFile), 0755, true);
@@ -44,21 +44,21 @@ class ArchiveZip extends BaseArchive
         $archive->open($this->path);
         $archive->extractTo($toPath);
 
-        $files = $this->getFiles($toPath);
+        $files = $this->getAllFiles($toPath);
 
         $archive->close();
 
         return $files;
     }
 
-    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
+    public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
         if (! $file) {
             return null;
         }
 
         $content = $this->parser(function (ArchiveItem $item, ZipArchive $archive, int $i) use ($file) {
-            if ($item->filename() === $file->filename()) {
+            if ($item->getFilename() === $file->getFilename()) {
                 return $archive->getFromIndex($i);
             }
 
@@ -68,13 +68,13 @@ class ArchiveZip extends BaseArchive
         return $toBase64 ? base64_encode($content) : $content;
     }
 
-    public function text(ArchiveItem $file): ?string
+    public function getText(ArchiveItem $file): ?string
     {
         if ($file->isImage()) {
-            throw new \Exception("Error, {$file->filename()} is an image");
+            throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        return $this->content($file);
+        return $this->getContent($file);
     }
 
     private function parse(): static

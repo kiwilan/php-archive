@@ -8,15 +8,15 @@ beforeEach(function () {
 
 it('can get files', function () {
     $archive = Archive::read(PDF);
-    $files = $archive->files();
+    $files = $archive->getFiles();
 
     expect($files)->toBeArray();
-    expect($files)->toHaveCount($archive->count());
+    expect($files)->toHaveCount($archive->getCount());
 });
 
 it('can get content first file', function () {
     $archive = Archive::read(PDF);
-    $content = $archive->content($archive->first());
+    $content = $archive->getContent($archive->getFirst());
 
     $output = outputPath();
     $file = "{$output}first.jpg";
@@ -28,8 +28,8 @@ it('can get content first file', function () {
 
 it('can extract some files', function () {
     $archive = Archive::read(PDF);
-    $files = $archive->files();
-    $output = outputPath($archive->basename());
+    $files = $archive->getFiles();
+    $output = outputPath($archive->getBasename());
 
     $select = [$files[0], $files[1]];
     $paths = $archive->extract($output, $select);
@@ -50,17 +50,17 @@ it('can extract files', function () {
 
 it('can read metadata', function () {
     $archive = Archive::read(PDF);
-    $pdf = $archive->pdf();
+    $pdf = $archive->getPdf();
 
-    expect($pdf->title())->toBe('Example PDF');
-    expect($pdf->author())->toBe('Ewilan Rivière');
-    expect($pdf->subject())->toBe('This is an example PDF for php-archive package tests.');
-    expect($pdf->keywords())->toBe(['test', 'pdf', 'example']);
-    expect($pdf->creator())->toBe('Kiwilan');
-    expect($pdf->creationDate())->toBeInstanceOf(\DateTime::class);
-    expect($pdf->modDate())->toBeInstanceOf(\DateTime::class);
-    expect($pdf->pages())->toBe(4);
-    expect($pdf->keywords())->toBeArray();
+    expect($pdf->getTitle())->toBe('Example PDF');
+    expect($pdf->getAuthor())->toBe('Ewilan Rivière');
+    expect($pdf->getSubject())->toBe('This is an example PDF for php-archive package tests.');
+    expect($pdf->getKeywords())->toBe(['test', 'pdf', 'example']);
+    expect($pdf->getCreator())->toBe('Kiwilan');
+    expect($pdf->getCreationDate())->toBeInstanceOf(\DateTime::class);
+    expect($pdf->getModDate())->toBeInstanceOf(\DateTime::class);
+    expect($pdf->getPages())->toBe(4);
+    expect($pdf->getKeywords())->toBeArray();
     expect($pdf->toArray())->toBeArray();
     expect($pdf->toJson())->toBeString();
 });
