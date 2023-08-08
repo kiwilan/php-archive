@@ -34,7 +34,7 @@ class ArchiveItem
     ) {
     }
 
-    public static function fromP7zip(array $data, ?string $archivePath = null): self
+    public static function fromP7zip(array $data, string $archivePath = null): self
     {
         if (empty($data)) {
             throw new \Exception('No data provided.');
@@ -97,47 +97,47 @@ class ArchiveItem
     /**
      * Path encoded in base64.
      */
-    public function id(): ?string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function archivePath(): ?string
+    public function getArchivePath(): ?string
     {
         return $this->archivePath;
     }
 
-    public function filename(): ?string
+    public function getFilename(): ?string
     {
         return $this->filename;
     }
 
-    public function extension(): ?string
+    public function getExtension(): ?string
     {
         return $this->extension;
     }
 
-    public function path(): ?string
+    public function getPath(): ?string
     {
         return $this->path;
     }
 
-    public function rootPath(): ?string
+    public function getRootPath(): ?string
     {
         return $this->rootPath;
     }
 
-    public function sizeHuman(): ?string
+    public function getSizeHuman(): ?string
     {
         return $this->sizeHuman;
     }
 
-    public function size(): ?int
+    public function getSize(): ?int
     {
         return $this->size;
     }
 
-    public function packedSize(): ?int
+    public function getPackedSize(): ?int
     {
         return $this->packedSize;
     }
@@ -157,27 +157,27 @@ class ArchiveItem
         return $this->isHidden;
     }
 
-    public function modified(): ?DateTime
+    public function getModified(): ?DateTime
     {
         return $this->modified;
     }
 
-    public function created(): ?DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
 
-    public function accessed(): ?DateTime
+    public function getAccessed(): ?DateTime
     {
         return $this->accessed;
     }
 
-    public function extraInfos(): array
+    public function getExtraInfos(): array
     {
         return $this->extraInfos;
     }
 
-    public function hostOS(): ?string
+    public function getHostOS(): ?string
     {
         return $this->hostOS;
     }
@@ -185,32 +185,32 @@ class ArchiveItem
     public function toArray(): array
     {
         return [
-            'id' => $this->id(),
-            'archivePath' => $this->archivePath(),
+            'id' => $this->getId(),
+            'archivePath' => $this->getArchivePath(),
 
-            'filename' => $this->filename(),
-            'extension' => $this->extension(),
-            'path' => $this->path(),
-            'rootPath' => $this->rootPath(),
+            'filename' => $this->getFilename(),
+            'extension' => $this->getExtension(),
+            'path' => $this->getPath(),
+            'rootPath' => $this->getRootPath(),
 
-            'sizeHuman' => $this->sizeHuman(),
-            'size' => $this->size(),
-            'packedSize' => $this->packedSize(),
+            'sizeHuman' => $this->getSizeHuman(),
+            'size' => $this->getSize(),
+            'packedSize' => $this->getPackedSize(),
 
             'isDirectory' => $this->isDirectory(),
             'isImage' => $this->isImage(),
             'isHidden' => $this->isHidden(),
 
-            'modified' => $this->modified(),
-            'created' => $this->created(),
-            'accessed' => $this->accessed(),
+            'modified' => $this->getModified(),
+            'created' => $this->getCreated(),
+            'accessed' => $this->getAccessed(),
 
-            'hostOS' => $this->hostOS(),
+            'hostOS' => $this->getHostOS(),
         ];
     }
 
     public function __toString(): string
     {
-        return $this->path();
+        return $this->getPath();
     }
 }

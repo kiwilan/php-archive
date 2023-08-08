@@ -21,6 +21,7 @@ define('ARCHIVES_NATIVE', [
     'ZIP' => ZIP,
 ]);
 define('EPUB', __DIR__.'/media/epub.epub');
+define('EPUB_BAD_FILE', __DIR__.'/media/epub-bad-file.epub');
 define('CBZ', __DIR__.'/media/cba.cbz');
 define('CBR', __DIR__.'/media/cba.cbr');
 define('CBT', __DIR__.'/media/cba.cbt');
@@ -61,7 +62,7 @@ function mediaPath(string $filename): string
     return $pathBase.$filename;
 }
 
-function outputPath(?string $path = null, ?string $filename = null): string
+function outputPath(string $path = null, string $filename = null): string
 {
     $pathBase = __DIR__.'/output/';
 

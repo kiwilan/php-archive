@@ -53,19 +53,19 @@ If you want more information, you can read section [**About**](#about).
 ## Features
 
 -   List files as `ArchiveItem` array
-    -   With `files` method: list of files
-    -   With `first` method: first file
-    -   With `last` method: last file
+    -   With `getFiles` method: list of files
+    -   With `getFirst` method: first file
+    -   With `getLast` method: last file
     -   With `find` method: find first file that match with `path` property
     -   With `filter` method: find all files that match with `path` property
 -   Content of file
-    -   With `content` method: content of file as string (useful for images)
-    -   With `text` method: content of text file (binaries files return `null`)
+    -   With `getContent` method: content of file as string (useful for images)
+    -   With `getText` method: content of text file (binaries files return `null`)
 -   Extract files
     -   With `extract` method: extract files to directory
     -   With `extractAll` method: extract all files to directory
--   Stat of archive with `path`, `deviceNumber`, `inodeNumber`, `inodeProtectionMode`, `numberOfLinks`, `userId`, `groupId`, `deviceType`, `size`, `lastAccessAt`, `createdAt`, `modifiedAt`, `blockSize`, `numberOfBlocks`, `status`, `comment` properties
--   PDF metadata: `title`, `author`, `subject`, `creator`, `creationDate`, `modDate`, `pages`,
+-   Stat of archive with `getPath`, `getDeviceNumber`, `getInodeNumber`, `getInodeProtectionMode`, `getNumberOfLinks`, `getUserId`, `getGroupId`, `getDeviceType`, `getSize`, `getLastAccessAt`, `getCreatedAt`, `getModifiedAt`, `getBlockSize`, `getNumberOfBlocks`, `getStatus`, `getComment` properties
+-   PDF metadata: `getTitle`, `getAuthor`, `getSubject`, `getCreator`, `getCreationDate`, `getModDate`, `getPages`,
 -   Count files
 -   Create or edit archives, only with `.zip` format
     -   With `make` method: create or edit archive
@@ -91,12 +91,12 @@ With archive file (`.zip`, `.rar`, `.tar`, `.7z`, `epub`, `cbz`, `cbr`, `cb7`, `
 ```php
 $archive = Archive::read('path/to/archive.zip');
 
-$files = $archive->files(); // ArchiveItem[]
-$count = $archive->count(); // int of files count
+$files = $archive->getFiles(); // ArchiveItem[]
+$count = $archive->getCount(); // int of files count
 
 $images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` in their path
 $metadataXml = $archive->find('metadata.xml'); // First ArchiveItem with `metadata.xml` in their path
-$content = $archive->content($metadataXml); // `metadata.xml` file content
+$content = $archive->getContent($metadataXml); // `metadata.xml` file content
 
 $paths = $archive->extract('/path/to/directory', [$metadataXml]); // string[] of extracted files paths
 $paths = $archive->extractAll('/path/to/directory'); // string[] of extracted files paths
@@ -107,10 +107,10 @@ PDF files works with same API than archives but with some differences.
 ```php
 $archive = Archive::read('path/to/file.pdf');
 
-$pdf = $archive->pdf(); // Metadata of PDF
+$pdf = $archive->getPdf(); // Metadata of PDF
 
-$content = $archive->content($archive->first()); // PDF page as image
-$text = $archive->text($archive->first()); // PDF page as text
+$content = $archive->getContent($archive->getFirst()); // PDF page as image
+$text = $archive->getText($archive->getFirst()); // PDF page as text
 ```
 
 ### Stat
@@ -123,21 +123,21 @@ From `stat` PHP function: <https://www.php.net/manual/en/function.stat.php>
 $archive = Archive::read('path/to/file.zip');
 $stat = $archive->stat();
 
-$stat->path(); // Path of file
-$stat->deviceNumber(); // Device number
-$stat->inodeNumber(); // Inode number
-$stat->inodeProtectionMode(); // Inode protection mode
-$stat->numberOfLinks(); // Number of links
-$stat->userId(); // User ID
-$stat->groupId(); // Group ID
-$stat->deviceType(); // Device type
-$stat->size(); // Size of file
-$stat->lastAccessAt(); // Last access time
-$stat->createdAt(); // Creation time
-$stat->modifiedAt(); // Last modification time
-$stat->blockSize(); // Block size
-$stat->numberOfBlocks(); // Number of blocks
-$stat->status(); // Status
+$stat->getPath(); // Path of file
+$stat->getDeviceNumber(); // Device number
+$stat->getInodeNumber(); // Inode number
+$stat->getInodeProtectionMode(); // Inode protection mode
+$stat->getNumberOfLinks(); // Number of links
+$stat->getUserId(); // User ID
+$stat->getGroupId(); // Group ID
+$stat->getDeviceType(); // Device type
+$stat->getSize(); // Size of file
+$stat->getLastAccessAt(); // Last access time
+$stat->getCreatedAt(); // Creation time
+$stat->getModifiedAt(); // Last modification time
+$stat->getBlockSize(); // Block size
+$stat->getNumberOfBlocks(); // Number of blocks
+$stat->getStatus(); // Status
 ```
 
 ### Create

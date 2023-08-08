@@ -18,33 +18,33 @@ class ArchivePhar extends BaseArchive
         return $self;
     }
 
-    public function content(?ArchiveItem $file, bool $toBase64 = false): ?string
+    public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
         if (! $file) {
             return null;
         }
 
-        $content = file_get_contents($file->path());
+        $content = file_get_contents($file->getPath());
 
         return $toBase64 ? base64_encode($content) : $content;
     }
 
-    public function text(ArchiveItem $file): ?string
+    public function getText(ArchiveItem $file): ?string
     {
         if ($file->isImage()) {
-            throw new \Exception("Error, {$file->filename()} is an image");
+            throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        return $this->content($file);
+        return $this->getContent($file);
     }
 
     public function extract(string $toPath, array $files): array
     {
         $paths = [];
         foreach ($files as $file) {
-            $content = $this->content($file);
+            $content = $this->getContent($file);
 
-            $toPathFile = "{$toPath}{$file->rootPath()}";
+            $toPathFile = "{$toPath}{$file->getRootPath()}";
 
             if (! is_dir(dirname($toPathFile))) {
                 mkdir(dirname($toPathFile), 0755, true);
@@ -61,7 +61,7 @@ class ArchivePhar extends BaseArchive
     {
         $phar = new PharData($this->path);
         $phar->extractTo($toPath, null, true);
-        $files = $this->getFiles($toPath);
+        $files = $this->getAllFiles($toPath);
 
         return $files;
     }
@@ -72,7 +72,7 @@ class ArchivePhar extends BaseArchive
         $phar->extractTo($this->outputDirectory, null, true);
 
         $this->stat = ArchiveStat::make($this->path);
-        $files = $this->getFiles($this->outputDirectory);
+        $files = $this->getAllFiles($this->outputDirectory);
 
         foreach ($files as $item) {
             $file = new SplFileInfo($item);

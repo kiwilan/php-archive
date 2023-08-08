@@ -10,7 +10,7 @@ enum ArchiveEnum: string
     case rar = 'rar';
     case pdf = 'pdf';
 
-    public static function fromExtension(string $extension, ?string $mimeType = null): self
+    public static function fromExtension(string $extension, string $mimeType = null): self
     {
         $extension = strtolower($extension);
         if (str_contains($extension, '.')) {

@@ -35,17 +35,17 @@ class ArchiveZipCreate
         return $self;
     }
 
-    public function path(): string
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    public function name(): string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function count(): int
+    public function getCount(): int
     {
         return $this->count;
     }
@@ -53,7 +53,7 @@ class ArchiveZipCreate
     /**
      * @return SplFileInfo[]
      */
-    public function files(): array
+    public function getFiles(): array
     {
         return $this->files;
     }
@@ -61,7 +61,7 @@ class ArchiveZipCreate
     /**
      * @return array<string, string>
      */
-    public function strings(): array
+    public function getStrings(): array
     {
         return $this->strings;
     }

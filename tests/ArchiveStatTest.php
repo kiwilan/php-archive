@@ -8,24 +8,24 @@ beforeEach(function () {
 
 it('can read', function (string $path) {
     $archive = Archive::read($path);
-    $stat = $archive->stat();
+    $stat = $archive->getStat();
 
-    expect($stat->path())->toBeString();
-    expect($stat->deviceNumber())->toBeInt();
-    expect($stat->inodeNumber())->toBeInt();
-    expect($stat->inodeProtectionMode())->toBeInt();
-    expect($stat->numberOfLinks())->toBeInt();
-    expect($stat->userId())->toBeInt();
-    expect($stat->groupId())->toBeInt();
-    expect($stat->deviceType())->toBeInt();
-    expect($stat->size())->toBeInt();
-    expect($stat->lastAccessAt())->toBeInstanceOf(DateTime::class);
-    expect($stat->createdAt())->toBeInstanceOf(DateTime::class);
-    expect($stat->modifiedAt())->toBeInstanceOf(DateTime::class);
-    expect($stat->blockSize())->toBeInt();
-    expect($stat->numberOfBlocks())->toBeInt();
-    if ($stat->status()) {
-        expect($stat->status())->toBeString();
+    expect($stat->getPath())->toBeString();
+    expect($stat->getDeviceNumber())->toBeInt();
+    expect($stat->getInodeNumber())->toBeInt();
+    expect($stat->getInodeProtectionMode())->toBeInt();
+    expect($stat->getNumberOfLinks())->toBeInt();
+    expect($stat->getUserId())->toBeInt();
+    expect($stat->getGroupId())->toBeInt();
+    expect($stat->getDeviceType())->toBeInt();
+    expect($stat->getSize())->toBeInt();
+    expect($stat->getLastAccessAt())->toBeInstanceOf(DateTime::class);
+    expect($stat->getCreatedAt())->toBeInstanceOf(DateTime::class);
+    expect($stat->getModifiedAt())->toBeInstanceOf(DateTime::class);
+    expect($stat->getBlockSize())->toBeInt();
+    expect($stat->getNumberOfBlocks())->toBeInt();
+    if ($stat->getStatus()) {
+        expect($stat->getStatus())->toBeString();
     }
 
     expect($stat->toArray())->toBeArray();

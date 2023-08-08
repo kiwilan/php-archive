@@ -115,18 +115,18 @@ class SevenZipProcess
     /**
      * @param  ArchiveItem[]  $files
      */
-    public function extract(string $toPath, ?array $files = null): bool
+    public function extract(string $toPath, array $files = null): bool
     {
         if ($this->isRar && $this->isDarwin) {
             if ($files) {
-                $list = array_map(fn (ArchiveItem $item) => $item->path(), $files);
+                $list = array_map(fn (ArchiveItem $item) => $item->getPath(), $files);
                 $this->execute('rar', ['x', '-y', $this->path, ...$list, "{$toPath}/"]);
             } else {
                 $this->execute('rar', ['x', '-y', $this->path, "{$toPath}"]);
             }
         } else {
             if ($files) {
-                $list = array_map(fn (ArchiveItem $item) => $item->path(), $files);
+                $list = array_map(fn (ArchiveItem $item) => $item->getPath(), $files);
                 $this->execute('7z', ['x', '-y', $this->path, "-o{$toPath}", ...$list, '-r']);
             } else {
                 $this->execute('7z', ['x', '-y', $this->path, "-o{$toPath}", '-r']);
@@ -140,7 +140,7 @@ class SevenZipProcess
     {
         $archive = pathinfo($this->path, PATHINFO_BASENAME);
         $output = "{$this->outputDir}/{$archive}";
-        $filePath = "{$output}/{$file->rootPath()}";
+        $filePath = "{$output}/{$file->getRootPath()}";
         $filePath = BaseArchive::pathToOsPath($filePath);
 
         if (! file_exists($filePath)) {
@@ -148,9 +148,9 @@ class SevenZipProcess
         }
 
         if ($this->isRar && $this->isDarwin) {
-            $this->execute('rar', ['x', '-y', $this->path, $file->path(), "{$output}/"]);
+            $this->execute('rar', ['x', '-y', $this->path, $file->getPath(), "{$output}/"]);
         } else {
-            $this->execute('7z', ['x', '-y', $this->path, "-o{$output}", $file->path(), '-r']);
+            $this->execute('7z', ['x', '-y', $this->path, "-o{$output}", $file->getPath(), '-r']);
         }
         $content = file_get_contents($filePath);
         BaseArchive::recurseRmdir($this->outputDir);

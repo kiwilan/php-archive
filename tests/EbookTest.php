@@ -5,26 +5,26 @@ use Kiwilan\Archive\Enums\ArchiveEnum;
 
 it('can read epub', function () {
     $archive = Archive::read(EPUB);
-    $files = $archive->files();
+    $files = $archive->getFiles();
     $extension = pathinfo(EPUB, PATHINFO_EXTENSION);
 
-    expect($archive->extension())->toBe($extension);
-    expect($archive->path())->toBe(EPUB);
-    expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
+    expect($archive->getExtension())->toBe($extension);
+    expect($archive->getPath())->toBe(EPUB);
+    expect($archive->getType())->toBeInstanceOf(ArchiveEnum::class);
     expect($files)->toBeIterable();
-    expect($archive->count())->toBeGreaterThan(0);
+    expect($archive->getCount())->toBeGreaterThan(0);
 });
 
 it('can read cba', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->files();
+    $files = $archive->getFiles();
     $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-    expect($archive->extension())->toBe($extension);
-    expect($archive->path())->toBe($path);
-    expect($archive->type())->toBeInstanceOf(ArchiveEnum::class);
+    expect($archive->getExtension())->toBe($extension);
+    expect($archive->getPath())->toBe($path);
+    expect($archive->getType())->toBeInstanceOf(ArchiveEnum::class);
     expect($files)->toBeIterable();
-    expect($archive->count())->toBeGreaterThan(0);
+    expect($archive->getCount())->toBeGreaterThan(0);
 })->with(CBA_ITEMS);
 
 it('can get cover with cba', function (string $path) {
