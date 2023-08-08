@@ -101,7 +101,7 @@ class ArchiveZip extends BaseArchive
     }
 
     /**
-     * @param Closure(ArchiveItem $file, ZipArchive $archive, int $i): mixed $closure
+     * @param  Closure(ArchiveItem $file, ZipArchive $archive, int $i): mixed  $closure
      */
     private function parser(Closure $closure): mixed
     {

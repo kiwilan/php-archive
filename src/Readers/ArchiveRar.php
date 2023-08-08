@@ -99,7 +99,7 @@ class ArchiveRar extends BaseArchive
     }
 
     /**
-     * @param Closure(ArchiveItem $file, resource $stream): mixed $closure
+     * @param  Closure(ArchiveItem $file, resource $stream): mixed  $closure
      */
     private function parser(Closure $closure): mixed
     {

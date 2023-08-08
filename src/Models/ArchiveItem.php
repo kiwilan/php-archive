@@ -34,7 +34,7 @@ class ArchiveItem
     ) {
     }
 
-    public static function fromP7zip(array $data, ?string $archivePath = null): self
+    public static function fromP7zip(array $data, string $archivePath = null): self
     {
         if (empty($data)) {
             throw new \Exception('No data provided.');
