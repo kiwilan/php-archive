@@ -45,6 +45,9 @@ abstract class BaseArchive
     ) {
     }
 
+    /**
+     * Create a new instance of Archive.
+     */
     abstract public static function read(string $path): self;
 
     protected function setup(string $path): static
@@ -62,75 +65,123 @@ abstract class BaseArchive
     }
 
     /**
+     * Extract all files from archive.
+     *
      * @return string[]
      */
     abstract public function extractAll(string $toPath): array;
 
     /**
+     * Extract selected files from archive.
+     *
      * @param  ArchiveItem[]  $files
      * @return string[]
      */
     abstract public function extract(string $toPath, array $files): array;
 
+    /**
+     * Get path to the archive.
+     */
     public function getPath(): string
     {
         return $this->path;
     }
 
+    /**
+     * Get extension of the archive.
+     */
     public function getExtension(): string
     {
         return $this->extension;
     }
 
+    /**
+     * Get filename of the archive.
+     */
     public function getFilename(): string
     {
         return $this->filename;
     }
 
+    /**
+     * Get basename of the archive.
+     */
     public function getBasename(): string
     {
         return $this->basename;
     }
 
+    /**
+     * Get `ArchiveEnum` of the archive.
+     */
     public function getType(): ArchiveEnum
     {
         return $this->type;
     }
 
+    /**
+     * Get first file from archive.
+     */
     public function getFirst(): ArchiveItem
     {
         return reset($this->files);
     }
 
+    /**
+     * Get last file from archive.
+     */
     public function getLast(): ArchiveItem
     {
         return end($this->files);
     }
 
+    /**
+     * Get files from archive.
+     *
+     * @return ArchiveItem[]
+     */
     public function getFiles(): array
     {
         return $this->files;
     }
 
+    /**
+     * Get count of files.
+     */
     public function getCount(): int
     {
         return $this->count;
     }
 
+    /**
+     * Get archive stat.
+     */
     public function getStat(): ?ArchiveStat
     {
         return $this->stat;
     }
 
+    /**
+     * Get PDF metadata.
+     */
     public function getPdf(): ?PdfMeta
     {
         return $this->pdf;
     }
 
+    /**
+     * Get content from file.
+     */
     abstract public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string;
 
+    /**
+     * Get text from file.
+     */
     abstract public function getText(ArchiveItem $file): ?string;
 
+    /**
+     * Find file by search to get `ArchiveItem`.
+     */
     public function find(string $search, bool $skipHidden = true): ?ArchiveItem
     {
         $files = $this->findFiles($search, $skipHidden);
@@ -143,6 +194,8 @@ abstract class BaseArchive
     }
 
     /**
+     * Filter files by search to get `ArchiveItem[]`.
+     *
      * @return ArchiveItem[]|null
      */
     public function filter(string $search, bool $skipHidden = true): ?array

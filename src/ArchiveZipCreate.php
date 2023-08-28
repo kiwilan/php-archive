@@ -9,27 +9,40 @@ use ZipArchive;
 
 class ArchiveZipCreate
 {
-    /** @var SplFileInfo[] */
-    protected array $files = [];
-
-    /** @var array<string, string> */
-    protected array $strings = [];
-
-    protected int $count = 0;
-
+    /**
+     * @param  SplFileInfo[]  $files
+     * @param  array<string, string>  $strings
+     */
     protected function __construct(
         protected string $path,
         protected string $name,
+        protected array $files = [],
+        protected array $strings = [],
+        protected int $count = 0,
     ) {
     }
 
-    public static function make(string $path): self
+    /**
+     * Create a new instance of ArchiveZipCreate, allowing extensions are `zip`, `epub`, `cbz`.
+     *
+     * @param  string  $path Path to the archive
+     * @param  bool  $skipAllowed Skip allowed extensions check
+     *
+     * @throws \Exception
+     */
+    public static function make(string $path, bool $skipAllowed = false): self
     {
         $self = new self($path, pathinfo($path, PATHINFO_BASENAME));
 
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        if ($extension !== 'zip') {
-            throw new \Exception("File {$path} is not a zip file, only zip files are supported.");
+
+        if (! $skipAllowed) {
+            $allowedExtensions = ['zip', 'epub', 'cbz'];
+            if (! in_array($extension, $allowedExtensions)) {
+                $extensions = implode(', ', $allowedExtensions);
+                throw new \Exception("File {$path} is not a zip file, only {$extensions} files are supported.");
+            }
+
         }
 
         return $self;
