@@ -2,6 +2,17 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.1.0 - 2023-08-28
+
+Rework `Archive::make()`
+
+- `addFile()` takes two parameters now: the `outputPath` inside archive and `pathToFile` on disk
+- ~~`addFiles()`~~ is removed
+- `addDirectory()` takes two parameters now: `relativeTo` path inside archive and the `path` of directory on the disk   
+  - If the `path` is `/path/to/dir` and `relativeTo` is `./dir`, the directory will be added to archive as `dir/`   
+  
+- ~~`addDirectories()`~~ is removed
+
 ## v2.0.02 - 2023-08-28
 
 - Add `skipAllowed` param to `Archive::class`
