@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Install for Linux
         run: |
+          sudo apt update
           sudo apt -y install p7zip-full ghostscript imagemagick
           sudo apt install -y unrar
           sudo apt install -y libunrar-dev
