@@ -10,14 +10,12 @@ use ZipArchive;
 class ArchiveZipCreate
 {
     /**
-     * @param  SplFileInfo[]  $files
-     * @param  array<string, string>  $strings
+     * @param  ArchiveFile[]  $files
      */
     protected function __construct(
         protected string $path,
         protected string $name,
         protected array $files = [],
-        protected array $strings = [],
         protected int $count = 0,
     ) {
     }
@@ -64,7 +62,7 @@ class ArchiveZipCreate
     }
 
     /**
-     * @return SplFileInfo[]
+     * @return ArchiveFile[]
      */
     public function getFiles(): array
     {
@@ -72,77 +70,74 @@ class ArchiveZipCreate
     }
 
     /**
-     * @return array<string, string>
+     * Add a new file to the archive from existing file.
+     *
+     * @param  string  $outputPath Path to the file inside the archive
+     * @param  string  $pathToFile Path to the file to add
      */
-    public function getStrings(): array
+    public function addFile(string $outputPath, string $pathToFile): self
     {
-        return $this->strings;
-    }
-
-    public function addFile(string $path): self
-    {
-        $this->files[] = new SplFileInfo($path);
+        $this->files[] = new ArchiveFile($outputPath, new SplFileInfo($pathToFile));
         $this->count++;
 
         return $this;
     }
 
-    public function addFromString(string $filename, string $content): self
+    /**
+     * Add a new file to the archive from string.
+     *
+     * @param  string  $outputPath Path to the file inside the archive
+     * @param  string  $content Content of the file to add
+     */
+    public function addFromString(string $outputPath, string $content): self
     {
-        $this->strings[$filename] = $content;
+        $this->files[] = new ArchiveFile($outputPath, null, $content);
         $this->count++;
 
         return $this;
     }
 
-    public function addFiles(array $paths): self
+    /**
+     * Add a full directory to the archive, including subdirectories.
+     *
+     * @param  string  $relativeTo Relative path to the directory inside the archive
+     * @param  string  $path Path to the directory to add
+     *
+     * ```php
+     * $archive->addDirectory('./to/directory', '/path/to/directory');
+     * ```
+     */
+    public function addDirectory(string $relativeTo, string $path): self
     {
-        foreach ($paths as $path) {
-            $this->addFile($path);
-        }
-
-        return $this;
-    }
-
-    public function addDirectory(string $path): self
-    {
-        $files = $this->pathsToSplFiles($this->directoryToPaths($path));
+        $files = $this->pathsToSplFiles($this->directoryToPaths($path, $relativeTo));
         $this->files = [...$this->files, ...$files];
         $this->count = count($this->files);
 
         return $this;
     }
 
-    public function addDirectories(array $paths): self
-    {
-        foreach ($paths as $path) {
-            $this->addDirectory($path);
-        }
-
-        return $this;
-    }
-
-    public function save(): self
+    /**
+     * Save the archive.
+     */
+    public function save(): bool
     {
         $zip = new ZipArchive();
         $zip->open($this->path, ZipArchive::CREATE);
 
         foreach ($this->files as $file) {
-            $zip->addFile($file->getRealPath(), $file->getFilename());
-        }
-
-        foreach ($this->strings as $filename => $content) {
-            $zip->addFromString($filename, $content);
+            $content = $file->content;
+            if (! $file->isString) {
+                $content = file_get_contents($file->file->getPathname());
+            }
+            $zip->addFromString($file->outputPath, $content);
         }
 
         $this->count = $zip->numFiles;
 
-        $zip->close();
-
-        return $this;
+        return $zip->close();
     }
 
-    protected function directoryToPaths(string $path): array
+    protected function directoryToPaths(string $path, string $relativeTo): array
     {
         $files = [];
         $directory = new RecursiveDirectoryIterator($path);
@@ -152,7 +147,9 @@ class ArchiveZipCreate
             if ($file->isDir()) {
                 continue;
             }
-            $files[] = $file->getPathname();
+
+            $outputPath = str_replace($path, $relativeTo, $file->getPathname());
+            $files[] = $this->addFile($outputPath, $file->getPathname());
         }
 
         return $files;
@@ -174,5 +171,19 @@ class ArchiveZipCreate
         }
 
         return $files;
+    }
+}
+
+class ArchiveFile
+{
+    public function __construct(
+        public string $outputPath,
+        public ?SplFileInfo $file = null,
+        public ?string $content = null,
+        public bool $isString = false,
+    ) {
+        if (! $this->file) {
+            $this->isString = true;
+        }
     }
 }
