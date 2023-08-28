@@ -19,6 +19,9 @@ class Archive
     ) {
     }
 
+    /**
+     * Read an archive from the path.
+     */
     public static function read(string $path): BaseArchive
     {
         if (! file_exists($path)) {
@@ -42,11 +45,17 @@ class Archive
         return $archive::read($self->path);
     }
 
-    public static function make(string $path): ArchiveZipCreate
+    /**
+     * Create an archive from path, allowing extensions are `zip`, `epub`, `cbz`.
+     *
+     * @param  string  $path Path to the archive
+     * @param  bool  $skipAllowed Skip allowed extensions check
+     *
+     * @throws \Exception
+     */
+    public static function make(string $path, bool $skipAllowed = false): ArchiveZipCreate
     {
-        $archive = ArchiveZipCreate::make($path);
-
-        return $archive;
+        return ArchiveZipCreate::make($path, $skipAllowed);
     }
 
     /**
