@@ -148,13 +148,17 @@ Works only with `.zip` archives.
 
 ```php
 $archive = Archive::make('path/to/archive.zip');
-$archive->addFiles([
-    'path/to/file1.txt',
-    'path/to/file2.txt',
-    'path/to/file3.txt',
-]);
+$files = [
+    'path/to/file/in/archive-file1.txt' => 'path/to/real-file1.txt',
+    'path/to/file/in/archive-file2.txt' => 'path/to/real-file2.txt',
+    'path/to/file/in/archive-file3.txt' => 'path/to/real-file3.txt',
+];
+
+foreach ($files as $pathInArchive => $pathToRealFile) {
+    $archive->addFile($pathInArchive, $pathToRealFile);
+}
 $archive->addFromString('test.txt', 'Hello World!');
-$archive->addDirectory('path/to/directory');
+$archive->addDirectory('./directory', 'path/to/directory');
 $archive->save();
 ```
 
