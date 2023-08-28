@@ -2,6 +2,12 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.0.01 - 2023-08-28
+
+- For `ArchiveZipCreate::class` add extensions check: `zip`, `epub`, `cbz`, add an option to skip the check.
+- For `Archive::class`, convert `path()`, `extension()` and `type()` to `getPath()`, `getExtension()` and `getType()`.
+- Add docblocks to `Archive::class`.
+
 ## 2.0.0 - 2023-08-08
 
 ### BREAKING CHANGES
