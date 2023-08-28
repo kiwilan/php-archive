@@ -49,21 +49,33 @@ class Archive
         return $archive;
     }
 
-    public function path(): string
+    /**
+     * Get path to the archive.
+     */
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    public function extension(): string
+    /**
+     * Get extension of the archive.
+     */
+    public function getExtension(): string
     {
         return $this->extension;
     }
 
-    public function type(): ArchiveEnum
+    /**
+     * Get type of the archive.
+     */
+    public function getType(): ArchiveEnum
     {
         return $this->type;
     }
 
+    /**
+     * Get mime type of the archive.
+     */
     public static function getMimeType(string $path): ?string
     {
         try {
