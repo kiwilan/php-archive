@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.0.02 - 2023-08-28
+
+- Add `skipAllowed` param to `Archive::class`
+
 ## v2.0.01 - 2023-08-28
 
 - For `ArchiveZipCreate::class` add extensions check: `zip`, `epub`, `cbz`, add an option to skip the check.
