@@ -7,7 +7,9 @@ define('TAR', __DIR__.'/media/archive.tar');
 define('TARBZ2', __DIR__.'/media/archive.tar.bz2');
 define('TARGZ', __DIR__.'/media/archive.tar.gz');
 define('ZIP', __DIR__.'/media/archive.zip');
-define('PDF', __DIR__.'/media/example.pdf');
+define('PDF', __DIR__.'/media/pdf-example.pdf');
+define('PDF_SIMPLE', __DIR__.'/media/pdf-simple.pdf');
+define('PDF_EMPTY', __DIR__.'/media/pdf-empty.pdf');
 
 define('ARCHIVES', [
     'SEVENZIP' => SEVENZIP,
