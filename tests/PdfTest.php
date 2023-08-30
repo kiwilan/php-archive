@@ -1,6 +1,8 @@
 <?php
 
 use Kiwilan\Archive\Archive;
+use Kiwilan\Archive\Enums\ArchiveEnum;
+use Kiwilan\Archive\Readers\ArchivePdf;
 
 beforeEach(function () {
     recurseRmdir(outputPath());
@@ -63,4 +65,20 @@ it('can read metadata', function () {
     expect($pdf->getKeywords())->toBeArray();
     expect($pdf->toArray())->toBeArray();
     expect($pdf->toJson())->toBeString();
+});
+
+it('can read empty pdf', function () {
+    $archive = Archive::read(PDF_EMPTY);
+
+    expect($archive)->toBeInstanceOf(ArchivePdf::class);
+    expect($archive->getType())->toBe(ArchiveEnum::pdf);
+});
+
+it('can read simple pdf', function () {
+    $archive = Archive::read(PDF_SIMPLE);
+    ray($archive);
+
+    expect($archive)->toBeInstanceOf(ArchivePdf::class);
+    expect($archive->getPdf()->getTitle())->toBeString();
+    expect($archive->getType())->toBe(ArchiveEnum::pdf);
 });

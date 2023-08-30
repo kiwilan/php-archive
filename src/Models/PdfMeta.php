@@ -20,8 +20,12 @@ class PdfMeta
     ) {
     }
 
-    public static function make(array $details): self
+    public static function make(?array $details): self
     {
+        if (! $details) {
+            return new self();
+        }
+
         $title = $details['Title'] ?? null;
         $author = $details['Author'] ?? null;
         $subject = $details['Subject'] ?? null;
@@ -48,6 +52,10 @@ class PdfMeta
             modDate: $modDate,
             pages: $pages,
         );
+
+        if (! $keywords) {
+            return $self;
+        }
 
         if (is_array($keywords)) {
             $keywords = implode(',', $keywords);

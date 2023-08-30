@@ -37,7 +37,7 @@ exiftool \
   -Producer="Vue" \
   -Subject="Vue3 Composition API" \
   -Title="Vue3 Composition API" \
-  "./example.pdf"
+  "./pdf-example.pdf"
 ```
 
 ```bash
