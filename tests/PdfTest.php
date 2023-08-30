@@ -76,7 +76,6 @@ it('can read empty pdf', function () {
 
 it('can read simple pdf', function () {
     $archive = Archive::read(PDF_SIMPLE);
-    ray($archive);
 
     expect($archive)->toBeInstanceOf(ArchivePdf::class);
     expect($archive->getPdf()->getTitle())->toBeString();
