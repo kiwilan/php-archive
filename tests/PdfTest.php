@@ -18,7 +18,7 @@ it('can get files', function () {
 
 it('can get content first file', function () {
     $archive = Archive::read(PDF);
-    $content = $archive->getContent($archive->getFirst());
+    $content = $archive->getContents($archive->getFirst());
 
     $output = outputPath();
     $file = "{$output}first.jpg";

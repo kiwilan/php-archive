@@ -51,7 +51,15 @@ class ArchiveZip extends BaseArchive
         return $files;
     }
 
+    /**
+     * @deprecated Use `getContents()` instead
+     */
     public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string
+    {
+        return $this->getContents($file, $toBase64);
+    }
+
+    public function getContents(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
         if (! $file) {
             return null;

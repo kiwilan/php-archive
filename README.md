@@ -96,7 +96,7 @@ $count = $archive->getCount(); // int of files count
 
 $images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` in their path
 $metadataXml = $archive->find('metadata.xml'); // First ArchiveItem with `metadata.xml` in their path
-$content = $archive->getContent($metadataXml); // `metadata.xml` file content
+$content = $archive->getContents($metadataXml); // `metadata.xml` file content
 
 $paths = $archive->extract('/path/to/directory', [$metadataXml]); // string[] of extracted files paths
 $paths = $archive->extractAll('/path/to/directory'); // string[] of extracted files paths
@@ -109,7 +109,7 @@ $archive = Archive::read('path/to/file.pdf');
 
 $pdf = $archive->getPdf(); // Metadata of PDF
 
-$content = $archive->getContent($archive->getFirst()); // PDF page as image
+$content = $archive->getContents($archive->getFirst()); // PDF page as image
 $text = $archive->getText($archive->getFirst()); // PDF page as text
 ```
 

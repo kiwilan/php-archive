@@ -70,7 +70,7 @@ it('can find all images', function (string $path) {
 
 it('can get content first file', function (string $path) {
     $archive = Archive::read($path);
-    $content = $archive->getContent($archive->getFirst());
+    $content = $archive->getContents($archive->getFirst());
 
     $output = outputPath();
     $file = BaseArchive::pathToOsPath("{$output}first.jpg");
@@ -78,12 +78,14 @@ it('can get content first file', function (string $path) {
 
     expect($content)->toBeString();
     expect($file)->toBeReadableFile();
+
+    $content = $archive->getContent($archive->getFirst());
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);
 
 it('can get cover', function (string $path) {
     $archive = Archive::read($path);
     $cover = $archive->find('cover.jpeg');
-    $content = $archive->getContent($cover);
+    $content = $archive->getContents($cover);
 
     $output = outputPath();
     $coverPath = "{$output}cover.jpeg";
