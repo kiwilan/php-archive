@@ -53,26 +53,26 @@ If you want more information, you can read section [**About**](#about).
 ## Features
 
 -   List files as `ArchiveItem` array
-    -   With `getFiles` method: list of files
-    -   With `getFirst` method: first file
-    -   With `getLast` method: last file
-    -   With `find` method: find first file that match with `path` property
-    -   With `filter` method: find all files that match with `path` property
+    -   With `getFiles()` method: list of files
+    -   With `getFirst()` method: first file
+    -   With `getLast()` method: last file
+    -   With `find()` method: find first file that match with `path` property
+    -   With `filter()` method: find all files that match with `path` property
 -   Content of file
-    -   With `getContent` method: content of file as string (useful for images)
-    -   With `getText` method: content of text file (binaries files return `null`)
+    -   With `getContents()` method: content of file as string (useful for images)
+    -   With `getText()` method: content of text file (binaries files return `null`)
 -   Extract files
-    -   With `extract` method: extract files to directory
-    -   With `extractAll` method: extract all files to directory
--   Stat of archive with `getPath`, `getDeviceNumber`, `getInodeNumber`, `getInodeProtectionMode`, `getNumberOfLinks`, `getUserId`, `getGroupId`, `getDeviceType`, `getSize`, `getLastAccessAt`, `getCreatedAt`, `getModifiedAt`, `getBlockSize`, `getNumberOfBlocks`, `getStatus`, `getComment` properties
--   PDF metadata: `getTitle`, `getAuthor`, `getSubject`, `getCreator`, `getCreationDate`, `getModDate`, `getPages`,
+    -   With `extract()` method: extract files to directory
+    -   With `extractAll()` method: extract all files to directory
+-   Stat of archive corresponding to [`stat`](https://www.php.net/manual/en/function.stat.php)
+-   PDF metadata: `getTitle()`, `getAuthor()`, `getSubject()`, `getCreator()`, `getCreationDate()`, `getModDate()`, `getPages()`,
 -   Count files
 -   Create or edit archives, only with `.zip` format
-    -   With `make` method: create or edit archive
-    -   With `addFiles` method: add files to archive
-    -   With `addFromString` method: add string to archive
-    -   With `addDirectory` and `addDirectories` methods: add directories to archive
-    -   With `save` method: save archive
+    -   With `make()` method: create or edit archive
+    -   With `addFiles()` method: add files to archive
+    -   With `addFromString()` method: add string to archive
+    -   With `addDirectory()` and `addDirectories()` methods: add directories to archive
+    -   With `save()` method: save archive
 
 ## Installation
 
