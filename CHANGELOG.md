@@ -2,6 +2,11 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.1.02 - 2023-09-20
+
+- All `getContent()` methods are now `getContents()`
+- Old `getContent()` methods are deprecated and will be removed in v3.0.0
+
 ## v2.1.01 - 2023-08-30
 
 - If PDF has no metadata, parser works with empty metadata
