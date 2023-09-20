@@ -171,8 +171,15 @@ abstract class BaseArchive
 
     /**
      * Get content from file.
+     *
+     * @deprecated Use `getContents()` instead
      */
     abstract public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string;
+
+    /**
+     * Get content from file.
+     */
+    abstract public function getContents(?ArchiveItem $file, bool $toBase64 = false): ?string;
 
     /**
      * Get text from file.

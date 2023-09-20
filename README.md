@@ -27,13 +27,13 @@ Supports Linux, macOS and Windows.
     -   [`imagick`](https://www.php.net/manual/en/book.imagick.php) (optional) for `.PDF`
     -   [`bz2`](https://www.php.net/manual/en/book.bzip2.php) (optional) for `.BZ2` archives
 
-|           Type            | Supported |                                               Requirement                                                |         Uses         |
-| :-----------------------: | :-------: | :------------------------------------------------------------------------------------------------------: | :------------------: |
-|  `.zip`, `.epub`, `.cbz`  |    ✅     |                                                   N/A                                                    |         N/A          |
-| `.tar`, `.tar.gz`, `.cbt` |    ✅     |                                                   N/A                                                    |         N/A          |
-|      `.rar`, `.cbr`       |    ✅     | [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary | PHP `rar` or `p7zip` |
-|       `.7z`, `.cb7`       |    ✅     |                                 [`p7zip`](https://www.7-zip.org/) binary                                 |    `p7zip` binary    |
-|          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |  `smalot/pdfparser`  |
+|           Type            | Supported |                                               Requirement                                                |                                 Uses                                 |
+| :-----------------------: | :-------: | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------: |
+|  `.zip`, `.epub`, `.cbz`  |    ✅     |                                                   N/A                                                    |  Uses [`zip` extension](https://www.php.net/manual/en/book.zip.php)  |
+| `.tar`, `.tar.gz`, `.cbt` |    ✅     |                                                   N/A                                                    | Uses [`phar` extension](https://www.php.net/manual/en/book.phar.php) |
+|      `.rar`, `.cbr`       |    ✅     | [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary |                         PHP `rar` or `p7zip`                         |
+|       `.7z`, `.cb7`       |    ✅     |                                 [`p7zip`](https://www.7-zip.org/) binary                                 |                            `p7zip` binary                            |
+|          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |                          `smalot/pdfparser`                          |
 
 > **Note**
 >
@@ -53,26 +53,26 @@ If you want more information, you can read section [**About**](#about).
 ## Features
 
 -   List files as `ArchiveItem` array
-    -   With `getFiles` method: list of files
-    -   With `getFirst` method: first file
-    -   With `getLast` method: last file
-    -   With `find` method: find first file that match with `path` property
-    -   With `filter` method: find all files that match with `path` property
+    -   With `getFiles()` method: list of files
+    -   With `getFirst()` method: first file
+    -   With `getLast()` method: last file
+    -   With `find()` method: find first file that match with `path` property
+    -   With `filter()` method: find all files that match with `path` property
 -   Content of file
-    -   With `getContent` method: content of file as string (useful for images)
-    -   With `getText` method: content of text file (binaries files return `null`)
+    -   With `getContents()` method: content of file as string (useful for images)
+    -   With `getText()` method: content of text file (binaries files return `null`)
 -   Extract files
-    -   With `extract` method: extract files to directory
-    -   With `extractAll` method: extract all files to directory
--   Stat of archive with `getPath`, `getDeviceNumber`, `getInodeNumber`, `getInodeProtectionMode`, `getNumberOfLinks`, `getUserId`, `getGroupId`, `getDeviceType`, `getSize`, `getLastAccessAt`, `getCreatedAt`, `getModifiedAt`, `getBlockSize`, `getNumberOfBlocks`, `getStatus`, `getComment` properties
--   PDF metadata: `getTitle`, `getAuthor`, `getSubject`, `getCreator`, `getCreationDate`, `getModDate`, `getPages`,
+    -   With `extract()` method: extract files to directory
+    -   With `extractAll()` method: extract all files to directory
+-   Stat of archive corresponding to [`stat`](https://www.php.net/manual/en/function.stat.php)
+-   PDF metadata: `getTitle()`, `getAuthor()`, `getSubject()`, `getCreator()`, `getCreationDate()`, `getModDate()`, `getPages()`,
 -   Count files
 -   Create or edit archives, only with `.zip` format
-    -   With `make` method: create or edit archive
-    -   With `addFiles` method: add files to archive
-    -   With `addFromString` method: add string to archive
-    -   With `addDirectory` and `addDirectories` methods: add directories to archive
-    -   With `save` method: save archive
+    -   With `make()` method: create or edit archive
+    -   With `addFiles()` method: add files to archive
+    -   With `addFromString()` method: add string to archive
+    -   With `addDirectory()` and `addDirectories()` methods: add directories to archive
+    -   With `save()` method: save archive
 
 ## Installation
 
@@ -96,7 +96,7 @@ $count = $archive->getCount(); // int of files count
 
 $images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` in their path
 $metadataXml = $archive->find('metadata.xml'); // First ArchiveItem with `metadata.xml` in their path
-$content = $archive->getContent($metadataXml); // `metadata.xml` file content
+$content = $archive->getContents($metadataXml); // `metadata.xml` file content
 
 $paths = $archive->extract('/path/to/directory', [$metadataXml]); // string[] of extracted files paths
 $paths = $archive->extractAll('/path/to/directory'); // string[] of extracted files paths
@@ -109,7 +109,7 @@ $archive = Archive::read('path/to/file.pdf');
 
 $pdf = $archive->getPdf(); // Metadata of PDF
 
-$content = $archive->getContent($archive->getFirst()); // PDF page as image
+$content = $archive->getContents($archive->getFirst()); // PDF page as image
 $text = $archive->getText($archive->getFirst()); // PDF page as text
 ```
 

@@ -32,7 +32,7 @@ class ArchivePdf extends BaseArchive
         $paths = [];
         foreach ($this->files as $file) {
             if (in_array($file, $files)) {
-                $content = $this->getContent($file);
+                $content = $this->getContents($file);
                 $toPathFile = "{$toPath}{$file->getPath()}.{$this->pdfExt}";
 
                 if (! is_dir(dirname($toPathFile))) {
@@ -47,7 +47,15 @@ class ArchivePdf extends BaseArchive
         return $paths;
     }
 
+    /**
+     * @deprecated Use `getContents()` instead
+     */
     public function getContent(?ArchiveItem $file, bool $toBase64 = false): ?string
+    {
+        return $this->getContents($file, $toBase64);
+    }
+
+    public function getContents(?ArchiveItem $file, bool $toBase64 = false): ?string
     {
         if (! $file) {
             return null;

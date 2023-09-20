@@ -53,7 +53,15 @@ class ArchiveRar extends BaseArchive
         return $paths;
     }
 
+    /**
+     * @deprecated Use `getContents()` instead
+     */
     public function getContent(?ArchiveItem $item, bool $toBase64 = false): ?string
+    {
+        return $this->getContents($item, $toBase64);
+    }
+
+    public function getContents(?ArchiveItem $item, bool $toBase64 = false): ?string
     {
         if (! $item) {
             return null;
