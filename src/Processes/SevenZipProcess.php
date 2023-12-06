@@ -115,7 +115,7 @@ class SevenZipProcess
     /**
      * @param  ArchiveItem[]  $files
      */
-    public function extract(string $toPath, array $files = null): bool
+    public function extract(string $toPath, ?array $files = null): bool
     {
         if ($this->isRar && $this->isDarwin) {
             if ($files) {

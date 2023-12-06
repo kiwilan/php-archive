@@ -64,7 +64,7 @@ function mediaPath(string $filename): string
     return $pathBase.$filename;
 }
 
-function outputPath(string $path = null, string $filename = null): string
+function outputPath(?string $path = null, ?string $filename = null): string
 {
     $pathBase = __DIR__.'/output/';
 
