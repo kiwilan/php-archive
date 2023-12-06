@@ -14,7 +14,6 @@ jobs:
           scoop update
           scoop install 7zip
           scoop checkup
-          scoop install unrar
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         shell: powershell
 
