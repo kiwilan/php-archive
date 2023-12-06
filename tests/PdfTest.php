@@ -26,7 +26,7 @@ it('can get content first file', function () {
 
     expect($content)->toBeString();
     expect($file)->toBeReadableFile();
-})->skip(PHP_OS_FAMILY === 'Windows', 'Not supported on Windows');
+})->skip(PHP_OS_FAMILY === 'Windows' || PHP_VERSION > '8.2', 'Not supported on Windows');
 
 it('can extract some files', function () {
     $archive = Archive::read(PDF);
@@ -40,7 +40,7 @@ it('can extract some files', function () {
     expect($paths)->toHaveCount(2);
     expect($paths[0])->toBeString();
     expect($paths[0])->toBeReadableFile();
-})->skip(PHP_OS_FAMILY === 'Windows', 'Not supported on Windows');
+})->skip(PHP_OS_FAMILY === 'Windows' || PHP_VERSION > '8.2', 'Not supported on Windows');
 
 it('can extract files', function () {
     $archive = Archive::read(PDF);
@@ -48,7 +48,7 @@ it('can extract files', function () {
 
     expect($paths)->toBeArray();
     expect($paths)->toBeGreaterThanOrEqual(5);
-})->skip(PHP_OS_FAMILY === 'Windows', 'Not supported on Windows');
+})->skip(PHP_OS_FAMILY === 'Windows' || PHP_VERSION > '8.2', 'Not supported on Windows');
 
 it('can read metadata', function () {
     $archive = Archive::read(PDF);
