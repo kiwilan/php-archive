@@ -84,7 +84,7 @@ class ArchiveRar extends BaseArchive
             throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        return $this->getContent($file);
+        return $this->getContents($file);
     }
 
     private function parse(): static

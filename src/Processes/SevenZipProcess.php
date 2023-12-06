@@ -6,8 +6,6 @@ use Exception;
 use Kiwilan\Archive\ArchiveTemporaryDirectory;
 use Kiwilan\Archive\Models\ArchiveItem;
 use Kiwilan\Archive\Readers\BaseArchive;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 class SevenZipProcess
 {
@@ -40,21 +38,62 @@ class SevenZipProcess
         return $self;
     }
 
-    /**
-     * @param  string[]  $args
-     */
-    public function execute(string $command, array $args): string
+    public static function test(bool $exception = true): bool
     {
-        BaseArchive::binaryP7zipTest();
+        exec('7z', $output, $res);
+        // $process = new Process(['7z']);
+        // $process->run();
 
-        $process = new Process([$command, ...$args]);
-        $process->run();
+        $isValid = $res === 0;
+        // $isValid = $process->isSuccessful();
 
-        if (! $process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+        // check if 7z is installed
+        if (! $isValid) {
+            if ($exception) {
+                $osFamily = PHP_OS_FAMILY;
+                $isDarwin = $osFamily === 'Darwin';
+                $message = "p7zip is not installed or not in the PATH. Please install p7zip and try again.\nYou can check this guide: https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d";
+
+                if ($isDarwin) {
+                    $message .= "\nYou have to install `rar` binary with brew on macOS.";
+                }
+
+                throw new Exception($message);
+            }
+
+            return false;
         }
 
-        return $process->getOutput();
+        return true;
+    }
+
+    /**
+     * @param  string[]  $args
+     * @return string[]
+     */
+    public function execute(string $command, array $args): array
+    {
+        SevenZipProcess::test();
+
+        $command = "{$command} ".implode(' ', $args);
+
+        // $process = new Process([$command, ...$args]);
+        // $process->run();
+
+        // if (! $process->isSuccessful()) {
+        //     throw new ProcessFailedException($process);
+        // }
+
+        try {
+            exec($command, $output, $res);
+        } catch (\Throwable $th) {
+            throw new \Error($th->getMessage());
+        }
+
+        // $output = explode(PHP_EOL, $output);
+        array_unshift($output, '');
+
+        return $output;
     }
 
     /**
@@ -63,9 +102,6 @@ class SevenZipProcess
     public function list(): array
     {
         $output = $this->execute('7z', ['l', '-ba', '-slt', $this->path]);
-
-        $output = explode(PHP_EOL, $output);
-        array_unshift($output, '');
 
         $temp = [];
         foreach ($output as $string) {
@@ -96,8 +132,13 @@ class SevenZipProcess
                 $key = array_key_exists(0, $data) ? $data[0] : null;
                 $value = array_key_exists(1, $data) ? $data[1] : null;
 
-                $key = trim($key);
-                $value = trim($value);
+                if ($key) {
+                    $key = trim($key);
+                }
+
+                if ($value) {
+                    $value = trim($value);
+                }
 
                 $item[$key] = $value;
             }
@@ -115,7 +156,7 @@ class SevenZipProcess
     /**
      * @param  ArchiveItem[]  $files
      */
-    public function extract(string $toPath, array $files = null): bool
+    public function extract(string $toPath, ?array $files = null): bool
     {
         if ($this->isRar && $this->isDarwin) {
             if ($files) {

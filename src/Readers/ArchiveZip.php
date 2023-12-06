@@ -23,7 +23,7 @@ class ArchiveZip extends BaseArchive
         $paths = [];
         $this->parser(function (ArchiveItem $item, ZipArchive $archive, int $i) use (&$files, $toPath, &$paths) {
             if (in_array($item, $files)) {
-                $content = $this->getContent($item);
+                $content = $this->getContents($item);
                 $toPathFile = "{$toPath}{$item->getRootPath()}";
 
                 if (! is_dir(dirname($toPathFile))) {
@@ -82,7 +82,7 @@ class ArchiveZip extends BaseArchive
             throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        return $this->getContent($file);
+        return $this->getContents($file);
     }
 
     private function parse(): static
