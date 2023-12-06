@@ -9,7 +9,7 @@
 [![tests][tests-src]][tests-href]
 [![codecov][codecov-src]][codecov-href]
 
-PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`) or `.pdf` with hybrid solution (native/`p7zip`), designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`).
+PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`, `.pdf`) with unified API and hybrid solution (native/`p7zip`), designed to works with eBooks (`.epub`, `.cbz`, `.cbr`, `.cb7`, `.cbt`).
 
 Supports Linux, macOS and Windows.
 
@@ -252,15 +252,15 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 [<img src="https://user-images.githubusercontent.com/48261459/201463225-0a5a084e-df15-4b11-b1d2-40fafd3555cf.svg" height="120rem" width="100%" />](https://github.com/kiwilan)
 
-[version-src]: https://img.shields.io/packagist/v/kiwilan/php-archive.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[version-src]: https://img.shields.io/packagist/v/kiwilan/php-archive.svg?style=flat&colorA=18181B&colorB=777BB4
 [version-href]: https://packagist.org/packages/kiwilan/php-archive
-[php-version-src]: https://img.shields.io/static/v1?style=flat-square&label=PHP&message=v8.1&color=777BB4&logo=php&logoColor=ffffff&labelColor=18181b
+[php-version-src]: https://img.shields.io/static/v1?style=flat&label=PHP&message=v8.1&color=777BB4&logo=php&logoColor=ffffff&labelColor=18181b
 [php-version-href]: https://www.php.net/
-[downloads-src]: https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[downloads-src]: https://img.shields.io/packagist/dt/kiwilan/php-archive.svg?style=flat&colorA=18181B&colorB=777BB4
 [downloads-href]: https://packagist.org/packages/kiwilan/php-archive
-[license-src]: https://img.shields.io/github/license/kiwilan/php-archive.svg?style=flat-square&colorA=18181B&colorB=777BB4
+[license-src]: https://img.shields.io/github/license/kiwilan/php-archive.svg?style=flat&colorA=18181B&colorB=777BB4
 [license-href]: https://github.com/kiwilan/php-archive/blob/main/README.md
-[tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=tests&style=flat-square&colorA=18181B
+[tests-src]: https://img.shields.io/github/actions/workflow/status/kiwilan/php-archive/run-tests.yml?branch=main&label=tests&style=flat&colorA=18181B
 [tests-href]: https://github.com/kiwilan/php-archive/actions/workflows/run-tests.yml
-[codecov-src]: https://codecov.io/gh/kiwilan/php-archive/branch/main/graph/badge.svg?token=P9XIK2KV9G
+[codecov-src]: https://img.shields.io/codecov/c/gh/kiwilan/php-archive/main?style=flat&colorA=18181B&colorB=777BB4
 [codecov-href]: https://codecov.io/gh/kiwilan/php-archive

@@ -79,7 +79,7 @@ it('can get content first file', function (string $path) {
     expect($content)->toBeString();
     expect($file)->toBeReadableFile();
 
-    $content = $archive->getContent($archive->getFirst());
+    $content = $archive->getContents($archive->getFirst());
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP]);
 
 it('can get cover', function (string $path) {
@@ -99,7 +99,7 @@ it('can get cover', function (string $path) {
 it('can cover with base64', function (string $path) {
     $archive = Archive::read($path);
     $cover = $archive->find('cover.jpeg');
-    $content = $archive->getContent($cover, true);
+    $content = $archive->getContents($cover, true);
     $isBase64 = isBase64($content);
 
     expect($isBase64)->toBeTrue();

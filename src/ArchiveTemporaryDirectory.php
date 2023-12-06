@@ -13,7 +13,7 @@ class ArchiveTemporaryDirectory
     ) {
     }
 
-    public static function make(string $filename = null): self
+    public static function make(?string $filename = null): self
     {
         return new self(uniqid(), $filename);
     }

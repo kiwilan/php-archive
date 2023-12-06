@@ -3,7 +3,6 @@
 namespace Kiwilan\Archive\Readers;
 
 use DateTime;
-use Exception;
 use FilesystemIterator;
 use Kiwilan\Archive\Archive;
 use Kiwilan\Archive\ArchiveTemporaryDirectory;
@@ -11,10 +10,10 @@ use Kiwilan\Archive\Enums\ArchiveEnum;
 use Kiwilan\Archive\Models\ArchiveItem;
 use Kiwilan\Archive\Models\ArchiveStat;
 use Kiwilan\Archive\Models\PdfMeta;
+use Kiwilan\Archive\Processes\SevenZipProcess;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
-use Symfony\Component\Process\Process;
 
 abstract class BaseArchive
 {
@@ -298,26 +297,7 @@ abstract class BaseArchive
 
     public static function binaryP7zipTest(bool $exception = true): bool
     {
-        $process = new Process(['7z']);
-        $process->run();
-
-        if (! $process->isSuccessful()) {
-            if ($exception) {
-                $osFamily = PHP_OS_FAMILY;
-                $isDarwin = $osFamily === 'Darwin';
-                $message = "p7zip is not installed or not in the PATH. Please install p7zip and try again.\nYou can check this guide: https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d";
-
-                if ($isDarwin) {
-                    $message .= "\nYou have to install `rar` binary with brew on macOS.";
-                }
-
-                throw new Exception($message);
-            }
-
-            return false;
-        }
-
-        return true;
+        return SevenZipProcess::test($exception);
     }
 
     protected function getAllFiles(string $path): array

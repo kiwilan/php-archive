@@ -45,7 +45,7 @@ class ArchiveSevenZip extends BaseArchive
             throw new \Exception("Error, {$file->getFilename()} is an image");
         }
 
-        return $this->getContent($file);
+        return $this->getContents($file);
     }
 
     public function extract(string $toPath, array $files): array
