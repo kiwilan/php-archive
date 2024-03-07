@@ -174,7 +174,7 @@ abstract class BaseArchive
     /**
      * Get file from archive from path.
      *
-     * @param  string  $path Path to the file in the archive.
+     * @param  string  $path  Path to the file in the archive.
      */
     public function getFileItem(string $path): ?ArchiveItem
     {

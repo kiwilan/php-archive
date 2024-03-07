@@ -48,8 +48,8 @@ class Archive
     /**
      * Create an archive from contents.
      *
-     * @param  string  $contents Contents of the archive.
-     * @param  string|null  $extension Extension of the archive, can be null to detect automatically mimetype.
+     * @param  string  $contents  Contents of the archive.
+     * @param  string|null  $extension  Extension of the archive, can be null to detect automatically mimetype.
      */
     public static function readFromString(string $contents, ?string $extension = null): BaseArchive
     {
@@ -91,8 +91,8 @@ class Archive
     /**
      * Create an archive from path, allowing extensions are `zip`, `epub`, `cbz`.
      *
-     * @param  string  $path Path to the archive
-     * @param  bool  $skipAllowed Skip allowed extensions check
+     * @param  string  $path  Path to the archive
+     * @param  bool  $skipAllowed  Skip allowed extensions check
      *
      * @throws \Exception
      */
