@@ -46,6 +46,49 @@ class Archive
     }
 
     /**
+     * Create an archive from contents.
+     *
+     * @param  string  $contents Contents of the archive.
+     * @param  string|null  $extension Extension of the archive, can be null to detect automatically mimetype.
+     */
+    public static function readFromString(string $contents, ?string $extension = null): BaseArchive
+    {
+        $file_info = new \finfo(FILEINFO_MIME_TYPE);
+        $mime_type = $file_info->buffer($contents);
+
+        $extension = match ($mime_type) {
+            'application/x-bzip2' => 'bz2',
+            'application/gzip' => 'gz',
+            'application/x-rar' => 'rar',
+            'application/epub+zip' => 'epub',
+            'application/pdf' => 'pdf',
+            'application/zip' => 'zip',
+            'application/x-tar' => 'tar',
+            'application/x-7z-compressed' => '7z',
+            'application/x-cbr' => 'rar',
+            'application/x-cbz' => 'cbz',
+            'application/x-cbt' => 'tar',
+            'application/x-cb7' => '7z',
+            default => null,
+        };
+
+        if ($extension === null) {
+            throw new \Exception('Archive: Error detecting extension from mime type, please add manually archive extension as second parameter of `readFromString()`.');
+        }
+
+        $path = tempnam(sys_get_temp_dir(), 'archive_');
+        rename($path, $path .= ".{$extension}"); // Rename to add extension
+
+        try {
+            file_put_contents($path, $contents);
+        } catch (\Throwable $th) {
+            throw new \Exception('Archive: Error creating temporary file with `readFromString()`.');
+        }
+
+        return self::read($path);
+    }
+
+    /**
      * Create an archive from path, allowing extensions are `zip`, `epub`, `cbz`.
      *
      * @param  string  $path Path to the archive
