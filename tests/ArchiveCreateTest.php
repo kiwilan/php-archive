@@ -26,7 +26,7 @@ it('can create', function () {
     expect($archive->getName())->toBe('test.zip');
     expect($archive->getPath())->toBeReadableFile($path);
     expect($archive->getCount())->toBe(5);
-    expect($archive->getFiles())->toBeArray()
+    expect($archive->getFileItems())->toBeArray()
         ->each(fn ($file) => expect($file->value)->toBeInstanceOf(ArchiveFile::class));
 });
 
