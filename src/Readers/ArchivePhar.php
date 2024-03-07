@@ -15,7 +15,6 @@ class ArchivePhar extends BaseArchive
         if ($password) {
             $self->password = $password;
             $self = ArchiveSevenZip::read($path, $password);
-            ray($self);
 
             return $self;
         }
