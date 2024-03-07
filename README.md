@@ -13,7 +13,7 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`, `.pdf`) with unif
 
 Supports Linux, macOS and Windows.
 
-> **Warning**
+> [!WARNING]
 >
 > For some formats (`.rar` and `.7z`) [`rar` PHP extension](https://github.com/cataphract/php-rar) or [p7zip](https://www.7-zip.org/) binary could be necessary, see [Requirements](#requirements).
 
@@ -35,7 +35,7 @@ Supports Linux, macOS and Windows.
 |       `.7z`, `.cb7`       |    ✅     |                                 [`p7zip`](https://www.7-zip.org/) binary                                 |                            `p7zip` binary                            |
 |          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |                          `smalot/pdfparser`                          |
 
-> **Note**
+> [!NOTE]
 >
 > Here you can read some installation guides for dependencies
 >
@@ -43,7 +43,7 @@ Supports Linux, macOS and Windows.
 > -   [`rar` PHP extension guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar)
 > -   [`imagick` PHP extension guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
 
-> **Warning**
+> [!WARNING]
 >
 > -   **On macOS**, for `.rar` extract, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
 > -   **On Windows**, for `.pdf` extract, [`imagick` PHP extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
