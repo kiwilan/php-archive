@@ -2,6 +2,44 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.2.0 - 2023-12-06
+
+Drop `symfony/process` from dependencies.
+
+## v2.1.02 - 2023-09-20
+
+- All `getContent()` methods are now `getContents()`
+- Old `getContent()` methods are deprecated and will be removed in v3.0.0
+
+## v2.1.01 - 2023-08-30
+
+- If PDF has no metadata, parser works with empty metadata
+
+## v2.1.0 - 2023-08-28
+
+Rework `Archive::make()`
+
+- `addFile()` takes two parameters now: the `outputPath` inside archive and `pathToFile` on disk
+  
+- ~~`addFiles()`~~ is removed
+  
+- `addDirectory()` takes two parameters now: `relativeTo` path inside archive and the `path` of directory on the disk
+  
+  - If the `path` is `/path/to/dir` and `relativeTo` is `./dir`, the directory will be added to archive as `dir/`
+  
+- ~~`addDirectories()`~~ is removed
+  
+
+## v2.0.02 - 2023-08-28
+
+- Add `skipAllowed` param to `Archive::class`
+
+## v2.0.01 - 2023-08-28
+
+- For `ArchiveZipCreate::class` add extensions check: `zip`, `epub`, `cbz`, add an option to skip the check.
+- For `Archive::class`, convert `path()`, `extension()` and `type()` to `getPath()`, `getExtension()` and `getType()`.
+- Add docblocks to `Archive::class`.
+
 ## 2.0.0 - 2023-08-08
 
 ### BREAKING CHANGES
