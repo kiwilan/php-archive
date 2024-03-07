@@ -11,14 +11,17 @@ use RarEntry;
 
 class ArchiveRar extends BaseArchive
 {
-    public static function read(string $path): BaseArchive
+    public static function read(string $path, ?string $password = null): BaseArchive
     {
         $self = new self();
+        if ($password) {
+            $self->password = $password;
+        }
 
         if (! BaseArchive::extensionRarTest(false)) {
             BaseArchive::binaryP7zipTest();
 
-            $self = ArchiveSevenZip::read($path);
+            $self = ArchiveSevenZip::read($path, $password);
 
             return $self;
         }
