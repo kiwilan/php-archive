@@ -42,6 +42,8 @@ abstract class BaseArchive
 
     protected ?string $tempDir = null;
 
+    protected ?string $binaryPath = null;
+
     protected function __construct(
     ) {
     }
@@ -49,22 +51,7 @@ abstract class BaseArchive
     /**
      * Create a new instance of Archive with path.
      */
-    abstract public static function read(string $path): self;
-
-    /**
-     * Create a new instance of Archive with file contents.
-     */
-    // abstract public static function get(string $contents): self;
-
-    /**
-     * Set password for the archive.
-     */
-    public function setPassword(?string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
+    abstract public static function read(string $path, ?string $password = null): self;
 
     protected function setup(string $path): static
     {
@@ -76,6 +63,16 @@ abstract class BaseArchive
         $temp->clear();
         $this->outputDirectory = $temp->path();
         $this->type = ArchiveEnum::fromExtension($this->extension, Archive::getMimeType($path));
+
+        return $this;
+    }
+
+    /**
+     * Override binary path for `7z` or `rar` command.
+     */
+    public function overrideBinaryPath(string $path): static
+    {
+        $this->binaryPath = $path;
 
         return $this;
     }

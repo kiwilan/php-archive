@@ -27,7 +27,7 @@ mv cba.7z cba.cb7
 ````bash
 zip -er archive-password.zip archive
 7z a -ppassword archive-password.7z archive
-tar -czf - archive | 7z a -si archive-password.tar.gz -p"password"
+tar -czf - archive | 7z a -si archive-password.tgz -p"password"
 rar a -ppassword archive-password.rar archive
 ```
 

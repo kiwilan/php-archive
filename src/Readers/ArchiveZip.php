@@ -9,9 +9,12 @@ use ZipArchive;
 
 class ArchiveZip extends BaseArchive
 {
-    public static function read(string $path): self
+    public static function read(string $path, ?string $password = null): self
     {
         $self = new self();
+        if ($password) {
+            $self->password = $password;
+        }
         $self->setup($path);
         $self->parse();
 

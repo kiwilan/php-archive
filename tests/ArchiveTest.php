@@ -141,8 +141,25 @@ it('can handle archive as string', function (string $path) {
 })->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP, PDF]);
 
 it('can handle archive with password', function (string $path) {
-    $archive = Archive::read($path);
-    $archive->setPassword('password');
+    $archive = Archive::read($path, 'password');
+    $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+    $files = $archive->getFileItems();
+    expect($files)->toBeArray();
+
+    if ($extension === 'gz') {
+        // skip
+
+        return;
+    }
+
+    $file = $archive->getFileItem('archive/file-1.md');
+    $text = $archive->getText($file);
+    expect($text)->toBeString();
+})->with([ZIP_PASSWORD, RAR_PASSWORD, SEVENZIP_PASSWORD, TAR_PASSWORD]);
+
+it('can handle archive with binary path', function (string $path) {
+    $archive = Archive::read($path)->overrideBinaryPath('/opt/homebrew/bin/7z');
 
     $files = $archive->getFileItems();
     expect($files)->toBeArray();
@@ -150,4 +167,4 @@ it('can handle archive with password', function (string $path) {
     $file = $archive->getFileItem('archive/file-1.md');
     $text = $archive->getText($file);
     expect($text)->toBeString();
-})->with([ZIP_PASSWORD, RAR_PASSWORD, SEVENZIP_PASSWORD]);
+})->with([SEVENZIP]);
