@@ -10,7 +10,7 @@ beforeEach(function () {
 
 it('can get files', function () {
     $archive = Archive::read(PDF);
-    $files = $archive->getFiles();
+    $files = $archive->getFileItems();
 
     expect($files)->toBeArray();
     expect($files)->toHaveCount($archive->getCount());
@@ -30,7 +30,7 @@ it('can get content first file', function () {
 
 it('can extract some files', function () {
     $archive = Archive::read(PDF);
-    $files = $archive->getFiles();
+    $files = $archive->getFileItems();
     $output = outputPath($archive->getBasename());
 
     $select = [$files[0], $files[1]];
