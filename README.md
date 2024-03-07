@@ -13,7 +13,7 @@ PHP package to handle archives (`.zip`, `.rar`, `.tar`, `.7z`, `.pdf`) with unif
 
 Supports Linux, macOS and Windows.
 
-> **Warning**
+> [!WARNING]
 >
 > For some formats (`.rar` and `.7z`) [`rar` PHP extension](https://github.com/cataphract/php-rar) or [p7zip](https://www.7-zip.org/) binary could be necessary, see [Requirements](#requirements).
 
@@ -35,7 +35,7 @@ Supports Linux, macOS and Windows.
 |       `.7z`, `.cb7`       |    ✅     |                                 [`p7zip`](https://www.7-zip.org/) binary                                 |                            `p7zip` binary                            |
 |          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |                          `smalot/pdfparser`                          |
 
-> **Note**
+> [!NOTE]
 >
 > Here you can read some installation guides for dependencies
 >
@@ -43,7 +43,7 @@ Supports Linux, macOS and Windows.
 > -   [`rar` PHP extension guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#winrar)
 > -   [`imagick` PHP extension guide](https://gist.github.com/ewilan-riviere/3f4efd752905abe24fd1cd44412d9db9#imagemagick)
 
-> **Warning**
+> [!WARNING]
 >
 > -   **On macOS**, for `.rar` extract, you have to [install `rar` binary](https://gist.github.com/ewilan-riviere/85d657f9283fa6af255531d97da5d71d#macos) to extract files, `p7zip` not support `.rar` extraction.
 > -   **On Windows**, for `.pdf` extract, [`imagick` PHP extension](https://github.com/Imagick/imagick) have to work but **my tests failed on this feature**. So to extract PDF pages I advice to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install).
@@ -53,7 +53,7 @@ If you want more information, you can read section [**About**](#about).
 ## Features
 
 -   List files as `ArchiveItem` array
-    -   With `getFiles()` method: list of files
+    -   With `getFileItems()` method: list of files
     -   With `getFirst()` method: first file
     -   With `getLast()` method: last file
     -   With `find()` method: find first file that match with `path` property
@@ -91,7 +91,7 @@ With archive file (`.zip`, `.rar`, `.tar`, `.7z`, `epub`, `cbz`, `cbr`, `cb7`, `
 ```php
 $archive = Archive::read('path/to/archive.zip');
 
-$files = $archive->getFiles(); // ArchiveItem[]
+$files = $archive->getFileItems(); // ArchiveItem[]
 $count = $archive->getCount(); // int of files count
 
 $images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` in their path
@@ -111,6 +111,40 @@ $pdf = $archive->getPdf(); // Metadata of PDF
 
 $content = $archive->getContents($archive->getFirst()); // PDF page as image
 $text = $archive->getText($archive->getFirst()); // PDF page as text
+```
+
+### Read from string
+
+You can read archive from string with `readFromString` method.
+
+```php
+$archive = Archive::readFromString($string);
+```
+
+This method will try to detect the format of the archive from the string. If you have an error, you can use `readFromString` method with third argument to specify the format of the archive.
+
+```php
+$archive = Archive::readFromString($string, extension: 'zip');
+```
+
+### Password protected
+
+You can read password protected archives with `read` or `readFromString` method.
+
+> [!WARNING]
+>
+> Works only with archives and not with PDF files.
+
+```php
+$archive = Archive::read('path/to/password-protected-archive.zip', 'password');
+```
+
+### Override binary path
+
+For `p7zip` binary, you can override the path with `overrideBinaryPath` method.
+
+```php
+$archive = Archive::read($path)->overrideBinaryPath('/opt/homebrew/bin/7z');
 ```
 
 ### Stat

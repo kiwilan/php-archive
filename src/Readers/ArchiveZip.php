@@ -9,9 +9,12 @@ use ZipArchive;
 
 class ArchiveZip extends BaseArchive
 {
-    public static function read(string $path): self
+    public static function read(string $path, ?string $password = null): self
     {
         $self = new self();
+        if ($password) {
+            $self->password = $password;
+        }
         $self->setup($path);
         $self->parse();
 
@@ -42,6 +45,9 @@ class ArchiveZip extends BaseArchive
     {
         $archive = new ZipArchive();
         $archive->open($this->path);
+        if ($this->password) {
+            $archive->setPassword($this->password);
+        }
         $archive->extractTo($toPath);
 
         $files = $this->getAllFiles($toPath);
@@ -67,6 +73,12 @@ class ArchiveZip extends BaseArchive
 
         $content = $this->parser(function (ArchiveItem $item, ZipArchive $archive, int $i) use ($file) {
             if ($item->getFilename() === $file->getFilename()) {
+                if ($this->password) {
+                    $archive->setPassword($this->password);
+
+                    return $archive->getFromIndex($i);
+                }
+
                 return $archive->getFromIndex($i);
             }
 
@@ -115,6 +127,9 @@ class ArchiveZip extends BaseArchive
     {
         $archive = new ZipArchive();
         $archive->open($this->path);
+        if ($this->password) {
+            $archive->setPassword($this->password);
+        }
 
         for ($i = 0; $i < $archive->numFiles; $i++) {
             $file = $archive->statIndex($i);

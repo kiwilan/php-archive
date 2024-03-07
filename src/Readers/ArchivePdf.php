@@ -13,9 +13,12 @@ class ArchivePdf extends BaseArchive
 {
     protected string $pdfExt = 'jpg';
 
-    public static function read(string $path): self
+    public static function read(string $path, ?string $password = null): self
     {
         $self = new self();
+        if ($password) {
+            $self->password = $password;
+        }
         $self->setup($path);
         $self->parse();
 

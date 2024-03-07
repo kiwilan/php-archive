@@ -11,14 +11,17 @@ use RarEntry;
 
 class ArchiveRar extends BaseArchive
 {
-    public static function read(string $path): BaseArchive
+    public static function read(string $path, ?string $password = null): BaseArchive
     {
         $self = new self();
+        if ($password) {
+            $self->password = $password;
+        }
 
         if (! BaseArchive::extensionRarTest(false)) {
             BaseArchive::binaryP7zipTest();
 
-            $self = ArchiveSevenZip::read($path);
+            $self = ArchiveSevenZip::read($path, $password);
 
             return $self;
         }
@@ -91,7 +94,7 @@ class ArchiveRar extends BaseArchive
     {
         $this->extensionRarTest();
 
-        $archive = RarArchive::open($this->path);
+        $archive = RarArchive::open($this->path, $this->password);
         $this->stat = ArchiveStat::make($this->path);
         $this->stat->setComment($archive->getComment());
         $archive->close();
@@ -111,7 +114,7 @@ class ArchiveRar extends BaseArchive
      */
     private function parser(Closure $closure): mixed
     {
-        $archive = RarArchive::open($this->getPath());
+        $archive = RarArchive::open($this->getPath(), $this->password);
 
         if ($archive->isBroken()) {
             throw new \Exception("Archive is broken {$this->getPath()}");

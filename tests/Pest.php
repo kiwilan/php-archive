@@ -11,6 +11,11 @@ define('PDF', __DIR__.'/media/pdf-example.pdf');
 define('PDF_SIMPLE', __DIR__.'/media/pdf-simple.pdf');
 define('PDF_EMPTY', __DIR__.'/media/pdf-empty.pdf');
 
+define('ZIP_PASSWORD', __DIR__.'/media/archive-password.zip');
+define('RAR_PASSWORD', __DIR__.'/media/archive-password.rar');
+define('SEVENZIP_PASSWORD', __DIR__.'/media/archive-password.7z');
+define('TAR_PASSWORD', __DIR__.'/media/archive-password.tar.gz');
+
 define('ARCHIVES', [
     'SEVENZIP' => SEVENZIP,
     'RAR' => RAR,

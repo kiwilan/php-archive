@@ -25,6 +25,8 @@ abstract class BaseArchive
 
     protected ?string $basename = null;
 
+    protected ?string $password = null;
+
     protected ?string $outputDirectory = null;
 
     protected ?ArchiveEnum $type = null;
@@ -40,14 +42,16 @@ abstract class BaseArchive
 
     protected ?string $tempDir = null;
 
+    protected ?string $binaryPath = null;
+
     protected function __construct(
     ) {
     }
 
     /**
-     * Create a new instance of Archive.
+     * Create a new instance of Archive with path.
      */
-    abstract public static function read(string $path): self;
+    abstract public static function read(string $path, ?string $password = null): self;
 
     protected function setup(string $path): static
     {
@@ -59,6 +63,16 @@ abstract class BaseArchive
         $temp->clear();
         $this->outputDirectory = $temp->path();
         $this->type = ArchiveEnum::fromExtension($this->extension, Archive::getMimeType($path));
+
+        return $this;
+    }
+
+    /**
+     * Override binary path for `7z` or `rar` command.
+     */
+    public function overrideBinaryPath(string $path): static
+    {
+        $this->binaryPath = $path;
 
         return $this;
     }
@@ -135,13 +149,39 @@ abstract class BaseArchive
     }
 
     /**
-     * Get files from archive.
+     * @deprecated Use `getFileItems()` instead.
      *
      * @return ArchiveItem[]
      */
     public function getFiles(): array
     {
+        return $this->getFileItems();
+    }
+
+    /**
+     * Get files from archive.
+     *
+     * @return ArchiveItem[]
+     */
+    public function getFileItems(): array
+    {
         return $this->files;
+    }
+
+    /**
+     * Get file from archive from path.
+     *
+     * @param  string  $path  Path to the file in the archive.
+     */
+    public function getFileItem(string $path): ?ArchiveItem
+    {
+        $files = array_filter($this->files, fn (ArchiveItem $item) => $item->getPath() === $path);
+
+        if (count($files) > 0) {
+            return reset($files);
+        }
+
+        return null;
     }
 
     /**
@@ -240,7 +280,7 @@ abstract class BaseArchive
      */
     protected function findFiles(string $search, bool $skipHidden): array
     {
-        $files = $this->getFiles();
+        $files = $this->getFileItems();
 
         $filtered = array_filter($files, function (ArchiveItem $file) use ($search, $skipHidden) {
             $isExtension = ! str_contains($search, '.');

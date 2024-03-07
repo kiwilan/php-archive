@@ -23,8 +23,8 @@ class ArchiveZipCreate
     /**
      * Create a new instance of ArchiveZipCreate, allowing extensions are `zip`, `epub`, `cbz`.
      *
-     * @param  string  $path Path to the archive
-     * @param  bool  $skipAllowed Skip allowed extensions check
+     * @param  string  $path  Path to the archive
+     * @param  bool  $skipAllowed  Skip allowed extensions check
      *
      * @throws \Exception
      */
@@ -64,7 +64,7 @@ class ArchiveZipCreate
     /**
      * @return ArchiveFile[]
      */
-    public function getFiles(): array
+    public function getFileItems(): array
     {
         return $this->files;
     }
@@ -72,8 +72,8 @@ class ArchiveZipCreate
     /**
      * Add a new file to the archive from existing file.
      *
-     * @param  string  $outputPath Path to the file inside the archive
-     * @param  string  $pathToFile Path to the file to add
+     * @param  string  $outputPath  Path to the file inside the archive
+     * @param  string  $pathToFile  Path to the file to add
      */
     public function addFile(string $outputPath, string $pathToFile): self
     {
@@ -86,8 +86,8 @@ class ArchiveZipCreate
     /**
      * Add a new file to the archive from string.
      *
-     * @param  string  $outputPath Path to the file inside the archive
-     * @param  string  $content Content of the file to add
+     * @param  string  $outputPath  Path to the file inside the archive
+     * @param  string  $content  Content of the file to add
      */
     public function addFromString(string $outputPath, string $content): self
     {
@@ -100,8 +100,8 @@ class ArchiveZipCreate
     /**
      * Add a full directory to the archive, including subdirectories.
      *
-     * @param  string  $relativeTo Relative path to the directory inside the archive
-     * @param  string  $path Path to the directory to add
+     * @param  string  $relativeTo  Relative path to the directory inside the archive
+     * @param  string  $path  Path to the directory to add
      *
      * ```php
      * $archive->addDirectory('./to/directory', '/path/to/directory');

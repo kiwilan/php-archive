@@ -9,9 +9,16 @@ use SplFileInfo;
 
 class ArchivePhar extends BaseArchive
 {
-    public static function read(string $path): self
+    public static function read(string $path, ?string $password = null): BaseArchive
     {
         $self = new self();
+        if ($password) {
+            $self->password = $password;
+            $self = ArchiveSevenZip::read($path, $password);
+
+            return $self;
+        }
+
         $self->setup($path);
         $self->parse();
 

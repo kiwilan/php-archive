@@ -17,16 +17,18 @@ class SevenZipProcess
 
     protected function __construct(
         protected string $path,
+        protected ?string $password = null,
+        protected ?string $binaryPath = null,
     ) {
     }
 
-    public static function make(string $path): self
+    public static function make(string $path, ?string $password = null, ?string $binaryPath = null): self
     {
         if (! file_exists($path)) {
             throw new Exception("File does not exist: {$path}");
         }
 
-        $self = new self($path);
+        $self = new self($path, $password, $binaryPath);
         $temp = ArchiveTemporaryDirectory::make();
         $self->outputDir = $temp->path();
         $self->isDarwin = PHP_OS_FAMILY === 'Darwin';
@@ -74,6 +76,14 @@ class SevenZipProcess
     public function execute(string $command, array $args): array
     {
         SevenZipProcess::test();
+
+        if ($this->password) {
+            $args = ['-p'.$this->password, ...$args];
+        }
+
+        if ($this->binaryPath) {
+
+        }
 
         $command = "{$command} ".implode(' ', $args);
 
