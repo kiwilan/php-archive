@@ -113,6 +113,40 @@ $content = $archive->getContents($archive->getFirst()); // PDF page as image
 $text = $archive->getText($archive->getFirst()); // PDF page as text
 ```
 
+### Read from string
+
+You can read archive from string with `readFromString` method.
+
+```php
+$archive = Archive::readFromString($string);
+```
+
+This method will try to detect the format of the archive from the string. If you have an error, you can use `readFromString` method with third argument to specify the format of the archive.
+
+```php
+$archive = Archive::readFromString($string, extension: 'zip');
+```
+
+### Password protected
+
+You can read password protected archives with `read` or `readFromString` method.
+
+> [!WARNING]
+>
+> Works only with archives and not with PDF files.
+
+```php
+$archive = Archive::read('path/to/password-protected-archive.zip', 'password');
+```
+
+### Override binary path
+
+For `p7zip` binary, you can override the path with `overrideBinaryPath` method.
+
+```php
+$archive = Archive::read($path)->overrideBinaryPath('/opt/homebrew/bin/7z');
+```
+
 ### Stat
 
 From `stat` PHP function: <https://www.php.net/manual/en/function.stat.php>
