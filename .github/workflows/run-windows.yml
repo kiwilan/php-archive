@@ -13,8 +13,10 @@ jobs:
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop update
           scoop install 7zip
+          scoop install which
           scoop checkup
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          which 7z
         shell: powershell
 
       - name: Checkout code
