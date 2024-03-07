@@ -159,7 +159,12 @@ it('can handle archive with password', function (string $path) {
 })->with([ZIP_PASSWORD, RAR_PASSWORD, SEVENZIP_PASSWORD, TAR_PASSWORD]);
 
 it('can handle archive with binary path', function (string $path) {
-    $archive = Archive::read($path)->overrideBinaryPath('/opt/homebrew/bin/7z');
+    if (PHP_OS_FAMILY === 'Windows') {
+        $binary_path = 'C:\Users\runneradmin\scoop\shims\7z.EXE';
+    } else {
+        $binary_path = '/opt/homebrew/bin/7z';
+    }
+    $archive = Archive::read($path)->overrideBinaryPath($binary_path);
 
     $files = $archive->getFileItems();
     expect($files)->toBeArray();
