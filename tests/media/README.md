@@ -22,11 +22,21 @@ mv cba.zip cba.cbz
 mv cba.7z cba.cb7
 ```
 
+### With password
+
+````bash
+zip -er archive-password.zip archive
+7z a -ppassword archive-password.7z archive
+tar -czf - archive | 7z a -si archive-password.tar.gz -p"password"
+rar a -ppassword archive-password.rar archive
+```
+
+
 ## PDF
 
 ```bash
 brew install exiftool
-```
+````
 
 ```bash
 exiftool \
