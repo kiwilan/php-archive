@@ -91,7 +91,7 @@ class ArchiveRar extends BaseArchive
     {
         $this->extensionRarTest();
 
-        $archive = RarArchive::open($this->path);
+        $archive = RarArchive::open($this->path, $this->password);
         $this->stat = ArchiveStat::make($this->path);
         $this->stat->setComment($archive->getComment());
         $archive->close();
@@ -111,7 +111,7 @@ class ArchiveRar extends BaseArchive
      */
     private function parser(Closure $closure): mixed
     {
-        $archive = RarArchive::open($this->getPath());
+        $archive = RarArchive::open($this->getPath(), $this->password);
 
         if ($archive->isBroken()) {
             throw new \Exception("Archive is broken {$this->getPath()}");
