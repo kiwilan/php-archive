@@ -22,7 +22,7 @@ it('can read', function (string $path) {
 
 it('can get text', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->getFiles();
+    $files = $archive->getFileItems();
     $first = array_filter($files, fn (ArchiveItem $item) => ! $item->isImage());
     $first = array_shift($first);
     $text = $archive->getText($first);
@@ -43,7 +43,7 @@ it('can get metadata', function (string $path) {
 
 it('can get files', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->getFiles();
+    $files = $archive->getFileItems();
 
     expect($files)->toBeArray();
     expect($files)->toHaveCount($archive->getCount());
@@ -107,7 +107,7 @@ it('can cover with base64', function (string $path) {
 
 it('can extract some files', function (string $path) {
     $archive = Archive::read($path);
-    $files = $archive->getFiles();
+    $files = $archive->getFileItems();
     $output = outputPath($archive->getBasename());
 
     $select = [$files[0], $files[1]];
@@ -130,3 +130,24 @@ it('can extract files', function (string $path) {
 it('can handle bad archive', function (string $path) {
     expect(fn () => Archive::read($path))->toThrow(ValueError::class);
 })->with([EPUB_BAD_FILE]);
+
+it('can handle archive as string', function (string $path) {
+    $contents = file_get_contents($path);
+    $archive = Archive::readFromString($contents);
+    $files = $archive->getFileItems();
+
+    expect($files)->toBeArray();
+    expect($files)->toHaveCount($archive->getCount());
+})->with([...ARCHIVES_ZIP, ...ARCHIVES_TAR, ...ARCHIVES_RAR, SEVENZIP, PDF]);
+
+it('can handle archive with password', function (string $path) {
+    $archive = Archive::read($path);
+    $archive->setPassword('password');
+
+    $files = $archive->getFileItems();
+    expect($files)->toBeArray();
+
+    $file = $archive->getFileItem('archive/file-1.md');
+    $text = $archive->getText($file);
+    expect($text)->toBeString();
+})->with([ZIP_PASSWORD, RAR_PASSWORD, SEVENZIP_PASSWORD]);
