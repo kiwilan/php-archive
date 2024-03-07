@@ -8,9 +8,15 @@ use Kiwilan\Archive\Processes\SevenZipProcess;
 
 class ArchiveSevenZip extends BaseArchive
 {
-    public static function read(string $path): self
+    protected string $archiveType = '7z';
+
+    public static function read(string $path, ?string $password = null): self
     {
         $self = new self();
+        if ($password) {
+            $self->password = $password;
+        }
+        $self->archiveType = pathinfo($path, PATHINFO_EXTENSION);
         $self->setup($path);
         $self->parse();
 
@@ -31,7 +37,7 @@ class ArchiveSevenZip extends BaseArchive
             return null;
         }
 
-        $process = SevenZipProcess::make($this->path, $this->password);
+        $process = SevenZipProcess::make($this->path, $this->password, $this->binaryPath);
         $content = $process->content($file);
 
         return $toBase64
