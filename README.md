@@ -53,7 +53,7 @@ If you want more information, you can read section [**About**](#about).
 ## Features
 
 -   List files as `ArchiveItem` array
-    -   With `getFiles()` method: list of files
+    -   With `getFileItems()` method: list of files
     -   With `getFirst()` method: first file
     -   With `getLast()` method: last file
     -   With `find()` method: find first file that match with `path` property
@@ -91,7 +91,7 @@ With archive file (`.zip`, `.rar`, `.tar`, `.7z`, `epub`, `cbz`, `cbr`, `cb7`, `
 ```php
 $archive = Archive::read('path/to/archive.zip');
 
-$files = $archive->getFiles(); // ArchiveItem[]
+$files = $archive->getFileItems(); // ArchiveItem[]
 $count = $archive->getCount(); // int of files count
 
 $images = $archive->filter('jpeg'); // ArchiveItem[] with `jpeg` in their path
