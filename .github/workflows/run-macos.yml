@@ -10,21 +10,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        continue-on-error: true
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          brew update
+          brew install p7zip
+          brew install rar
+          brew install ghostscript
+          brew install imagemagick
+        shell: bash
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
           extensions: imagick, zip, fileinfo, bz2
           coverage: pcov
-
-      - name: Install dependencies
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install p7zip
-          brew install rar
-          brew install ghostscript
-          brew install imagemagick
-        shell: bash
 
       - name: Setup problem matchers
         run: |
