@@ -64,7 +64,7 @@ class ArchiveZipCreate
     /**
      * @return ArchiveFile[]
      */
-    public function getFiles(): array
+    public function getFileItems(): array
     {
         return $this->files;
     }
