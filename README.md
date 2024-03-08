@@ -33,7 +33,7 @@ Supports Linux, macOS and Windows.
 | `.tar`, `.tar.gz`, `.cbt` |    ✅     |                                                   N/A                                                    | Uses [`phar` extension](https://www.php.net/manual/en/book.phar.php)\* |
 |      `.rar`, `.cbr`       |    ✅     | [`rar` PHP extension](https://github.com/cataphract/php-rar) or [`p7zip`](https://www.7-zip.org/) binary |                          PHP `rar` or `p7zip`                          |
 |       `.7z`, `.cb7`       |    ✅     |                                 [`p7zip`](https://www.7-zip.org/) binary                                 |                             `p7zip` binary                             |
-|          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |                           `smalot/pdfparser`                           |
+|          `.pdf`           |    ✅     |         Optional (for extraction) [`imagick` PHP extension](https://github.com/Imagick/imagick)          |       [`smalot/pdfparser`](https://github.com/smalot/pdfparser)        |
 
 \*: for `.tar` archives with password, `.7z` will be used because extension don't support password.
 
@@ -277,7 +277,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Credits
 
--   [Kiwilan](https://github.com/kiwilan)
+-   [Ewilan Riviere](https://github.com/ewilan-riviere)
 -   [All Contributors](../../contributors)
 -   [spatie](https://github.com/spatie) for `spatie/package-skeleton-php` and `spatie/temporary-directory`
 -   [`smalot/pdfparser`](https://github.com/smalot/pdfparser) for PDF parser
