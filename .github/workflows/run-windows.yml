@@ -47,6 +47,11 @@ jobs:
       - name: Install dependencies
         run: composer update --prefer-dist --no-interaction
 
+      - name: Create .env file
+        run: |
+          cp .env.example .env
+        shell: powershell
+
       # - name: Check extension rar
       #   run: php -m | grep rar
 

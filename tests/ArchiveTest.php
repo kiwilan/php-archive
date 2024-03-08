@@ -159,14 +159,7 @@ it('can handle archive with password', function (string $path) {
 })->with([ZIP_PASSWORD, RAR_PASSWORD, SEVENZIP_PASSWORD, TAR_PASSWORD]);
 
 it('can handle archive with binary path', function (string $path) {
-    if (PHP_OS_FAMILY === 'Windows') {
-        $current_user = exec('echo %USERNAME%');
-        $binary_path = "C:\\Users\\{$current_user}\\scoop\\apps\\7zip\\current\\7z.exe";
-    } elseif (PHP_OS_FAMILY === 'Darwin') {
-        $binary_path = '/opt/homebrew/bin/7z';
-    } else {
-        $binary_path = '/usr/bin/7z';
-    }
+    $binary_path = getSevenZipBinaryPath();
     $archive = Archive::read($path)->overrideBinaryPath($binary_path);
 
     $files = $archive->getFileItems();
