@@ -175,10 +175,22 @@ abstract class BaseArchive
      */
     public function getFileItem(string $path): ?ArchiveItem
     {
+        $original_path = $path;
+        if (PHP_OS_FAMILY === 'Windows') {
+            $path = str_replace('/', DIRECTORY_SEPARATOR, $path);
+        }
+
         $files = array_filter($this->files, fn (ArchiveItem $item) => $item->getPath() === $path);
 
         if (count($files) > 0) {
             return reset($files);
+        }
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $files = array_filter($this->files, fn (ArchiveItem $item) => $item->getPath() === $original_path);
+            if (count($files) > 0) {
+                return reset($files);
+            }
         }
 
         return null;

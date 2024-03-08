@@ -14,3 +14,4 @@ vendor
 example
 temp
 CHANGELOG-draft.md
+.phpunit.cache
