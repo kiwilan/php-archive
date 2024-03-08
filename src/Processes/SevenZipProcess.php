@@ -43,11 +43,8 @@ class SevenZipProcess
     public static function test(bool $exception = true): bool
     {
         exec('7z', $output, $res);
-        // $process = new Process(['7z']);
-        // $process->run();
 
         $isValid = $res === 0;
-        // $isValid = $process->isSuccessful();
 
         // check if 7z is installed
         if (! $isValid) {
@@ -82,17 +79,10 @@ class SevenZipProcess
         }
 
         if ($this->binaryPath) {
-
+            $command = $this->binaryPath;
         }
 
         $command = "{$command} ".implode(' ', $args);
-
-        // $process = new Process([$command, ...$args]);
-        // $process->run();
-
-        // if (! $process->isSuccessful()) {
-        //     throw new ProcessFailedException($process);
-        // }
 
         try {
             exec($command, $output, $res);
@@ -100,7 +90,6 @@ class SevenZipProcess
             throw new \Error($th->getMessage());
         }
 
-        // $output = explode(PHP_EOL, $output);
         array_unshift($output, '');
 
         return $output;

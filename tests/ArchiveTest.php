@@ -160,7 +160,8 @@ it('can handle archive with password', function (string $path) {
 
 it('can handle archive with binary path', function (string $path) {
     if (PHP_OS_FAMILY === 'Windows') {
-        $binary_path = 'C:\Users\runneradmin\scoop\shims\7z.EXE';
+        $current_user = exec('echo %USERNAME%');
+        $binary_path = "C:\\Users\\{$current_user}\\scoop\\apps\\7zip\\current\\7z.exe";
     } else {
         $binary_path = '/opt/homebrew/bin/7z';
     }

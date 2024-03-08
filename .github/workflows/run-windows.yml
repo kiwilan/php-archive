@@ -13,6 +13,7 @@ jobs:
           iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
           scoop update
           scoop install 7zip
+          scoop install imagemagick ghostscript ffmpeg
           scoop install which
           scoop checkup
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12

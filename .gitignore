@@ -13,3 +13,5 @@ vendor
 .DS_Store
 example
 temp
+CHANGELOG-draft.md
+.phpunit.cache
