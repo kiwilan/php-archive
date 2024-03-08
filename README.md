@@ -56,6 +56,7 @@ If you want more information, you can read section [**About**](#about).
 
 -   List files as `ArchiveItem` array
     -   With `getFileItems()` method: list of files
+    -   With `getFileItem(string $path)` method: file corresponding to `path` property
     -   With `getFirst()` method: first file
     -   With `getLast()` method: last file
     -   With `find()` method: find first file that match with `path` property
