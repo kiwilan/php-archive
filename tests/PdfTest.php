@@ -26,7 +26,7 @@ it('can get content first file', function () {
 
     expect($content)->toBeString();
     expect($file)->toBeReadableFile();
-});
+})->skip(PHP_OS_FAMILY === 'Windows', 'Skip on Windows');
 
 it('can extract some files', function () {
     $archive = Archive::read(PDF);
