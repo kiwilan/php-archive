@@ -19,7 +19,6 @@ jobs:
           brew install rar
           brew install ghostscript
           brew install imagemagick
-          which 7z
         shell: bash
 
       - name: Setup PHP
