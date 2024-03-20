@@ -21,12 +21,6 @@ jobs:
           brew install imagemagick
         shell: bash
 
-      - name: Check 7z path
-        continue-on-error: true
-        run: |
-          which 7z
-        shell: bash
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
