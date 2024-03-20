@@ -179,3 +179,53 @@ function recurseRmdir(string $dir)
     }
     // rmdir($dir);
 }
+
+function dotenv(): array
+{
+    $path = __DIR__.'/../';
+    $lines = file($path.'.env');
+    $dotenv = [];
+
+    foreach ($lines as $line) {
+        if (! empty($line)) {
+            $data = explode('=', $line);
+            $key = $data[0];
+            if ($key === " \n ") {
+                continue;
+            }
+            unset($data[0]);
+            $value = implode('=', $data);
+
+            $key = $key ? trim($key) : '';
+            $value = $value ? trim($value) : '';
+
+            if ($key === '') {
+                continue;
+            }
+
+            $value = str_replace('"', '', $value);
+            $value = str_replace("'", '', $value);
+
+            $dotenv[$key] = $value;
+        }
+    }
+
+    return $dotenv;
+}
+
+function getDotenv(string $key): string
+{
+    return dotenv()[$key] ?? '';
+}
+
+function getSevenZipBinaryPath(): string
+{
+    $os = PHP_OS_FAMILY;
+    $dotenv = match ($os) {
+        'Windows' => 'SEVEN_ZIP_BINARY_PATH_WINDOWS',
+        'Darwin' => 'SEVEN_ZIP_BINARY_PATH_MACOS',
+        default => 'SEVEN_ZIP_BINARY_PATH_LINUX',
+    };
+
+    return getDotenv($dotenv);
+}
