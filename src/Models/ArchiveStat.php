@@ -23,8 +23,7 @@ class ArchiveStat
         protected ?int $numberOfBlocks = null,
         protected ?string $status = null,
         protected ?string $comment = null,
-    ) {
-    }
+    ) {}
 
     public static function make(string $path): self
     {

@@ -12,7 +12,7 @@ class ArchiveSevenZip extends BaseArchive
 
     public static function read(string $path, ?string $password = null): self
     {
-        $self = new self();
+        $self = new self;
         if ($password) {
             $self->password = $password;
         }

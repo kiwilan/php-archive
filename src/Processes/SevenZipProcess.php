@@ -19,8 +19,7 @@ class SevenZipProcess
         protected string $path,
         protected ?string $password = null,
         protected ?string $binaryPath = null,
-    ) {
-    }
+    ) {}
 
     public static function make(string $path, ?string $password = null, ?string $binaryPath = null): self
     {

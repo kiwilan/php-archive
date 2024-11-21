@@ -31,8 +31,7 @@ class ArchiveItem
         protected array $extraInfos = [],
 
         protected ?string $hostOS = null,
-    ) {
-    }
+    ) {}
 
     public static function fromP7zip(array $data, ?string $archivePath = null): self
     {

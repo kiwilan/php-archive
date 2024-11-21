@@ -11,7 +11,7 @@ class ArchivePhar extends BaseArchive
 {
     public static function read(string $path, ?string $password = null): BaseArchive
     {
-        $self = new self();
+        $self = new self;
         if ($password) {
             $self->password = $password;
             $self = ArchiveSevenZip::read($path, $password);

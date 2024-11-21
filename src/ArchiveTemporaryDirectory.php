@@ -10,8 +10,7 @@ class ArchiveTemporaryDirectory
         protected string $uuid,
         protected ?string $tempDir = null,
         protected ?string $filename = null,
-    ) {
-    }
+    ) {}
 
     public static function make(?string $filename = null): self
     {
@@ -20,14 +19,14 @@ class ArchiveTemporaryDirectory
 
     public function clear(): bool
     {
-        (new TemporaryDirectory())->name($this->uuid)->force()->delete();
+        (new TemporaryDirectory)->name($this->uuid)->force()->delete();
 
         return true;
     }
 
     public function path(): string
     {
-        $temp = (new TemporaryDirectory())->name("{$this->uuid}");
+        $temp = (new TemporaryDirectory)->name("{$this->uuid}");
 
         if (! $temp->exists()) {
             $temp->create();

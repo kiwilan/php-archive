@@ -15,7 +15,7 @@ class ArchivePdf extends BaseArchive
 
     public static function read(string $path, ?string $password = null): self
     {
-        $self = new self();
+        $self = new self;
         if ($password) {
             $self->password = $password;
         }
@@ -72,7 +72,7 @@ class ArchivePdf extends BaseArchive
 
         $content = null;
         try {
-            $imagick = new Imagick();
+            $imagick = new Imagick;
 
             $imagick->setResolution(300, 300);
             $path = BaseArchive::pathToOsPath("{$this->path}[{$index}]");
@@ -105,7 +105,7 @@ class ArchivePdf extends BaseArchive
 
         $index = (int) $file->getPath();
 
-        $parser = new Parser();
+        $parser = new Parser;
         $document = $parser->parseFile($this->getPath());
 
         $pages = $document->getPages();
@@ -122,7 +122,7 @@ class ArchivePdf extends BaseArchive
 
     private function parse(): static
     {
-        $parser = new Parser();
+        $parser = new Parser;
         $document = $parser->parseFile($this->getPath());
 
         $this->stat = ArchiveStat::make($this->path);

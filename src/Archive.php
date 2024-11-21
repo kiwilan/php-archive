@@ -17,8 +17,7 @@ class Archive
         protected string $extension,
         protected ArchiveEnum $type,
         protected ?string $password = null,
-    ) {
-    }
+    ) {}
 
     /**
      * Read an archive from the path.
