@@ -43,7 +43,29 @@ class Archive
             ArchiveEnum::pdf => ArchivePdf::class,
         };
 
-        return $archive::read($self->path, $self->password);
+        try {
+            return $archive::read($self->path, $self->password);
+        } catch (\Throwable $originalException) {
+            if ($self->type === ArchiveEnum::zip && $extension === 'cbz') {
+                try {
+                    // Sometimes files with cbz extension are actually misnamed rar files
+                    return ArchiveRar::read($self->path, $self->password);
+                } catch (\Throwable) {
+                    // If it's not a rar file, throw the original exception
+                    throw $originalException;
+                }
+            }
+
+            if ($self->type === ArchiveEnum::rar && $extension === 'cbr') {
+                try {
+                    // Sometimes files with cbr extension are actually misnamed zip files
+                    return ArchiveZip::read($self->path, $self->password);
+                } catch (\Throwable) {
+                    // If it's not a zip file, throw the original exception
+                    throw $originalException;
+                }
+            }
+        }
     }
 
     /**
