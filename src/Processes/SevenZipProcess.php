@@ -67,6 +67,28 @@ class SevenZipProcess
     }
 
     /**
+     * Escapes a string to be used as a shell argument.
+     */
+    private function escapeArgument(?string $argument): string
+    {
+        if ('' === $argument || null === $argument) {
+            return '""';
+        }
+        if ('\\' !== \DIRECTORY_SEPARATOR) {
+            return "'".str_replace("'", "'\\''", $argument)."'";
+        }
+        if (str_contains($argument, "\0")) {
+            $argument = str_replace("\0", '?', $argument);
+        }
+        if (!preg_match('/[()%!^"<>&|\s]/', $argument)) {
+            return $argument;
+        }
+        $argument = preg_replace('/(\\\\+)$/', '$1$1', $argument);
+
+        return '"'.str_replace(['"', '^', '%', '!', "\n"], ['""', '"^^"', '"^%"', '"^!"', '!LF!'], $argument).'"';
+    }
+
+    /**
      * @param  string[]  $args
      * @return string[]
      */
@@ -82,7 +104,7 @@ class SevenZipProcess
             $command = $this->binaryPath;
         }
 
-        $command = "{$command} ".implode(' ', $args);
+        $command = "{$command} ".implode(' ', array_map($this->escapeArgument(...), $args));
 
         try {
             exec($command, $output, $res);
