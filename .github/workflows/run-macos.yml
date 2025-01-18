@@ -36,26 +36,10 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction
 
-      # - name: Add rar extension
-      #   run: |
-      #     git clone https://github.com/cataphract/php-rar
-      #     cd php-rar
-      #     phpize
-      #     ./configure
-      #     sudo make
-      #     sudo make install
-      #     pecl_path=$(pecl config-get ext_dir)
-      #     phpini_path=$(php -i | grep /.+/php.ini -oE)
-      #     sudo cp ./modules/rar.so $pecl_path
-      #     sudo echo "extension=rar.so" > $phpini_path
-
       - name: Create .env file
         run: |
           cp .env.example .env
         shell: bash
-
-      # - name: Check extension rar
-      #   run: php -m | grep rar
 
       - name: Check extension imagick
         run: php -m | grep imagick
