@@ -45,8 +45,7 @@ abstract class BaseArchive
     protected ?string $binaryPath = null;
 
     protected function __construct(
-    ) {
-    }
+    ) {}
 
     /**
      * Create a new instance of Archive with path.
@@ -451,7 +450,7 @@ abstract class BaseArchive
 
     public static function timestampToDateTime(int $timestamp): DateTime
     {
-        $date = new \DateTime();
+        $date = new \DateTime;
         $date->setTimestamp($timestamp);
 
         return $date;

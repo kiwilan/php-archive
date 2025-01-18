@@ -19,8 +19,7 @@ class SevenZipProcess
         protected string $path,
         protected ?string $password = null,
         protected ?string $binaryPath = null,
-    ) {
-    }
+    ) {}
 
     public static function make(string $path, ?string $password = null, ?string $binaryPath = null): self
     {
@@ -71,7 +70,7 @@ class SevenZipProcess
      */
     private function escapeArgument(?string $argument): string
     {
-        if ('' === $argument || null === $argument) {
+        if ($argument === '' || $argument === null) {
             return '""';
         }
         if ('\\' !== \DIRECTORY_SEPARATOR) {
@@ -80,7 +79,7 @@ class SevenZipProcess
         if (str_contains($argument, "\0")) {
             $argument = str_replace("\0", '?', $argument);
         }
-        if (!preg_match('/[()%!^"<>&|\s]/', $argument)) {
+        if (! preg_match('/[()%!^"<>&|\s]/', $argument)) {
             return $argument;
         }
         $argument = preg_replace('/(\\\\+)$/', '$1$1', $argument);

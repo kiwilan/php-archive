@@ -17,13 +17,12 @@ class PdfMeta
         protected ?DateTime $creationDate = null,
         protected ?DateTime $modDate = null,
         protected ?int $pages = null,
-    ) {
-    }
+    ) {}
 
     public static function make(?array $details): self
     {
         if (! $details) {
-            return new self();
+            return new self;
         }
 
         $title = $details['Title'] ?? null;

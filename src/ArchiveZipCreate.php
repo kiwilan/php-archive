@@ -17,8 +17,7 @@ class ArchiveZipCreate
         protected string $name,
         protected array $files = [],
         protected int $count = 0,
-    ) {
-    }
+    ) {}
 
     /**
      * Create a new instance of ArchiveZipCreate, allowing extensions are `zip`, `epub`, `cbz`.
@@ -121,7 +120,7 @@ class ArchiveZipCreate
      */
     public function save(): bool
     {
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
         $zip->open($this->path, ZipArchive::CREATE);
 
         foreach ($this->files as $file) {

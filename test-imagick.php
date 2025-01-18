@@ -9,7 +9,7 @@ var_dump('PDF: '.PDF);
 
 function pdfImageExtract()
 {
-    $imagick = new Imagick();
+    $imagick = new Imagick;
     $imagick->setResolution(300, 300);
     $path = PDF;
     // $path = BaseArchive::pathToOsPath("{$path}[0]");

@@ -11,7 +11,7 @@ class ArchiveZip extends BaseArchive
 {
     public static function read(string $path, ?string $password = null): self
     {
-        $self = new self();
+        $self = new self;
         if ($password) {
             $self->password = $password;
         }
@@ -43,7 +43,7 @@ class ArchiveZip extends BaseArchive
 
     public function extractAll(string $toPath): array
     {
-        $archive = new ZipArchive();
+        $archive = new ZipArchive;
         $archive->open($this->path);
         if ($this->password) {
             $archive->setPassword($this->password);
@@ -99,7 +99,7 @@ class ArchiveZip extends BaseArchive
 
     private function parse(): static
     {
-        $archive = new ZipArchive();
+        $archive = new ZipArchive;
         $archive->open($this->path);
 
         $this->stat = ArchiveStat::make($this->path);
@@ -125,7 +125,7 @@ class ArchiveZip extends BaseArchive
      */
     private function parser(Closure $closure): mixed
     {
-        $archive = new ZipArchive();
+        $archive = new ZipArchive;
         $archive->open($this->path);
         if ($this->password) {
             $archive->setPassword($this->password);
