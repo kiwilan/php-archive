@@ -65,6 +65,8 @@ class Archive
                     throw $originalException;
                 }
             }
+
+            throw $originalException;
         }
     }
 
