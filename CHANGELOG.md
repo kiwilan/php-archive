@@ -2,6 +2,14 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.3.0 - 2024-03-20
+
+- Add password option for ZIP, RAR and 7z files, using `read(string $path, ?string $password = null)` and `readFromString(string $contents, ?string $password = null, ?string $extension = null)` methods.
+- Add new `Archive::class` method `readFromString(string $contents, ?string $password = null, ?string $extension = null)` to read an archive from a string
+- When you read RAR or 7z archives with `p7zip` binary, you can set manually the path to the binary using `overrideBinaryPath(string $path)` method.
+- `getFiles()` method is now deprecated. Use `getFileItems()` instead.
+- New method `getFileItem(string $path)` to get a single file item.
+
 ## v2.2.0 - 2023-12-06
 
 Drop `symfony/process` from dependencies.
