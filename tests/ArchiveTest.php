@@ -168,4 +168,5 @@ it('can handle archive with binary path', function (string $path) {
     $file = $archive->getFileItem('archive/file-1.md');
     $text = $archive->getText($file);
     expect($text)->toBeString();
-})->with([SEVENZIP]);
+})->with([SEVENZIP])
+    ->skip(PHP_OS_FAMILY === 'Darwin', 'Skip on MacOS');

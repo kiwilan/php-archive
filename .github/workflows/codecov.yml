@@ -45,6 +45,11 @@ jobs:
           sudo cp ./modules/rar.so $pecl_path
           sudo echo "extension=rar.so" > $phpini_path
 
+      - name: Create .env file
+        run: |
+          cp .env.example .env
+        shell: bash
+
       - name: Check extension rar
         run: php -m | grep rar
 
@@ -63,7 +68,7 @@ jobs:
         run: vendor/bin/pest --coverage
 
       - name: Send code coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           verbose: false
