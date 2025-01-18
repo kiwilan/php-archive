@@ -2,6 +2,18 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.3.01 - 2025-01-18
+
+PR #54 by @onigoetz: Various bugfixes due to humans being humans
+
+- Missing escaping of CLI arguments
+- Errors swallowed hiding the original error
+- Sometimes a .cbz is a RAR file, sometimes a .cbr is a ZIP file
+
+Thanks to @onigoetz for the PR!
+
+Note: macOS test with RAR extension removed.
+
 ## v2.3.0 - 2024-03-20
 
 - Add password option for ZIP, RAR and 7z files, using `read(string $path, ?string $password = null)` and `readFromString(string $contents, ?string $password = null, ?string $extension = null)` methods.
