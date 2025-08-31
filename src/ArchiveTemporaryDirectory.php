@@ -14,7 +14,12 @@ class ArchiveTemporaryDirectory
 
     public static function make(?string $filename = null): self
     {
-        return new self(uniqid(), $filename);
+        $prefix = substr(bin2hex(random_bytes(2)), 0, 4);
+        $uniq = uniqid(more_entropy: true);
+        $uniq = str_replace('.', '', $uniq);
+        $uuid = "archive_{$prefix}_{$uniq}";
+
+        return new self($uuid, $filename);
     }
 
     public function clear(): bool
