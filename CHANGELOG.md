@@ -2,6 +2,10 @@
 
 All notable changes to `php-archive` will be documented in this file.
 
+## v2.3.02 - 2025-08-31
+
+For `ArchiveTemporaryDirectory` temporary directory name is now based on a UUID format: `archive_{prefix}_{uniq}` where `prefix` is a random 4-character string and `uniq` is a unique identifier generated using `uniqid()`.
+
 ## v2.3.01 - 2025-01-18
 
 PR #54 by @onigoetz: Various bugfixes due to humans being humans
