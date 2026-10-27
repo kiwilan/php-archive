@@ -59,7 +59,7 @@ class ArchivePhar extends BaseArchive
         foreach ($files as $file) {
             $content = $this->getContents($file);
 
-            $toPathFile = "{$toPath}{$file->getRootPath()}";
+            $toPathFile = self::safeExtractPath($toPath, $file->getRootPath());
 
             if (! is_dir(dirname($toPathFile))) {
                 mkdir(dirname($toPathFile), 0755, true);

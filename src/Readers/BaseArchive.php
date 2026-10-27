@@ -411,6 +411,46 @@ abstract class BaseArchive
         return str_replace('/', DIRECTORY_SEPARATOR, $path);
     }
 
+    /**
+     * Resolve the path of an archive entry inside an extraction directory.
+     *
+     * Entry names are controlled by whoever built the archive, so a name
+     * like `../../evil.php` must never resolve outside of `$toPath`
+     * (path traversal / Zip Slip, CWE-22).
+     *
+     * @throws \Exception If the entry path would escape the extraction directory.
+     */
+    protected static function safeExtractPath(string $toPath, string $entryPath): string
+    {
+        $segments = [];
+
+        foreach (explode('/', str_replace('\\', '/', $entryPath)) as $segment) {
+            if ($segment === '' || $segment === '.') {
+                continue;
+            }
+
+            if ($segment === '..') {
+                if ($segments === []) {
+                    throw new \Exception("Archive entry `{$entryPath}` cannot be extracted outside of the extraction directory.");
+                }
+
+                array_pop($segments);
+
+                continue;
+            }
+
+            $segments[] = $segment;
+        }
+
+        if ($segments === []) {
+            throw new \Exception("Archive entry `{$entryPath}` cannot be extracted outside of the extraction directory.");
+        }
+
+        $base = rtrim($toPath, '/\\');
+
+        return $base.DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, $segments);
+    }
+
     public static function fileIsImage(?string $extension): bool
     {
         return in_array($extension, [

@@ -42,7 +42,7 @@ class ArchiveRar extends BaseArchive
         $paths = [];
         $this->parser(function (ArchiveItem $file, $stream) use ($files, $toPath, &$paths) {
             if (in_array($file, $files)) {
-                $toPathFile = "{$toPath}{$file->getRootPath()}";
+                $toPathFile = self::safeExtractPath($toPath, $file->getRootPath());
 
                 if (! is_dir(dirname($toPathFile))) {
                     mkdir(dirname($toPathFile), 0755, true);

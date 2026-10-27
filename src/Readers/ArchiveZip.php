@@ -27,7 +27,7 @@ class ArchiveZip extends BaseArchive
         $this->parser(function (ArchiveItem $item, ZipArchive $archive, int $i) use (&$files, $toPath, &$paths) {
             if (in_array($item, $files)) {
                 $content = $this->getContents($item);
-                $toPathFile = "{$toPath}{$item->getRootPath()}";
+                $toPathFile = self::safeExtractPath($toPath, $item->getRootPath());
 
                 if (! is_dir(dirname($toPathFile))) {
                     mkdir(dirname($toPathFile), 0755, true);
